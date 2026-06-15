@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>锦绣西南 - 图片展示</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background-color: #000000;
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      padding-top: 80px;
+    }
+    
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      z-index: 1000;
+      padding: 15px 20px;
+    }
+    
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-title {
+      color: #d4af37;
+      font-size: 1.2rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 4px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    
+    .nav-links a {
+      color: rgba(212, 175, 55, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    .nav-links a.active {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.15);
+    }
+
+    .gallery-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .gallery-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #daa520, transparent);
+    }
+
+    .gallery-header::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 8px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='8' viewBox='0 0 100 8'%3E%3Ccircle cx='20' cy='4' r='3' fill='%23daa520'/%3E%3Cline x1='26' y1='4' x2='74' y2='4' stroke='%23daa520' stroke-width='2'/%3E%3Ccircle cx='80' cy='4' r='3' fill='%23daa520'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .gallery-title-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 25px;
+    }
+
+    .title-line {
+      flex: 1;
+      height: 1px;
+      max-width: 120px;
+      background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.6), transparent);
+    }
+
+    .gallery-title {
+      font-size: 3.8rem;
+      color: #d4af37;
+      letter-spacing: 22px;
+      margin: 0;
+      font-weight: 500;
+      text-shadow: 
+        0 0 30px rgba(212, 175, 55, 0.4),
+        0 1px 0 rgba(255, 255, 255, 0.1);
+      font-family: 'Noto Serif SC', 'STKaiti', 'KaiTi', '楷体', serif;
+    }
+
+    .gallery-subtitle {
+      font-size: 0.9rem;
+      color: rgba(212, 175, 55, 0.6);
+      letter-spacing: 10px;
+      text-transform: uppercase;
+      font-weight: 300;
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      row-gap: 25px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(20, 18, 15, 0.8) 0%, rgba(15, 13, 10, 0.9) 100%);
+      border: 1px solid rgba(218, 165, 32, 0.12);
+      transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(145deg, 
+        rgba(218,165,32,0.3) 0%, 
+        rgba(255,255,255,0.08) 30%,
+        rgba(184,134,11,0.15) 70%,
+        rgba(139,90,43,0.2) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(218, 165, 32, 0.08);
+      border-color: rgba(218, 165, 32, 0.3);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .gallery-item:hover .gallery-image {
+      transform: scale(1.05);
+      filter: brightness(1.05) contrast(1.03);
+    }
+
+    .gallery-info {
+      padding: 14px 16px;
+      text-align: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 100%);
+    }
+
+    .gallery-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(145deg, rgba(212,175,55,0.15), rgba(139,90,43,0.1));
+      border-radius: 50%;
+      color: #d4af37;
+      font-size: 0.75rem;
+      font-weight: 400;
+      margin-bottom: 8px;
+      letter-spacing: 0;
+      font-family: 'Noto Serif SC', 'STKaiti', 'KaiTi', serif;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover .gallery-number {
+      background: linear-gradient(145deg, rgba(212,175,55,0.25), rgba(184,134,11,0.15));
+      transform: scale(1.1);
+    }
+
+    .gallery-caption {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      transition: all 0.3s ease;
+      font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      font-weight: 300;
+    }
+
+    .gallery-item:hover .gallery-caption {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .gallery-description {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212, 175, 55, 0.12);
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      letter-spacing: 1.5px;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      font-family: 'Noto Serif SC', 'STKaiti', 'KaiTi', serif;
+      font-weight: 400;
+    }
+
+    .gallery-description.show {
+      opacity: 1;
+      max-height: 100px;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.95);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      z-index: 10;
+      cursor: pointer;
+      padding-top: 10px;
+    }
+
+    .video-overlay.active {
+      display: flex;
+    }
+
+    .video-container {
+      position: relative;
+      width: calc(100% - 30px);
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .video-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 11;
+      transition: all 0.3s ease;
+    }
+
+    .video-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(90deg);
+    }
+
+    .video-description {
+      position: absolute;
+      bottom: 10px;
+      left: 15px;
+      right: 15px;
+      padding: 12px;
+      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      letter-spacing: 1px;
+      border-radius: 0 0 20px 20px;
+      font-family: 'Noto Serif SC', 'STKaiti', 'KaiTi', serif;
+      font-weight: 400;
+    }
+
+    @media (max-width: 1200px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .gallery-container {
+        padding: 25px 15px;
+      }
+
+      .gallery-title {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        row-gap: 20px;
+      }
+
+      .gallery-image {
+        height: 150px;
+      }
+
+      .gallery-info {
+        padding: 10px 12px;
+      }
+
+      .gallery-number {
+        width: 26px;
+        height: 26px;
+        font-size: 0.75rem;
+      }
+
+      .gallery-caption {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-image {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="nav-title">技法</div>
+      <div class="nav-links">
+        <a href="戗金/戗金.html">戗金</a>
+        <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+        <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+        <a href="堆红做法.html">堆红</a>
+        <a href="制作贴金.html" class="active">贴金</a>
+        <a href="犀皮制法.html">犀皮</a>
+        <a href="灰条制法.html">灰条</a>
+        <a href="金缮做法.html">金缮</a>
+        <a href="采漆方法.html">采漆</a>
+        <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+        <a href="描金法_files/描金法.html">描金</a>
+        <a href="制作朱漆.html">朱漆</a>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-header">
+      <div class="gallery-title-wrapper">
+        <div class="title-line"></div>
+        <h1 class="gallery-title">制作贴金</h1>
+        <div class="title-line"></div>
+      </div>
+      <p class="gallery-subtitle">Gold Leaf Technique</p>
+    </div>
+
+    <div class="gallery-grid" id="galleryGrid">
+      <!-- 图片将通过JavaScript动态生成 -->
+    </div>
+  </div>
+
+  <script>
+    // 图片路径数组
+    const imagePaths = [
+      '制作贴金_files/1.jpeg',
+      '制作贴金_files/2.jpeg',
+      '制作贴金_files/3.jpeg',
+      '制作贴金_files/4.jpeg',
+      '制作贴金_files/5.jpeg',
+      '制作贴金_files/6.jpeg',
+      '制作贴金_files/7.jpeg',
+      '制作贴金_files/8.jpeg',
+      '制作贴金_files/9.jpeg',
+      '制作贴金_files/10.jpeg',
+      '制作贴金_files/11.jpeg',
+      '制作贴金_files/12.jpeg',
+      '制作贴金_files/13.jpeg',
+      '制作贴金_files/14.jpeg',
+      '制作贴金_files/15.jpeg',
+      '制作贴金_files/16.jpeg',
+      '制作贴金_files/17.jpeg',
+      '制作贴金_files/18.jpeg',
+      '制作贴金_files/19.jpeg',
+      '制作贴金_files/20.jpeg'
+    ];
+
+    // 视频映射：index -> 视频文件名
+    const videoMap = {
+      2: '3、4.mp4',
+      4: '5.mp4',
+      5: '6.mp4',
+      6: '7.mp4',
+      7: '8.mp4',
+      8: '9.mp4',
+      10: '11.mp4',
+      11: '12.mp4',
+      12: '13.mp4',
+      13: '14.mp4',
+      14: '15.mp4',
+      15: '16.mp4'
+    };
+
+    // 图片描述数组
+    const descriptions = [
+      '棉布内包丝绵球，做两枚形似打起蓓蕾漆的蘸子。',
+      '准备一个制好的黑漆地素髹小盘。',
+      '用蘸子蘸取金底漆，给盘子需要贴金的部分薄薄地擦一道漆。',
+      '另取一个未蘸过漆的干净蘸子，揩擦刚才擦过漆的部位，将漆层擦得更薄、更均匀。揩擦完毕，将小盘放入荫房阴干约10~15分钟，这是为了给漆液一点干燥的时间，使箔片更易贴紧。',
+      '贴箔前，在手上抹一层细灰干燥手部，以防箔片粘到手上。',
+      '贴金箔，用镊子夹取一张带底纸的金箔，小心轻放到盘中。注意贴好后不要挪动。',
+      '将不易掉絮的纱布揉成团，轻轻拍打按压金箔上的底纸。',
+      '贴好一张后轻轻揭下金箔上的底纸，注意不要带起灰尘。',
+      '按照刚才的方法将剩余部分的金箔贴好，贴好后，将小盘放入荫房待干。一天左右，取出小盘，扫去重叠粘贴的金箔，将贴箔的面收拾平整。',
+      '贴箔时，难免有粘贴不牢或拍打按压时手法不当以致脱落的箔片，这就需要再次给箔片脱落处涂金底漆，粘补箔片。',
+      '观察需要贴补的部位，取带底纸的大片金箔，剪成合适的大小。',
+      '粘贴金箔。',
+      '贴箔处，用纱布团轻轻拍打按压。',
+      '揭去金箔上的底纸，随后将小盘再次放入荫房内待干。',
+      '小盘上的贴箔面干固后，用扫笔扫去多余的金箔。',
+      '一块平整的金箔面就贴成了。',
+      '调制漆液，精制生漆中加入少许樟脑油做稀释。',
+      '用发刷蘸取漆液轻轻涂小盘的贴箔面。',
+      '使用不易掉屑的绵纸快速地擦去漆液，注意不要太用力。擦拭完毕，将小盘放入荫房内待干。',
+      '一只贴金的小盘就制成了。'
+    ];
+
+    // 生成画廊HTML
+    const galleryGrid = document.getElementById('galleryGrid');
+    imagePaths.forEach((path, index) => {
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.dataset.index = index;
+      
+      // 如果有描述，则添加描述区域
+      const descHtml = descriptions[index] ? 
+        `<div class="gallery-description" id="desc-${index}">${descriptions[index]}</div>` : '';
+      
+      // 检查当前图片是否有对应的视频
+      const hasVideo = videoMap[index] !== undefined;
+      
+      // 添加视频覆盖层（如果有视频）
+      const videoOverlay = hasVideo ? `
+        <div class="video-overlay" id="videoOverlay-${index}">
+          <div class="video-container">
+            <video class="gallery-video" id="video-${index}" playsinline>
+              <source src="制作贴金_files/${videoMap[index]}" type="video/mp4">
+            </video>
+            <div class="video-close" id="videoClose-${index}">×</div>
+          </div>
+          <div class="video-description">${descriptions[index]}</div>
+        </div>
+      ` : '';
+      
+      item.innerHTML = `
+        <img src="${path}" alt="图片 ${index + 1}" class="gallery-image">
+        ${videoOverlay}
+        <div class="gallery-info">
+          <div class="gallery-number">${index + 1}</div>
+          <div class="gallery-caption">步骤 ${index + 1}</div>
+          ${descHtml}
+        </div>
+      `;
+      galleryGrid.appendChild(item);
+
+      // 有视频的图片点击播放视频
+      if (hasVideo) {
+        const image = item.querySelector('.gallery-image');
+        const videoOverlayEl = document.getElementById(`videoOverlay-${index}`);
+        const video = document.getElementById(`video-${index}`);
+        const videoClose = document.getElementById(`videoClose-${index}`);
+        
+        image.addEventListener('click', (e) => {
+          e.stopPropagation();
+          videoOverlayEl.classList.add('active');
+          video.play().catch(err => {
+            console.log('Autoplay prevented, will play on user interaction');
+          });
+        });
+        
+        videoClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          videoOverlayEl.classList.remove('active');
+          video.pause();
+          video.currentTime = 0;
+        });
+        
+        videoOverlayEl.addEventListener('click', () => {
+          videoOverlayEl.classList.remove('active');
+          video.pause();
+          video.currentTime = 0;
+        });
+      } else if (descriptions[index]) {
+        // 其他图片点击显示描述的功能
+        item.addEventListener('click', () => {
+          const desc = document.getElementById(`desc-${index}`);
+          if (desc) {
+            desc.classList.toggle('show');
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

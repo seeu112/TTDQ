@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2006年 列入首批国家级非遗 - 福州脱胎漆器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:#1a1410;
+      min-height:100vh;
+      font-family:'Noto Serif SC', 'Ma Shan Zheng', serif;
+      color:#e8d9c4;
+      letter-spacing:0.02em;
+      line-height:1.8;
+    }
+    /* 强制模态框大小 */
+    .modal-overlay.active .modal {
+      max-width: 500px !important;
+      width: 75% !important;
+      max-height: 70vh !important;
+      height: auto !important;
+      min-height: auto !important;
+    }
+    .bg-main{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:url('2006·国家级非遗.png') center/cover no-repeat;
+      opacity:0.08;
+      z-index:1;
+    }
+    .bg-overlay{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:linear-gradient(135deg, rgba(13,10,8,0.9) 0%, rgba(26,20,16,0.85) 50%, rgba(13,10,8,0.9) 100%);
+      z-index:2;
+    }
+    .container{
+      position:relative;
+      z-index:10;
+      max-width:1200px;
+      margin:0 auto;
+      padding:80px 40px;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:60px;
+    }
+    .back-btn{
+      border:1px solid #d4b87a;
+      background:transparent;color:#d4b87a;
+      padding:12px 30px;border-radius:99px;
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .back-btn:hover{
+      background:#d4b87a;color:#1a1410;
+    }
+    .title-section{
+      text-align:center;
+      margin-bottom:80px;
+    }
+    .era-badge{
+      display:inline-block;
+      padding:8px 24px;
+      border:1px solid #d4b87a;
+      border-radius:99px;
+      font-size:14px;
+      color:#d4b87a;
+      margin-bottom:20px;
+    }
+    .main-title{
+      font-size:48px;color:#d4b87a;
+      margin-bottom:20px;
+    }
+    .subtitle{
+      font-size:20px;color:#c4b090;
+      opacity:0.8;
+    }
+    .content-grid{
+      position:relative;
+      width:100%;
+      height:380px;
+      margin-bottom:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .arc-container{
+      position:absolute;
+      width:100%;
+      height:200px;
+    }
+    .arc-container svg{
+      width:100%;
+      height:100%;
+      overflow:visible;
+    }
+    .arc-line{
+      stroke:#c8a97c;
+      stroke-width:3;
+      fill:none;
+      opacity:0.6;
+    }
+    .glow-filter{
+      filter:url(#arcGlow);
+    }
+    .timeline-nodes{
+      position:relative;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:space-around;
+      align-items:flex-end;
+      padding:0 80px;
+    }
+    .info-card{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      position:relative;
+      z-index:10;
+      background:none;
+      border:none;
+      padding:0;
+    }
+    .node-circle{
+      width:70px;
+      height:70px;
+      border:3px solid #d4b87a;
+      border-radius:50%;
+      background:rgba(26,20,16,0.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:25px;
+      transition:all 0.3s ease;
+      position:relative;
+    }
+    .node-circle::before{
+      content:"";
+      position:absolute;
+      width:85px;
+      height:85px;
+      border:2px solid rgba(212,184,122,0.3);
+      border-radius:50%;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{transform:scale(1);opacity:0.3;}
+      50%{transform:scale(1.2);opacity:0;}
+    }
+    .node-inner{
+      width:24px;
+      height:24px;
+      background:#d4b87a;
+      border-radius:50%;
+      transition:all 0.3s ease;
+    }
+    .info-card:hover .node-circle{
+      border-width:3px;
+      transform:scale(1.1);
+      box-shadow:0 0 20px rgba(212,184,122,0.5);
+    }
+    .info-card:hover .node-inner{
+      transform:scale(1.3);
+      box-shadow:0 0 15px rgba(212,184,122,0.8);
+    }
+    .info-card:hover .card-title{
+      color:#d4b87a;
+      transform:translateY(-3px);
+    }
+    .card-title{
+      font-size:24px;color:#c4b090;
+      transition:all 0.3s ease;
+      white-space:nowrap;
+      margin-bottom:12px;
+      padding-bottom:0;
+      border-bottom:none;
+      font-weight:600;
+    }
+    .card-content{
+      font-size:18px;color:#9a886a;
+      margin-top:8px;
+      text-align:center;
+    }
+    .card-content p{margin-bottom:8px;}
+    .card-content ul{list-style:none;padding-left:0;}
+    .card-content li{
+      padding:5px 0;
+      padding-left:15px;
+      position:relative;
+    }
+    .card-content li::before{
+      content:"◆";
+      position:absolute;left:0;top:50%;
+      transform:translateY(-50%);
+      color:#d4b87a;
+      font-size:10px;
+    }
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(13,10,8,0.9);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(5px);
+    }
+    .modal-overlay.active{
+      display:flex;
+      animation:fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+    .modal{
+      background:#1a1410 !important;
+      border:none !important;
+      border-radius:12px !important;
+      max-width:600px !important;
+      width:80% !important;
+      max-height:75vh !important;
+      height:auto !important;
+      min-height:auto !important;
+      overflow:hidden !important;
+      animation:slideUp 0.3s ease;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+    .modal::-webkit-scrollbar{display:none;}
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(20px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    .modal-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:25px 30px;
+      border-bottom:1px solid rgba(212,184,122,0.2);
+    }
+    .modal-title{font-size:24px;color:#d4b87a;}
+    .modal-close{
+      width:36px;height:36px;
+      border:none;
+      background:rgba(212,184,122,0.1);
+      color:#d4b87a;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:20px;
+      transition:all 0.3s;
+    }
+    .modal-close:hover{background:#d4b87a;color:#1a1410;}
+    .modal-content{padding:25px 30px;overflow-y:auto;max-height:calc(80vh - 100px);}
+    .modal-content::-webkit-scrollbar{width:8px;}
+    .modal-content::-webkit-scrollbar-track{background:rgba(212,184,122,0.1);border-radius:4px;}
+    .modal-content::-webkit-scrollbar-thumb{background:linear-gradient(180deg, #d4b87a 0%, #b89a5c 100%);border-radius:4px;border:1px solid rgba(255,255,255,0.2);}
+    .modal-content::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg, #e4c88a 0%, #d4b87a 100%);}
+    .modal-content{scrollbar-width:thin;scrollbar-color:#d4b87a rgba(212,184,122,0.1);}
+    .modal-content p{
+      font-size:18px;line-height:1.8;
+      color:#d4c4a8;
+      margin-bottom:15px;
+    }
+    .modal-content ul, .modal-content ol{list-style:none;padding-left:0;}
+    .modal-content li{
+      padding:12px 0;
+      padding-left:25px;
+      position:relative;
+      border-bottom:1px solid rgba(212,184,122,0.1);
+      font-size:17px;
+      line-height:1.7;
+    }
+    .modal-content li:last-child{border-bottom:none;}
+    .modal-content li::before{
+      content:"◆";
+      position:absolute;left:0;top:50%;
+      transform:translateY(-50%);
+      color:#d4b87a;
+      font-size:12px;
+    }
+    .modal-content strong{color:#d4b87a;font-size:23px;}
+    .modal-flex{
+      display:flex;
+      gap:45px;
+      align-items:flex-start;
+    }
+    .modal-text{
+      flex:1;
+      font-size:23px;
+      line-height:2.1;
+    }
+    .modal-text p{margin-bottom:22px;color:#d4c4a8;}
+    .modal-image{
+      flex:0 0 420px;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .modal-image img{
+      width:100%;
+      height:auto;
+      max-height:360px;
+      object-fit:contain;
+    }
+    .highlight-box{
+      background:linear-gradient(135deg, rgba(212,184,122,0.1) 0%, rgba(212,184,122,0.05) 100%);
+      border-left:3px solid #d4b87a;
+      padding:20px 25px;
+      margin-top:30px;
+    }
+    .modal-overlay.active .modal{
+      width:90% !important;
+      max-width:1050px !important;
+      max-height:90vh !important;
+      min-height:auto !important;
+    }
+    .modal-wide{max-width:950px;width:90%;max-height:85vh;height:auto;}
+    .gift-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+      padding:25px 0;
+      border-bottom:1px solid rgba(212,184,122,0.1);
+    }
+    .gift-item:last-child{border-bottom:none;}
+    .gift-text{
+      flex:0 0 220px;
+      font-size:18px;
+      color:#d4c4a8;
+    }
+    .gift-image{
+      flex:1;
+      max-width:400px;
+      border-radius:8px;
+      overflow:hidden;
+      border:none;
+    }
+    .gift-image img{
+      width:100%;
+      height:auto;
+      max-height:200px;
+      object-fit:contain;
+    }
+    .portfolio-btn{
+      padding:12px 28px;
+      background:linear-gradient(135deg, #d4b87a 0%, #b89a5c 100%);
+      color:#1a1410;
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:99px;
+      font-size:18px;
+      font-family:'Noto Serif SC', serif;
+      font-weight:600;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      white-space:nowrap;
+      box-shadow:0 4px 15px rgba(212,184,122,0.3);
+      text-shadow:0 1px 2px rgba(255,255,255,0.3);
+    }
+    .portfolio-btn:hover{
+      background:linear-gradient(135deg, #e4c88a 0%, #d4b87a 100%);
+      transform:translateY(-2px);
+      box-shadow:0 6px 20px rgba(212,184,122,0.4);
+    }
+    .portfolio-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-top:20px;
+    }
+    .portfolio-item{
+      border-radius:8px;
+      overflow:hidden;
+      text-align:center;
+    }
+    .portfolio-item img{
+      width:100%;
+      height:250px;
+      object-fit:contain;
+      background:transparent;
+      display:block;
+      margin:0 auto;
+    }
+    .portfolio-item img[src=""], .portfolio-item img:not([src]){
+      background:#333;
+    }
+    .portfolio-info{
+      padding:15px 10px;
+      background:rgba(26,20,16,0.9);
+    }
+    .portfolio-name{
+      font-size:18px;
+      color:#d4b87a;
+      font-family:'Noto Serif SC', serif;
+      font-weight:600;
+      margin-bottom:8px;
+      letter-spacing:0.05em;
+    }
+    .portfolio-period{
+      font-size:14px;
+      color:#c4b090;
+      font-family:'Noto Serif SC', serif;
+      opacity:0.9;
+      line-height:1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-main"></div>
+  <div class="bg-overlay"></div>
+  
+  <div class="container">
+    <div class="header">
+      <button class="back-btn" onclick="window.history.back()">← 返回首页</button>
+      <div class="era-badge">2006年</div>
+    </div>
+    
+    <div class="title-section">
+      <h1 class="main-title">列入首批国家级非遗</h1>
+      <p class="subtitle">系统性保护传承的开始</p>
+    </div>
+    
+    <div class="content-grid">
+      <div class="arc-container">
+        <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <defs>
+            <filter id="arcGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="arc-line glow-filter" d="M50,180 Q300,20 600,50 T1150,180" />
+        </svg>
+      </div>
+      
+      <div class="timeline-nodes">
+        <div class="info-card" data-modal="modal1">
+          <div class="node-circle"><div class="node-inner"></div></div>
+          <h2 class="card-title">非遗认定</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal2">
+          <div class="node-circle"><div class="node-inner"></div></div>
+          <h2 class="card-title">保护措施</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal3">
+          <div class="node-circle"><div class="node-inner"></div></div>
+          <h2 class="card-title">国家级传承人</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal4">
+          <div class="node-circle"><div class="node-inner"></div></div>
+          <h2 class="card-title">传承现状</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal1">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">非遗认定</h3>
+          <button class="modal-close" onclick="closeModal('modal1')">×</button>
+        </div>
+        <div class="modal-content modal-flex">
+          <div class="modal-text">
+            <p>2006年5月20日，国务院正式将"福州脱胎漆器髹饰技艺"列入第一批国家级非物质文化遗产名录。</p>
+            <p>这标志着福州脱胎漆器的保护和传承进入了一个新的阶段。</p>
+          </div>
+          <div class="modal-image">
+            <img src="列入第一批国家级非物质文化遗产名录.jpg" alt="非遗认定文件" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal2">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">保护措施</h3>
+          <button class="modal-close" onclick="closeModal('modal2')">×</button>
+        </div>
+        <div class="modal-content">
+          <ul>
+            <li><strong>建立传承基地</strong>：设立专门的传承保护中心</li>
+            <li><strong>培养传承人</strong>：资助年轻艺人学习传统技艺</li>
+            <li><strong>技艺研究</strong>：深入研究传统工艺技术</li>
+            <li><strong>市场推广</strong>：举办展览，推广漆艺文化</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal3">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">国家级传承人</h3>
+          <button class="modal-close" onclick="closeModal('modal3')">×</button>
+        </div>
+        <div class="modal-content">
+          <div class="gift-item">
+            <span class="gift-text"><strong>李芝卿</strong>：现代漆艺开拓者</span>
+            <div class="gift-image"><img src="李芝卿.png" alt="李芝卿" /></div>
+            <button class="portfolio-btn" onclick="openModal('modal7')">作品集</button>
+          </div>
+          <div class="gift-item">
+            <span class="gift-text"><strong>沈幼兰</strong>：沈氏漆艺第四代传人</span>
+            <div class="gift-image"><img src="沈幼兰.png" alt="沈幼兰" /></div>
+            <button class="portfolio-btn" onclick="openModal('modal6')">作品集</button>
+          </div>
+          <div class="gift-item">
+            <span class="gift-text"><strong>郑修钤</strong>：漆艺理论家</span>
+            <div class="gift-image"><img src="郑修钤.png" alt="郑修钤" /></div>
+            <button class="portfolio-btn" onclick="openModal('modal5')">作品集</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal4">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">传承现状</h3>
+          <button class="modal-close" onclick="closeModal('modal4')">×</button>
+        </div>
+        <div class="modal-content modal-flex">
+          <div class="modal-text">
+            <p>福州脱胎漆器目前有国家级传承人3人，省级传承人10余人。</p>
+            <p>福州大学厦门工艺美术学院等院校开设了漆艺专业，培养新一代传承人。</p>
+          </div>
+          <div class="modal-image">
+            <img src="柱状图.gif" alt="传承人统计柱状图" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal5">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">郑修钤作品集</h3>
+          <button class="modal-close" onclick="closeModal('modal5')">×</button>
+        </div>
+        <div class="modal-content">
+          <div class="portfolio-grid">
+            <div class="portfolio-item">
+              <img src="zxl1.png" alt="郑修钤作品 1" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《丝路行》</div>
+                <div class="portfolio-period">时期：20 世纪 90 年代中期<br/>（成熟创作期）</div>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="zxl2.png" alt="郑修钤作品 2" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《冬韵双口脱胎瓶》</div>
+                <div class="portfolio-period">时期：2000 年初<br/>（2000–2003 年）</div>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="zxl3.png" alt="郑修钤作品 3" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《秋雁归晚》</div>
+                <div class="portfolio-period">时期：2005 年后<br/>（晚年期精品）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal6">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">沈幼兰作品集</h3>
+          <button class="modal-close" onclick="closeModal('modal6')">×</button>
+        </div>
+        <div class="modal-content">
+          <div class="portfolio-grid">
+            <div class="portfolio-item">
+              <img src="沈幼兰2 (1).png" alt="沈幼兰作品 1" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《兰记金锦龙纹大赏盘》</div>
+                <div class="portfolio-period">时期：1920-1930 年代<br/>（民国时期）</div>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="沈幼兰2 (2).png" alt="沈幼兰作品 2" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《金地山水人物柳瓶》</div>
+                <div class="portfolio-period">时期：19世纪末至20世纪初</div>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="沈幼兰3.png" alt="沈幼兰作品 3" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《蓝黑漆金里彩绘松鹤图笔洗》</div>
+                <div class="portfolio-period">时期：1920-1930 年代<br/>（民国时期）</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-overlay" id="modal7">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">李芝卿作品集</h3>
+          <button class="modal-close" onclick="closeModal('modal7')">×</button>
+        </div>
+        <div class="modal-content">
+          <div class="portfolio-grid">
+            <div class="portfolio-item">
+              <img src="李芝卿1.jpg" alt="李芝卿作品 1" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《鼓山风景》</div>
+                <div class="portfolio-period">时期：1956年</div>
+              </div>
+            </div>
+            <div class="portfolio-item">
+              <img src="李芝卿1.png" alt="李芝卿作品 2" />
+              <div class="portfolio-info">
+                <div class="portfolio-name">《镶嵌古蝶条纹闪光瓶》</div>
+                <div class="portfolio-period">时期：1957年</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="highlight-box">
+      <p>"保护非物质文化遗产，就是保护我们民族的记忆和灵魂。" — 非遗保护理念</p>
+    </div>
+  </div>
+  
+  <script>
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const modalId = card.dataset.modal;
+        openModal(modalId);
+      });
+    });
+    
+    const modalOverlays = document.querySelectorAll('.modal-overlay');
+    modalOverlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+          activeModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

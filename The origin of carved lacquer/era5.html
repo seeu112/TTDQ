@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2010至今 · 福州脱胎漆器</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Noto Serif SC", "Source Han Serif CN", "Songti SC", serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+            color: #e8e8e8;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.2);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 25px;
+            color: #c8c8c8;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 215, 0, 0.08);
+            border-color: rgba(255, 215, 0, 0.5);
+            color: #ffd700;
+        }
+
+        .nav-title {
+            font-size: 14px;
+            color: #888888;
+            letter-spacing: 2px;
+        }
+
+        .content-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 50px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            position: relative;
+        }
+
+        .content-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .era-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 1px dashed rgba(255, 215, 0, 0.2);
+        }
+
+        .era-badge {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin-right: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        .era-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffd700;
+            letter-spacing: 4px;
+        }
+
+        .era-subtitle {
+            font-size: 16px;
+            color: #888888;
+            margin-left: 15px;
+            font-weight: 400;
+        }
+
+        .era-content {
+            font-size: 17px;
+            line-height: 2;
+            color: #d0d0d0;
+            margin-bottom: 30px;
+            text-indent: 2em;
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
+            border-left: 4px solid #ffd700;
+            padding: 25px 30px;
+            border-radius: 0 15px 15px 0;
+            margin: 30px 0;
+        }
+
+        .highlight-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffd700;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .highlight-text {
+            font-size: 15px;
+            color: #c0c0c0;
+            line-height: 1.9;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .info-label {
+            font-size: 13px;
+            color: #888888;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 16px;
+            color: #e8e8e8;
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 13px;
+            color: #666666;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .content-panel {
+                padding: 30px 25px;
+            }
+
+            .era-title {
+                font-size: 24px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="index.html" class="back-btn">
+                <span>←</span>
+                <span>返回封面</span>
+            </a>
+            <span class="nav-title">福州脱胎漆器 · 历史资料库</span>
+        </div>
+
+        <div class="content-panel">
+            <div class="era-header">
+                <span class="era-badge"></span>
+                <h1 class="era-title">2010至今</h1>
+                <span class="era-subtitle">文创复兴 · 当代传承</span>
+            </div>
+
+            <div class="era-content">
+                脱胎漆融入现代设计理念，出现耳饰、茶具、装置艺术等新品类。年轻匠人结合传统工艺与当代审美，让古老漆艺重新走进日常生活，在传承中创新，在创新中发展。
+            </div>
+
+            <div class="era-content">
+                当代漆艺家们不仅传承了传统技艺，更积极探索与现代生活的结合。他们将脱胎漆器与时尚、家居、艺术等领域相结合，创造出既有传统韵味又符合现代审美的作品。
+            </div>
+
+            <div class="highlight-card">
+                <div class="highlight-title">创新发展</div>
+                <div class="highlight-text">当代漆艺家探索脱胎漆与现代材料的结合，开发出漆艺首饰、家居装饰、艺术装置等创新产品。他们通过参加各类艺术展、文创市集等方式，让更多年轻人了解和喜爱这一传统技艺。</div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-box">
+                    <div class="info-label">发展方向</div>
+                    <div class="info-value">文创产品开发</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">新品类</div>
+                    <div class="info-value">首饰、茶具、装置艺术</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">传承方式</div>
+                    <div class="info-value">创新中传承</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">目标人群</div>
+                    <div class="info-value">年轻一代</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">福州脱胎漆器髹饰技艺 · 国家级非物质文化遗产</div>
+    </div>
+</body>
+</html>

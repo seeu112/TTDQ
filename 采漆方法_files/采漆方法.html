@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>采漆方法</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #000;
+      min-height: 100vh;
+      padding: 140px 20px 60px;
+      font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+    }
+    
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      z-index: 1000;
+      padding: 15px 20px;
+    }
+    
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-title {
+      color: #d4af37;
+      font-size: 1.2rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 4px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    
+    .nav-links a {
+      color: rgba(212, 175, 55, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    .nav-links a.active {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.15);
+    }
+
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .gallery-title-wrapper {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .gallery-title-top-line {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .gallery-title-top-line::before,
+    .gallery-title-top-line::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #daa520);
+    }
+
+    .gallery-title-top-line::after {
+      background: linear-gradient(90deg, #daa520, transparent);
+    }
+
+    .gallery-title-top-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .gallery-title-top-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #daa520;
+    }
+
+    .gallery-title-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .gallery-title-main::before,
+    .gallery-title-main::after {
+      content: '';
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(218, 165, 32, 0.5));
+    }
+
+    .gallery-title-main::after {
+      background: linear-gradient(90deg, rgba(218, 165, 32, 0.5), transparent);
+    }
+
+    .gallery-title {
+      color: #daa520;
+      font-size: 3.8rem;
+      font-weight: 500;
+      font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+      letter-spacing: 32px;
+      position: relative;
+      padding: 0 20px;
+      text-shadow: 
+        0 0 20px rgba(218, 165, 32, 0.3),
+        0 0 40px rgba(218, 165, 32, 0.1);
+    }
+
+    .gallery-title-sub {
+      color: #a08060;
+      font-size: 0.95rem;
+      font-family: 'Playfair Display', 'Times New Roman', serif;
+      letter-spacing: 15px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .video-item {
+      position: relative;
+    }
+
+    .item-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      border-radius: 16px;
+      z-index: 2;
+    }
+
+    .item-video.playing {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .item-image {
+      position: relative;
+      z-index: 1;
+    }
+
+    .video-item.playing-video .item-image {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .item-video.playing + .play-icon,
+    .item-video.playing ~ .image-overlay {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(218, 165, 32, 0.5);
+    }
+
+    .play-icon svg {
+      width: 20px;
+      height: 20px;
+      margin-left: 3px;
+    }
+
+    .video-item:hover .play-icon {
+      transform: translate(-50%, -50%) scale(1.1);
+      border-color: #daa520;
+      box-shadow: 0 0 20px rgba(218, 165, 32, 0.5);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, 
+        rgba(218, 165, 32, 0.1) 0%, 
+        transparent 50%, 
+        rgba(139, 90, 43, 0.1) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .image-overlay {
+      transform: translateY(0);
+    }
+
+    .image-number {
+      color: #daa520;
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
+
+    .image-caption {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+      margin-top: 5px;
+      opacity: 0.7;
+    }
+
+    .description-panel {
+      max-width: 800px;
+      margin: 30px auto 0;
+      padding: 25px 30px;
+      background: linear-gradient(135deg, rgba(20, 18, 15, 0.95), rgba(10, 8, 6, 0.98));
+      border: 1px solid rgba(218, 165, 32, 0.2);
+      border-radius: 16px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      pointer-events: none;
+    }
+
+    .description-panel.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .description-panel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      padding: 1px;
+      background: linear-gradient(135deg, 
+        rgba(218, 165, 32, 0.3) 0%, 
+        rgba(139, 90, 43, 0.1) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .description-text {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: center;
+      letter-spacing: 2px;
+      font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+    }
+
+    .description-text::first-letter {
+      color: #daa520;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .gallery-item.active {
+      box-shadow: 0 0 30px rgba(218, 165, 32, 0.4);
+      border: 1px solid rgba(218, 165, 32, 0.5);
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 768px) {
+      body {
+        padding: 50px 15px;
+      }
+
+      .gallery-title {
+        font-size: 2rem;
+        letter-spacing: 15px;
+      }
+
+      .gallery-title-main::before,
+      .gallery-title-main::after {
+        width: 60px;
+      }
+
+      .gallery-title-sub {
+        font-size: 0.7rem;
+        letter-spacing: 8px;
+      }
+
+      .gallery-grid {
+        gap: 18px;
+        padding: 15px;
+      }
+
+      .gallery-item {
+        aspect-ratio: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-title {
+        font-size: 1.5rem;
+        letter-spacing: 10px;
+      }
+
+      .gallery-title-main::before,
+      .gallery-title-main::after {
+        width: 40px;
+      }
+
+      .gallery-title-sub {
+        font-size: 0.6rem;
+        letter-spacing: 6px;
+      }
+
+      .gallery-grid {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="nav-title">技法</div>
+      <div class="nav-links">
+        <a href="戗金/戗金.html">戗金</a>
+        <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+        <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+        <a href="堆红做法.html">堆红</a>
+        <a href="制作贴金.html">贴金</a>
+        <a href="犀皮制法.html">犀皮</a>
+        <a href="灰条制法.html">灰条</a>
+        <a href="金缮做法.html">金缮</a>
+        <a href="采漆方法.html" class="active">采漆</a>
+        <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+        <a href="描金法_files/描金法.html">描金</a>
+        <a href="制作朱漆.html">朱漆</a>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-title-wrapper">
+      <div class="gallery-title-top-line">
+        <div class="gallery-title-top-dots">
+          <span class="gallery-title-top-dot"></span>
+          <span class="gallery-title-top-dot"></span>
+        </div>
+      </div>
+      <div class="gallery-title-main">
+        <h1 class="gallery-title">采漆方法</h1>
+      </div>
+      <div class="gallery-title-sub">LACQUER COLLECTION</div>
+    </div>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item video-item" id="item1">
+        <img src="./采漆方法_files/1.png" alt="采漆步骤1" class="item-image">
+        <video class="item-video" src="./采漆方法_files/1.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#daa520">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="image-overlay">
+          <div class="image-number">01</div>
+          <div class="image-caption">割漆</div>
+        </div>
+      </div>
+      
+      <div class="gallery-item video-item" id="item2">
+        <img src="./采漆方法_files/2.png" alt="采漆步骤2" class="item-image">
+        <video class="item-video" src="./采漆方法_files/2.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#daa520">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="image-overlay">
+          <div class="image-number">02</div>
+          <div class="image-caption">接漆</div>
+        </div>
+      </div>
+      
+      <div class="gallery-item video-item" id="item3">
+        <img src="./采漆方法_files/3.png" alt="采漆步骤3" class="item-image">
+        <video class="item-video" src="./采漆方法_files/3.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#daa520">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="image-overlay">
+          <div class="image-number">03</div>
+          <div class="image-caption">收漆</div>
+        </div>
+      </div>
+      
+      <div class="gallery-item video-item" id="item4">
+        <img src="./采漆方法_files/4.jpeg" alt="采漆步骤4" class="item-image">
+        <video class="item-video" src="./采漆方法_files/4.mp4" muted loop playsinline preload="metadata"></video>
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#daa520">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <div class="image-overlay">
+          <div class="image-number">04</div>
+          <div class="image-caption">封漆</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="description-panel" id="descriptionPanel">
+      <p class="description-text" id="descriptionText">点击图片查看采漆步骤详情</p>
+    </div>
+  </div>
+  
+  <script>
+    const descriptions = {
+      item1: '先在漆树上找到合适的位置，快速地沿着漆路划出两个半月形的切口，既不能回刀，也不能补刀，否则一滴漆都不会流出。',
+      item2: '割好漆口，在其下方再割一个"茧口"。装上"茧子"，漆液就会顺着割口流到"茧子"里。刚流出的生漆呈乳白色，流到"茧子"里之后，漆酚快速氧化，生漆会变成褐色，这也是古代家具最常见的颜色。',
+      item3: '收下"茧子"，用刮板或小毛笔将"茧子"中的漆液收入盛漆的竹筒。',
+      item4: '每收一个"茧子"，都用刮板把漆口抚平，以便它自然愈合。'
+    };
+    
+    const items = ['item1', 'item2', 'item3', 'item4'];
+    const descriptionPanel = document.getElementById('descriptionPanel');
+    const descriptionText = document.getElementById('descriptionText');
+    let activeItem = null;
+    let currentPlayingVideo = null;
+    
+    items.forEach(itemId => {
+      const item = document.getElementById(itemId);
+      const video = item.querySelector('.item-video');
+      
+      item.addEventListener('click', function() {
+        if (currentPlayingVideo === video && !video.paused) {
+          video.pause();
+          video.classList.remove('playing');
+          item.classList.remove('active');
+          item.classList.remove('playing-video');
+          currentPlayingVideo = null;
+          descriptionText.textContent = descriptions[itemId];
+          descriptionPanel.classList.add('show');
+          activeItem = itemId;
+        } else {
+          if (currentPlayingVideo) {
+            currentPlayingVideo.pause();
+            currentPlayingVideo.classList.remove('playing');
+            const playingItem = document.querySelector('.playing-video');
+            if (playingItem) {
+              playingItem.classList.remove('active');
+              playingItem.classList.remove('playing-video');
+            }
+          }
+          
+          descriptionPanel.classList.remove('show');
+          
+          video.play().then(function() {
+            video.classList.add('playing');
+            item.classList.add('active');
+            item.classList.add('playing-video');
+            currentPlayingVideo = video;
+            activeItem = null;
+          }).catch(function(error) {
+            console.error('视频播放失败:', error);
+            descriptionText.textContent = descriptions[itemId];
+            descriptionPanel.classList.add('show');
+            item.classList.add('active');
+            activeItem = itemId;
+          });
+        }
+      });
+      
+      video.addEventListener('loadeddata', function() {
+        console.log('视频加载完成:', itemId);
+      });
+      
+      video.addEventListener('error', function(e) {
+        console.error('视频加载错误:', itemId, e);
+      });
+    });
+  </script>
+</body>
+</html>
