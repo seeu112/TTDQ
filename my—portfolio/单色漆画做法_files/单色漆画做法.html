@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单色漆画做法</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            background: #000000;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+        
+        .nav-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            z-index: 1000;
+            padding: 15px 20px;
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .nav-title {
+            color: #d4af37;
+            font-size: 1.2rem;
+            font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+            letter-spacing: 4px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+        
+        .nav-links a {
+            color: rgba(212, 175, 55, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+            letter-spacing: 2px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
+        }
+        
+        .nav-links a.active {
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.15);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 20px 60px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .header::before,
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #c9a962);
+        }
+        
+        .header::before {
+            left: 15%;
+        }
+        
+        .header::after {
+            right: 15%;
+        }
+        
+        .header-top-line {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-top-line::before,
+        .header-top-line::after {
+            content: '';
+            width: 35px;
+            height: 1px;
+            background: #c9a962;
+        }
+        
+        .header-top-dot {
+            width: 6px;
+            height: 6px;
+            background: #c9a962;
+            border-radius: 50%;
+        }
+        
+        h1 {
+            color: #d4af37;
+            font-size: 4rem;
+            margin-bottom: 25px;
+            font-weight: 400;
+            letter-spacing: 35px;
+            font-family: 'STXingkai', 'STKaiti', 'KaiTi', '楷体', 'AR PL UKai CN', 'AR PL UKai HK', serif;
+            text-shadow: 0 2px 15px rgba(212, 175, 55, 0.4);
+            padding-left: 18px;
+        }
+        
+        .subtitle {
+            color: #c9a962;
+            font-size: 1rem;
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            font-family: 'Playfair Display', 'Georgia', 'Times New Roman', serif;
+            font-weight: 300;
+        }
+        
+        .timeline {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            padding: 20px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.5), transparent);
+            transform: translateY(-50%);
+        }
+        
+        .step-card {
+            position: relative;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(233, 69, 96, 0.25);
+        }
+        
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e94560, #ff6b6b);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .step-card:hover::before {
+            opacity: 1;
+        }
+        
+        .image-container {
+            position: relative;
+            width: 100%;
+            padding-top: 75%;
+            overflow: hidden;
+        }
+        
+        .step-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .step-card:hover .step-image {
+            transform: scale(1.1);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #d4af37 0%, #c9a962 50%, #b8944e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(201, 169, 98, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .step-card:hover .step-number {
+            transform: scale(1.1);
+        }
+        
+        .step-content {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .step-title {
+            color: #d4af37;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+            letter-spacing: 8px;
+            font-family: 'STXingkai', 'STKaiti', 'KaiTi', '楷体', 'AR PL UKai CN', serif;
+            text-shadow: 0 1px 8px rgba(212, 175, 55, 0.3);
+        }
+        
+        .step-description {
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .image-container.clickable {
+            cursor: pointer;
+        }
+        
+        .click-hint {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.85rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 16px;
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .image-container.clickable:hover .click-hint {
+            opacity: 1;
+        }
+        
+        .step-detail {
+            padding: 15px 25px 25px;
+            text-align: center;
+            background: rgba(201, 169, 98, 0.08);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .step-detail.show {
+            display: block;
+        }
+        
+        .step-detail p {
+            color: #d4af37;
+            font-size: 1rem;
+            line-height: 1.8;
+            margin: 0;
+            font-family: 'STKaiti', 'KaiTi', '楷体', 'AR PL UKai CN', serif;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 1200px) {
+            .timeline {
+                gap: 30px;
+            }
+            
+            .step-card {
+                width: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+                letter-spacing: 4px;
+            }
+            
+            .timeline {
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+            
+            .timeline::before {
+                display: none;
+            }
+            
+            .step-card {
+                width: 100%;
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-header">
+        <div class="nav-content">
+            <div class="nav-title">技法</div>
+            <div class="nav-links">
+                <a href="../戗金/戗金.html">戗金</a>
+                <a href="../螺钿镶嵌法.html">螺钿镶嵌</a>
+                <a href="../单色漆画做法_files/单色漆画做法.html" class="active">单色漆画</a>
+                <a href="../堆红做法.html">堆红</a>
+                <a href="../制作贴金.html">贴金</a>
+                <a href="../犀皮制法.html">犀皮</a>
+                <a href="../灰条制法.html">灰条</a>
+                <a href="../金缮做法.html">金缮</a>
+                <a href="../采漆方法.html">采漆</a>
+                <a href="../鱼鳔胶制法.html">鱼鳔胶</a>
+                <a href="../描金法_files/描金法.html">描金</a>
+                <a href="../制作朱漆.html">朱漆</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="header">
+            <div class="header-top-line">
+                <span class="header-top-dot"></span>
+            </div>
+            <h1>单色漆画做法</h1>
+            <p class="subtitle">MONOCHROME LACQUER TECHNIQUE</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="step-card">
+                <div class="image-container clickable" onclick="toggleDetail(this)">
+                    <img src="1.jpeg" alt="步骤一：准备漆板" class="step-image">
+                    <span class="step-number">1</span>
+                    <div class="click-hint">点击查看详情</div>
+                </div>
+                <div class="step-content">
+                    <h3 class="step-title">准备漆板</h3>
+                </div>
+                <div class="step-detail" id="detail-1">
+                    <p>准备一块平整的黑漆地板子。</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="image-container clickable" onclick="toggleDetail(this)">
+                    <img src="2.jpeg" alt="步骤二：调配漆料" class="step-image">
+                    <span class="step-number">2</span>
+                    <div class="click-hint">点击查看详情</div>
+                </div>
+                <div class="step-content">
+                    <h3 class="step-title">调配漆料</h3>
+                </div>
+                <div class="step-detail" id="detail-2">
+                    <p>调制朱漆，在黑漆地上作朱绘，古拙朴雅。</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="image-container clickable" onclick="toggleDetail(this)">
+                    <img src="3.jpeg" alt="步骤三：绘制图案" class="step-image">
+                    <span class="step-number">3</span>
+                    <div class="click-hint">点击查看详情</div>
+                </div>
+                <div class="step-content">
+                    <h3 class="step-title">绘制图案</h3>
+                </div>
+                <div class="step-detail" id="detail-3">
+                    <p>笔头要吸漆饱满，描漆时运笔力度要均匀，漆液线条才能流畅，干了以后不起皱。</p>
+                </div>
+            </div>
+            
+            <div class="step-card">
+                <div class="image-container clickable" onclick="toggleDetail(this)">
+                    <img src="4.jpeg" alt="步骤四：完成作品" class="step-image">
+                    <span class="step-number">4</span>
+                    <div class="click-hint">点击查看详情</div>
+                </div>
+                <div class="step-content">
+                    <h3 class="step-title">完成作品</h3>
+                </div>
+                <div class="step-detail" id="detail-4">
+                    <p>最后，稍加打磨推光，描漆就更显细腻。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleDetail(container) {
+            var card = container.closest('.step-card');
+            var detail = card.querySelector('.step-detail');
+            detail.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
