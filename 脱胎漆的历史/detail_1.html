@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>清乾隆 沈绍安创立福州脱胎 - 福州脱胎漆器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:#1a1410;
+      min-height:100vh;
+      font-family:'Noto Serif SC', 'Ma Shan Zheng', serif;
+      color:#e8d9c4;
+      letter-spacing:0.02em;
+      line-height:1.8;
+    }
+    .bg-main{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:url('乾隆.png') center/cover no-repeat;
+      opacity:0.08;
+      z-index:1;
+    }
+    .bg-overlay{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:linear-gradient(135deg, rgba(13,10,8,0.9) 0%, rgba(26,20,16,0.85) 50%, rgba(13,10,8,0.9) 100%);
+      z-index:2;
+    }
+    .container{
+      position:relative;
+      z-index:10;
+      max-width:1200px;
+      margin:0 auto;
+      padding:80px 40px;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:60px;
+    }
+    .back-btn{
+      border:1px solid #d4b87a;
+      background:transparent;color:#d4b87a;
+      padding:12px 30px;border-radius:99px;
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .back-btn:hover{
+      background:#d4b87a;color:#1a1410;
+    }
+    .title-section{
+      text-align:center;
+      margin-bottom:80px;
+    }
+    .era-badge{
+      display:inline-block;
+      padding:10px 28px;
+      border:1px solid #d4b87a;
+      border-radius:99px;
+      font-size:14px;
+      color:#d4b87a;
+      margin-bottom:25px;
+      font-family:'Ma Shan Zheng', cursive;
+      letter-spacing:0.1em;
+    }
+    .main-title{
+      font-size:52px;color:#d4b87a;
+      margin-bottom:25px;
+      font-family:'Ma Shan Zheng', cursive;
+      letter-spacing:0.08em;
+      font-weight:400;
+      text-shadow:0 0 30px rgba(212,184,122,0.3);
+    }
+    .subtitle{
+      font-size:22px;color:#c4b090;
+      opacity:0.85;
+      letter-spacing:0.05em;
+    }
+    /* 横向圆弧时间线容器 */
+    .content-grid{
+      position:relative;
+      width:100%;
+      height:380px;
+      margin-bottom:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    /* 圆弧SVG容器 */
+    .arc-container{
+      position:absolute;
+      width:100%;
+      height:200px;
+    }
+    .arc-container svg{
+      width:100%;
+      height:100%;
+      overflow:visible;
+    }
+    /* 圆弧曲线 */
+    .arc-line{
+      stroke:#c8a97c;
+      stroke-width:3;
+      fill:none;
+      opacity:0.6;
+    }
+    /* 发光滤镜 */
+    .glow-filter{
+      filter:url(#arcGlow);
+    }
+    /* 节点容器 */
+    .timeline-nodes{
+      position:relative;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:space-around;
+      align-items:flex-end;
+      padding:0 80px;
+    }
+    /* 单个节点 */
+    .info-card{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      position:relative;
+      z-index:10;
+      background:none;
+      border:none;
+      padding:0;
+    }
+    /* 节点圆圈 */
+    .node-circle{
+      width:70px;
+      height:70px;
+      border:3px solid #d4b87a;
+      border-radius:50%;
+      background:rgba(26,20,16,0.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:25px;
+      transition:all 0.3s ease;
+      position:relative;
+    }
+    .node-circle::before{
+      content:"";
+      position:absolute;
+      width:85px;
+      height:85px;
+      border:2px solid rgba(212,184,122,0.3);
+      border-radius:50%;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{
+        transform:scale(1);
+        opacity:0.3;
+      }
+      50%{
+        transform:scale(1.2);
+        opacity:0;
+      }
+    }
+    .node-inner{
+      width:24px;
+      height:24px;
+      background:#d4b87a;
+      border-radius:50%;
+      transition:all 0.3s ease;
+    }
+    /* 悬停效果 */
+    .info-card:hover .node-circle{
+      border-width:3px;
+      transform:scale(1.1);
+      box-shadow:0 0 20px rgba(212,184,122,0.5);
+    }
+    .info-card:hover .node-inner{
+      transform:scale(1.3);
+      box-shadow:0 0 15px rgba(212,184,122,0.8);
+    }
+    .info-card:hover .card-title{
+      color:#d4b87a;
+      transform:translateY(-3px);
+    }
+    .card-title{
+      font-size:24px;color:#c4b090;
+      transition:all 0.3s ease;
+      white-space:nowrap;
+      margin-bottom:12px;
+      padding-bottom:0;
+      border-bottom:none;
+      font-weight:600;
+    }
+    .card-content{
+      font-size:18px;color:#9a886a;
+      margin-top:8px;
+      text-align:center;
+    }
+    .card-content p{
+      margin-bottom:8px;
+    }
+    .card-content ul{
+      list-style:none;
+      padding-left:0;
+    }
+    .card-content li{
+      padding:5px 0;
+      padding-left:15px;
+      position:relative;
+    }
+    .card-content li::before{
+      content:"◆";
+      position:absolute;left:0;top:50%;
+      transform:translateY(-50%);
+      color:#d4b87a;
+      font-size:10px;
+    }
+    /* 模态框样式 */
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(13,10,8,0.92);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(8px);
+    }
+    .modal-overlay.active{
+      display:flex;
+      animation:fadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    @keyframes fadeIn{
+      from{opacity:0;}
+      to{opacity:1;}
+    }
+    .modal{
+      background:linear-gradient(145deg, #1f1812 0%, #15100b 100%);
+      border:1px solid rgba(212,184,122,0.3);
+      border-radius:16px;
+      max-width:1100px;
+      width:92%;
+      max-height:92vh;
+      overflow-y:auto;
+      animation:slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow:0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,184,122,0.1);
+      position:relative;
+    }
+    .modal::before{
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;
+      height:2px;
+      background:linear-gradient(90deg, transparent, #d4b87a, transparent);
+      border-radius:16px 16px 0 0;
+    }
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(30px) scale(0.95);}
+      to{opacity:1;transform:translateY(0) scale(1);}
+    }
+    .modal-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:28px 32px;
+      border-bottom:1px solid rgba(212,184,122,0.15);
+      background:linear-gradient(180deg, rgba(212,184,122,0.05) 0%, transparent 100%);
+    }
+    .modal-title{
+      font-size:28px;color:#d4b87a;
+      font-weight:500;
+      position:relative;
+      padding-left:28px;
+      font-family:'Ma Shan Zheng', cursive;
+      letter-spacing:0.08em;
+    }
+    .modal-title::before{
+      content:"◆";
+      position:absolute;
+      left:0;
+      color:#d4b87a;
+      font-size:16px;
+    }
+    .modal-close{
+      width:38px;height:38px;
+      border:none;
+      background:rgba(212,184,122,0.1);
+      color:#d4b87a;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:22px;
+      transition:all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .modal-close:hover{
+      background:#d4b87a;
+      color:#1a1410;
+      transform:rotate(90deg) scale(1.1);
+      box-shadow:0 0 20px rgba(212,184,122,0.5);
+    }
+    .modal-content{
+      padding:32px;
+    }
+    .modal-content p{
+      font-size:17px;line-height:2.2;
+      color:#d4c4a8;
+      margin-bottom:22px;
+      text-indent:2em;
+      position:relative;
+      letter-spacing:0.02em;
+    }
+    .modal-content p:first-child::first-letter{
+      font-size:32px;
+      font-weight:600;
+      color:#d4b87a;
+      margin-right:6px;
+      font-family:'Ma Shan Zheng', cursive;
+    }
+    .modal-content ul, .modal-content ol{
+      list-style:none;
+      padding-left:0;
+    }
+    .modal-content li{
+      padding:10px 0;
+      padding-left:25px;
+      position:relative;
+      border-bottom:1px solid rgba(212,184,122,0.1);
+    }
+    .modal-content li:last-child{
+      border-bottom:none;
+    }
+    .modal-content li::before{
+      content:"◆";
+      position:absolute;left:0;top:50%;
+      transform:translateY(-50%);
+      color:#d4b87a;
+      font-size:12px;
+    }
+    .modal-content strong{
+      color:#d4b87a;
+    }
+    .highlight-box{
+      background:linear-gradient(135deg, rgba(212,184,122,0.1) 0%, rgba(212,184,122,0.05) 100%);
+      border-left:3px solid #d4b87a;
+      padding:20px 25px;
+      margin-top:30px;
+    }
+    .highlight-box p{
+      font-style:italic;
+      color:#c4b090;
+      margin:0;
+    }
+    /* 宽模态框样式 */
+    .modal-wide{
+      max-width:950px;
+      width:92%;
+    }
+    .modal-flex{
+      display:flex;
+      gap:40px;
+      align-items:flex-start;
+    }
+    .modal-text{
+      flex:1;
+      padding-top:8px;
+    }
+    .modal-image{
+      flex:0 0 320px;
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+      background:linear-gradient(145deg, rgba(212,184,122,0.15) 0%, rgba(212,184,122,0.05) 100%);
+      border:1px solid rgba(212,184,122,0.2);
+      box-shadow:0 8px 30px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .modal-image::before{
+      content:"";
+      position:absolute;
+      top:-50%;
+      left:-50%;
+      width:200%;
+      height:200%;
+      background:linear-gradient(45deg, transparent 30%, rgba(212,184,122,0.05) 50%, transparent 70%);
+      transform:rotate(45deg);
+      animation:shimmer 3s infinite;
+    }
+    @keyframes shimmer{
+      0%{transform:rotate(45deg) translateX(-100%);}
+      100%{transform:rotate(45deg) translateX(100%);}
+    }
+    .modal-image img{
+      width:100%;
+      height:auto;
+      display:block;
+      position:relative;
+      z-index:1;
+      transition:transform 0.5s ease;
+    }
+    .modal-image:hover img{
+      transform:scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-main"></div>
+  <div class="bg-overlay"></div>
+  
+  <div class="container">
+    <div class="header">
+      <button class="back-btn" onclick="window.history.back()">← 返回首页</button>
+      <div class="era-badge">清乾隆年间</div>
+    </div>
+    
+    <div class="title-section">
+      <h1 class="main-title">沈绍安创立福州脱胎</h1>
+      <p class="subtitle">福州脱胎漆器的诞生</p>
+    </div>
+    
+    <div class="content-grid">
+      <!-- 横向圆弧曲线 -->
+      <div class="arc-container">
+        <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <defs>
+            <filter id="arcGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="arc-line glow-filter" d="M50,180 Q300,20 600,50 T1150,180" />
+        </svg>
+      </div>
+      
+      <!-- 节点容器 -->
+      <div class="timeline-nodes">
+        <div class="info-card" data-modal="modal1">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">创始人沈绍安</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal2">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">工艺创新</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal3">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">皇家赏识</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal4">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">传承发展</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框1 -->
+    <div class="modal-overlay" id="modal1">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">创始人沈绍安</h3>
+          <button class="modal-close" onclick="closeModal('modal1')">×</button>
+        </div>
+        <div class="modal-content modal-flex">
+          <div class="modal-text">
+            <p>沈绍安（1767-1835），福建侯官人，清代著名漆艺家。</p>
+            <p>他在修复一块破旧的楠木匾额时，发现木胎已朽但漆灰麻布仍完好，由此得到启发，复原了失传已久的夹纻工艺。</p>
+          </div>
+          <div class="modal-image">
+            <img src="修复一块破旧的楠木匾.gif" alt="修复楠木匾" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框2 -->
+    <div class="modal-overlay" id="modal2">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">工艺创新</h3>
+          <button class="modal-close" onclick="closeModal('modal2')">×</button>
+        </div>
+        <div class="modal-content">
+          <ul>
+            <li><strong>薄料髹涂</strong>：采用多层薄漆涂刷</li>
+            <li><strong>脱胎技法</strong>：脱模后器体质轻如蝉翼</li>
+            <li><strong>精雕细琢</strong>：结合雕刻与彩绘</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框3 -->
+    <div class="modal-overlay" id="modal3">
+      <div class="modal modal-wide">
+        <div class="modal-header">
+          <h3 class="modal-title">皇家赏识</h3>
+          <button class="modal-close" onclick="closeModal('modal3')">×</button>
+        </div>
+        <div class="modal-content modal-flex">
+          <div class="modal-text">
+            <p>沈绍安制作的脱胎漆器进贡宫廷后，深受乾隆皇帝喜爱。</p>
+            <p>福州脱胎漆器因其精美绝伦的工艺和独特的艺术风格，被列为贡品，成为皇室御用工艺品。</p>
+          </div>
+          <div class="modal-image">
+            <img src="皇家赏识.gif" alt="皇家赏识" />
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框4 -->
+    <div class="modal-overlay" id="modal4">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">传承发展</h3>
+          <button class="modal-close" onclick="closeModal('modal4')">×</button>
+        </div>
+        <div class="modal-content">
+          <ul>
+            <li><strong>第二代</strong>：沈正镐、沈正恂</li>
+            <li><strong>第三代</strong>：沈德铭、沈德麟</li>
+            <li><strong>第四代</strong>：沈幼兰</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="highlight-box">
+      <p>"沈绍安脱胎漆器，轻巧坚牢，色泽光润，天下称奇。" — 《福建通志》</p>
+    </div>
+  </div>
+  
+  <script>
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const modalId = card.dataset.modal;
+        openModal(modalId);
+      });
+    });
+    
+    const modalOverlays = document.querySelectorAll('.modal-overlay');
+    modalOverlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+          activeModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>髹刷制作</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            min-height: 100vh;
+            font-family: 'STSong', 'SimSun', 'Microsoft YaHei', serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+
+        .title-decoration-top {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a962, transparent);
+        }
+
+        .title-decoration-top::before,
+        .title-decoration-top::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #c9a962;
+        }
+
+        .title-decoration-top::before { left: 0; }
+        .title-decoration-top::after { right: 0; }
+
+        .title {
+            color: #c9a962;
+            font-size: 4em;
+            font-weight: 400;
+            letter-spacing: 40px;
+            margin-bottom: 30px;
+            padding-left: 20px;
+            text-shadow: 0 0 20px rgba(201, 169, 98, 0.3);
+            position: relative;
+        }
+
+        .title::before,
+        .title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.5));
+        }
+
+        .title::before { left: -180px; }
+        .title::after { right: -180px; background: linear-gradient(90deg, rgba(201, 169, 98, 0.5), transparent); }
+
+        .subtitle {
+            color: rgba(201, 169, 98, 0.8);
+            font-size: 1.2em;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .image-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-wrapper.clickable {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image-wrapper.clickable:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.3);
+        }
+
+        /* 图片带文字框的组合 */
+        .image-with-text {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* 文字框样式 - 金色边框发光 */
+        .text-box {
+            background: #000000;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px 25px;
+            text-align: center;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.5),
+                0 0 40px rgba(255, 215, 0, 0.3);
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .text-box.show {
+            opacity: 1;
+            height: auto;
+        }
+
+        .text-box p {
+            color: #c9a962;
+            font-size: 1.3em;
+            line-height: 1.4;
+            letter-spacing: 3px;
+            font-family: 'KaiTi', 'STKaiti', 'SimKai', 'AR PL UKai CN', 'AR PL UKai HK', 'AR PL UKai TW', 'AR PL UKai TW MBE', serif;
+            text-shadow: 
+                0 0 8px rgba(201, 169, 98, 0.6),
+                0 0 15px rgba(201, 169, 98, 0.4);
+            margin: 0;
+        }
+
+        /* 视频播放器样式 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .video-container.active {
+            display: block;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-wrapper.hidden {
+            display: none;
+        }
+
+        @media (max-width: 1400px) {
+            .gallery { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1024px) {
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+            .image-wrapper img { height: 180px; }
+        }
+
+        @media (max-width: 768px) {
+            .gallery { grid-template-columns: 1fr; }
+            .image-wrapper img { height: 250px; }
+            .title { font-size: 2.2em; letter-spacing: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title-decoration-top"></div>
+            <h1 class="title">髹刷制作</h1>
+            <p class="subtitle">TRADITIONAL CRAFT</p>
+        </div>
+        
+        <div class="gallery">
+            <!-- 步骤1 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="1">
+                    <img src="./新建文件夹 (6)/1.jpeg" alt="步骤1">
+                </div>
+                <div class="text-box" id="text1">
+                    <p>选取长三寸以上的女孩长发<br><br>用碱水洗涤干净。</p>
+                </div>
+            </div>
+
+            <!-- 步骤2 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="2" id="imgWrapper2">
+                    <img src="./新建文件夹 (6)/2.jpeg" alt="步骤2">
+                </div>
+                <div class="video-container" id="videoContainer2">
+                    <video id="video2" src="./新建文件夹 (2)/2.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text2">
+                    <p>生漆混少许煤油调匀，将头发浸湿梳顺。</p>
+                </div>
+            </div>
+
+            <!-- 步骤3 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="3" id="imgWrapper3">
+                    <img src="./新建文件夹 (6)/3.jpeg" alt="步骤3">
+                </div>
+                <div class="video-container" id="videoContainer3">
+                    <video id="video3" src="./新建文件夹 (2)/3.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text3">
+                    <p>用刮刀刮去头发上多余的漆</p>
+                </div>
+            </div>
+
+            <!-- 步骤4 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="4" id="imgWrapper4">
+                    <img src="./新建文件夹 (6)/4.jpeg" alt="步骤4">
+                </div>
+                <div class="video-container" id="videoContainer4">
+                    <video id="video4" src="./新建文件夹 (2)/4.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text4">
+                    <p>将湿发放在石板或木板下，压成约一厘米厚的发片，长宽视所制发刷的大小而定。</p>
+                </div>
+            </div>
+
+            <!-- 步骤5 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="5" id="imgWrapper5">
+                    <img src="./新建文件夹 (6)/5.jpeg" alt="步骤5">
+                </div>
+                <div class="video-container" id="videoContainer5">
+                    <video id="video5" src="./新建文件夹 (2)/5、9.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text5">
+                    <p>约四十八小时后发片会略微干硬，用薄刀片将其挑起，再用细麻绳捆绑于薄木板上。这一步是为了压出形状规整的发片。</p>
+                </div>
+            </div>
+
+            <!-- 步骤6 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="6" id="imgWrapper6">
+                    <img src="./新建文件夹 (6)/6.jpeg" alt="步骤6">
+                </div>
+                <div class="video-container" id="videoContainer6">
+                    <video id="video6" src="./新建文件夹 (2)/6.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text6">
+                    <p>待数日后，发片完全干燥，用刀片将其裁切整齐。</p>
+                </div>
+            </div>
+
+            <!-- 步骤7 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="7">
+                    <img src="./新建文件夹 (6)/7.jpeg" alt="步骤7">
+                </div>
+                <div class="text-box" id="text7">
+                    <p>生漆中加糯米粉调制漆糊。</p>
+                </div>
+            </div>
+
+            <!-- 步骤8 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="8" id="imgWrapper8">
+                    <img src="./新建文件夹 (6)/8.jpeg" alt="步骤8">
+                </div>
+                <div class="video-container" id="videoContainer8">
+                    <video id="video8" src="./新建文件夹 (2)/8.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text8">
+                    <p>将漆糊涂抹在做刷柄的木板上，黏合发片。</p>
+                </div>
+            </div>
+
+            <!-- 步骤9 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="9">
+                    <img src="./新建文件夹 (6)/9.jpeg" alt="步骤9">
+                </div>
+                <div class="text-box" id="text9">
+                    <p>发片四面均用薄木板黏漆糊拼夹后，再次用麻线绕绑。</p>
+                </div>
+            </div>
+
+            <!-- 步骤10 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="10">
+                    <img src="./新建文件夹 (6)/10.jpeg" alt="步骤10">
+                </div>
+                <div class="text-box" id="text10">
+                    <p>麻线绕绑后，可以在木板与麻线之间打入楔子，增加压力。</p>
+                </div>
+            </div>
+
+            <!-- 步骤11 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="11">
+                    <img src="./新建文件夹 (6)/11.jpeg" alt="步骤11">
+                </div>
+                <div class="text-box" id="text11">
+                    <p>待漆糊干固后，取去麻线，将夹住发片的木板刨削齐整。</p>
+                </div>
+            </div>
+
+            <!-- 步骤12 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="12" id="imgWrapper12">
+                    <img src="./新建文件夹 (6)/12.jpeg" alt="步骤12">
+                </div>
+                <div class="video-container" id="videoContainer12">
+                    <video id="video12" src="./新建文件夹 (2)/12.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text12">
+                    <p>将木板的一端斜削约半厘米，削成齐整的斜刃形。</p>
+                </div>
+            </div>
+
+            <!-- 步骤13 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="13" id="imgWrapper13">
+                    <img src="./新建文件夹 (6)/13.jpeg" alt="步骤13">
+                </div>
+                <div class="video-container" id="videoContainer13">
+                    <video id="video13" src="./新建文件夹 (2)/13.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text13">
+                    <p>用磨石打磨刷头，务必使毛刷尖端平齐成一线。</p>
+                </div>
+            </div>
+
+            <!-- 步骤14 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="14" id="imgWrapper14">
+                    <img src="./新建文件夹 (6)/14.jpeg" alt="步骤14">
+                </div>
+                <div class="video-container" id="videoContainer14">
+                    <video id="video14" src="./新建文件夹 (2)/14.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text14">
+                    <p>将毛发轻轻锤松。</p>
+                </div>
+            </div>
+
+            <!-- 步骤15 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="15" id="imgWrapper15">
+                    <img src="./新建文件夹 (6)/15.jpeg" alt="步骤15">
+                </div>
+                <div class="video-container" id="videoContainer15">
+                    <video id="video15" src="./新建文件夹 (2)/15.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text15">
+                    <p>用肥皂将刷毛揉洗干净。</p>
+                </div>
+            </div>
+
+            <!-- 步骤16 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="16">
+                    <img src="./新建文件夹 (6)/16.jpeg" alt="步骤16">
+                </div>
+                <div class="text-box" id="text16">
+                    <p>一把可以髹涂的发刷就制成了</p>
+                </div>
+            </div>
+
+            <!-- 步骤17 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="17">
+                    <img src="./新建文件夹 (6)/17.jpeg" alt="步骤17">
+                </div>
+                <div class="text-box" id="text17">
+                    <p>使用的时间久了，发刷的刷头难免秃坏。</p>
+                </div>
+            </div>
+
+            <!-- 步骤18 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="18" id="imgWrapper18">
+                    <img src="./新建文件夹 (6)/18.jpeg" alt="步骤18">
+                </div>
+                <div class="video-container" id="videoContainer18">
+                    <video id="video18" src="./新建文件夹 (2)/18.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text18">
+                    <p>将刷头上的毛发齐根平切。</p>
+                </div>
+            </div>
+
+            <!-- 步骤19 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="19" id="imgWrapper19">
+                    <img src="./新建文件夹 (6)/19.jpeg" alt="步骤19">
+                </div>
+                <div class="video-container" id="videoContainer19">
+                    <video id="video19" src="./新建文件夹 (2)/19.mp4" preload="metadata"></video>
+                </div>
+                <div class="text-box" id="text19">
+                    <p>再度刨削木片，露出藏于木柄内的毛发。</p>
+                </div>
+            </div>
+
+            <!-- 步骤20 -->
+            <div class="image-with-text">
+                <div class="image-wrapper clickable" data-step="20">
+                    <img src="./新建文件夹 (6)/20.jpeg" alt="步骤20">
+                </div>
+                <div class="text-box" id="text20">
+                    <p>再用磨石将新露出的刷毛打磨齐整，再用肥皂水揉洗干净，发刷又可像初用时那么顺手。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取所有可点击的图片
+            var images = document.querySelectorAll('.image-wrapper.clickable');
+            var timers = {}; // 存储每个步骤的定时器
+            
+            // 图片2的视频播放功能
+            var imgWrapper2 = document.getElementById('imgWrapper2');
+            var videoContainer2 = document.getElementById('videoContainer2');
+            var video2 = document.getElementById('video2');
+            var isPlaying2 = false;
+            
+            if (imgWrapper2 && videoContainer2 && video2) {
+                imgWrapper2.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying2) {
+                        // 如果正在播放，停止并恢复图片
+                        video2.pause();
+                        video2.currentTime = 0;
+                        videoContainer2.classList.remove('active');
+                        imgWrapper2.classList.remove('hidden');
+                        isPlaying2 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper2.classList.add('hidden');
+                        videoContainer2.classList.add('active');
+                        video2.play();
+                        isPlaying2 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video2.addEventListener('ended', function() {
+                    videoContainer2.classList.remove('active');
+                    imgWrapper2.classList.remove('hidden');
+                    isPlaying2 = false;
+                });
+            }
+            
+            // 图片3的视频播放功能
+            var imgWrapper3 = document.getElementById('imgWrapper3');
+            var videoContainer3 = document.getElementById('videoContainer3');
+            var video3 = document.getElementById('video3');
+            var isPlaying3 = false;
+            
+            if (imgWrapper3 && videoContainer3 && video3) {
+                imgWrapper3.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying3) {
+                        // 如果正在播放，停止并恢复图片
+                        video3.pause();
+                        video3.currentTime = 0;
+                        videoContainer3.classList.remove('active');
+                        imgWrapper3.classList.remove('hidden');
+                        isPlaying3 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper3.classList.add('hidden');
+                        videoContainer3.classList.add('active');
+                        video3.play();
+                        isPlaying3 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video3.addEventListener('ended', function() {
+                    videoContainer3.classList.remove('active');
+                    imgWrapper3.classList.remove('hidden');
+                    isPlaying3 = false;
+                });
+            }
+            
+            // 图片4的视频播放功能
+            var imgWrapper4 = document.getElementById('imgWrapper4');
+            var videoContainer4 = document.getElementById('videoContainer4');
+            var video4 = document.getElementById('video4');
+            var isPlaying4 = false;
+            
+            if (imgWrapper4 && videoContainer4 && video4) {
+                imgWrapper4.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying4) {
+                        // 如果正在播放，停止并恢复图片
+                        video4.pause();
+                        video4.currentTime = 0;
+                        videoContainer4.classList.remove('active');
+                        imgWrapper4.classList.remove('hidden');
+                        isPlaying4 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper4.classList.add('hidden');
+                        videoContainer4.classList.add('active');
+                        video4.play();
+                        isPlaying4 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video4.addEventListener('ended', function() {
+                    videoContainer4.classList.remove('active');
+                    imgWrapper4.classList.remove('hidden');
+                    isPlaying4 = false;
+                });
+            }
+            
+            // 图片5的视频播放功能
+            var imgWrapper5 = document.getElementById('imgWrapper5');
+            var videoContainer5 = document.getElementById('videoContainer5');
+            var video5 = document.getElementById('video5');
+            var isPlaying5 = false;
+            
+            if (imgWrapper5 && videoContainer5 && video5) {
+                imgWrapper5.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying5) {
+                        // 如果正在播放，停止并恢复图片
+                        video5.pause();
+                        video5.currentTime = 0;
+                        videoContainer5.classList.remove('active');
+                        imgWrapper5.classList.remove('hidden');
+                        isPlaying5 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper5.classList.add('hidden');
+                        videoContainer5.classList.add('active');
+                        video5.play();
+                        isPlaying5 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video5.addEventListener('ended', function() {
+                    videoContainer5.classList.remove('active');
+                    imgWrapper5.classList.remove('hidden');
+                    isPlaying5 = false;
+                });
+            }
+            
+            // 图片6的视频播放功能
+            var imgWrapper6 = document.getElementById('imgWrapper6');
+            var videoContainer6 = document.getElementById('videoContainer6');
+            var video6 = document.getElementById('video6');
+            var isPlaying6 = false;
+            
+            if (imgWrapper6 && videoContainer6 && video6) {
+                imgWrapper6.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying6) {
+                        // 如果正在播放，停止并恢复图片
+                        video6.pause();
+                        video6.currentTime = 0;
+                        videoContainer6.classList.remove('active');
+                        imgWrapper6.classList.remove('hidden');
+                        isPlaying6 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper6.classList.add('hidden');
+                        videoContainer6.classList.add('active');
+                        video6.play();
+                        isPlaying6 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video6.addEventListener('ended', function() {
+                    videoContainer6.classList.remove('active');
+                    imgWrapper6.classList.remove('hidden');
+                    isPlaying6 = false;
+                });
+            }
+            
+            // 图片8的视频播放功能
+            var imgWrapper8 = document.getElementById('imgWrapper8');
+            var videoContainer8 = document.getElementById('videoContainer8');
+            var video8 = document.getElementById('video8');
+            var isPlaying8 = false;
+            
+            if (imgWrapper8 && videoContainer8 && video8) {
+                imgWrapper8.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying8) {
+                        // 如果正在播放，停止并恢复图片
+                        video8.pause();
+                        video8.currentTime = 0;
+                        videoContainer8.classList.remove('active');
+                        imgWrapper8.classList.remove('hidden');
+                        isPlaying8 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper8.classList.add('hidden');
+                        videoContainer8.classList.add('active');
+                        video8.play();
+                        isPlaying8 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video8.addEventListener('ended', function() {
+                    videoContainer8.classList.remove('active');
+                    imgWrapper8.classList.remove('hidden');
+                    isPlaying8 = false;
+                });
+            }
+            
+            // 图片12的视频播放功能
+            var imgWrapper12 = document.getElementById('imgWrapper12');
+            var videoContainer12 = document.getElementById('videoContainer12');
+            var video12 = document.getElementById('video12');
+            var isPlaying12 = false;
+            
+            if (imgWrapper12 && videoContainer12 && video12) {
+                imgWrapper12.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying12) {
+                        // 如果正在播放，停止并恢复图片
+                        video12.pause();
+                        video12.currentTime = 0;
+                        videoContainer12.classList.remove('active');
+                        imgWrapper12.classList.remove('hidden');
+                        isPlaying12 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper12.classList.add('hidden');
+                        videoContainer12.classList.add('active');
+                        video12.play();
+                        isPlaying12 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video12.addEventListener('ended', function() {
+                    videoContainer12.classList.remove('active');
+                    imgWrapper12.classList.remove('hidden');
+                    isPlaying12 = false;
+                });
+            }
+            
+            // 图片13的视频播放功能
+            var imgWrapper13 = document.getElementById('imgWrapper13');
+            var videoContainer13 = document.getElementById('videoContainer13');
+            var video13 = document.getElementById('video13');
+            var isPlaying13 = false;
+            
+            if (imgWrapper13 && videoContainer13 && video13) {
+                imgWrapper13.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying13) {
+                        // 如果正在播放，停止并恢复图片
+                        video13.pause();
+                        video13.currentTime = 0;
+                        videoContainer13.classList.remove('active');
+                        imgWrapper13.classList.remove('hidden');
+                        isPlaying13 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper13.classList.add('hidden');
+                        videoContainer13.classList.add('active');
+                        video13.play();
+                        isPlaying13 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video13.addEventListener('ended', function() {
+                    videoContainer13.classList.remove('active');
+                    imgWrapper13.classList.remove('hidden');
+                    isPlaying13 = false;
+                });
+            }
+            
+            // 图片14的视频播放功能
+            var imgWrapper14 = document.getElementById('imgWrapper14');
+            var videoContainer14 = document.getElementById('videoContainer14');
+            var video14 = document.getElementById('video14');
+            var isPlaying14 = false;
+            
+            if (imgWrapper14 && videoContainer14 && video14) {
+                imgWrapper14.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying14) {
+                        // 如果正在播放，停止并恢复图片
+                        video14.pause();
+                        video14.currentTime = 0;
+                        videoContainer14.classList.remove('active');
+                        imgWrapper14.classList.remove('hidden');
+                        isPlaying14 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper14.classList.add('hidden');
+                        videoContainer14.classList.add('active');
+                        video14.play();
+                        isPlaying14 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video14.addEventListener('ended', function() {
+                    videoContainer14.classList.remove('active');
+                    imgWrapper14.classList.remove('hidden');
+                    isPlaying14 = false;
+                });
+            }
+            
+            // 图片15的视频播放功能
+            var imgWrapper15 = document.getElementById('imgWrapper15');
+            var videoContainer15 = document.getElementById('videoContainer15');
+            var video15 = document.getElementById('video15');
+            var isPlaying15 = false;
+            
+            if (imgWrapper15 && videoContainer15 && video15) {
+                imgWrapper15.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying15) {
+                        // 如果正在播放，停止并恢复图片
+                        video15.pause();
+                        video15.currentTime = 0;
+                        videoContainer15.classList.remove('active');
+                        imgWrapper15.classList.remove('hidden');
+                        isPlaying15 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper15.classList.add('hidden');
+                        videoContainer15.classList.add('active');
+                        video15.play();
+                        isPlaying15 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video15.addEventListener('ended', function() {
+                    videoContainer15.classList.remove('active');
+                    imgWrapper15.classList.remove('hidden');
+                    isPlaying15 = false;
+                });
+            }
+            
+            // 图片18的视频播放功能
+            var imgWrapper18 = document.getElementById('imgWrapper18');
+            var videoContainer18 = document.getElementById('videoContainer18');
+            var video18 = document.getElementById('video18');
+            var isPlaying18 = false;
+            
+            if (imgWrapper18 && videoContainer18 && video18) {
+                imgWrapper18.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying18) {
+                        // 如果正在播放，停止并恢复图片
+                        video18.pause();
+                        video18.currentTime = 0;
+                        videoContainer18.classList.remove('active');
+                        imgWrapper18.classList.remove('hidden');
+                        isPlaying18 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper18.classList.add('hidden');
+                        videoContainer18.classList.add('active');
+                        video18.play();
+                        isPlaying18 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video18.addEventListener('ended', function() {
+                    videoContainer18.classList.remove('active');
+                    imgWrapper18.classList.remove('hidden');
+                    isPlaying18 = false;
+                });
+            }
+            
+            // 图片19的视频播放功能
+            var imgWrapper19 = document.getElementById('imgWrapper19');
+            var videoContainer19 = document.getElementById('videoContainer19');
+            var video19 = document.getElementById('video19');
+            var isPlaying19 = false;
+            
+            if (imgWrapper19 && videoContainer19 && video19) {
+                imgWrapper19.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    if (isPlaying19) {
+                        // 如果正在播放，停止并恢复图片
+                        video19.pause();
+                        video19.currentTime = 0;
+                        videoContainer19.classList.remove('active');
+                        imgWrapper19.classList.remove('hidden');
+                        isPlaying19 = false;
+                    } else {
+                        // 隐藏图片，显示并播放视频
+                        imgWrapper19.classList.add('hidden');
+                        videoContainer19.classList.add('active');
+                        video19.play();
+                        isPlaying19 = true;
+                    }
+                });
+                
+                // 视频播放结束后恢复图片
+                video19.addEventListener('ended', function() {
+                    videoContainer19.classList.remove('active');
+                    imgWrapper19.classList.remove('hidden');
+                    isPlaying19 = false;
+                });
+            }
+            
+            images.forEach(function(img) {
+                img.addEventListener('click', function() {
+                    var step = this.getAttribute('data-step');
+                    var textBox = document.getElementById('text' + step);
+                    
+                    // 如果之前有定时器，清除它
+                    if (timers[step]) {
+                        clearTimeout(timers[step]);
+                    }
+                    
+                    // 如果文字框已显示，先隐藏
+                    if (textBox.classList.contains('show')) {
+                        textBox.classList.remove('show');
+                        return;
+                    }
+                    
+                    // 显示文字框
+                    textBox.classList.add('show');
+                    
+                    // 5秒后自动隐藏
+                    timers[step] = setTimeout(function() {
+                        textBox.classList.remove('show');
+                        timers[step] = null;
+                    }, 5000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
