@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>黑金漆艺 - 传统工艺</title>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 性能优化 */
+        .btn, .carousel-img, .indicator, .carousel-info, .image-carousel {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        body {
+            font-family: 'KaiTi', 'STKaiti', 'KaiTi_GB2312', '楷体', serif;
+            background: 
+                radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.18) 0%, transparent 35%),
+                radial-gradient(ellipse at 50% 0%, #4a3a25 0%, #1a1410 35%),
+                radial-gradient(ellipse at 0% 100%, #2a2018 0%, #14100c 50%),
+                radial-gradient(ellipse at 100% 100%, #2c201a 0%, #161108 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+                linear-gradient(135deg, #2a2018 0%, #1a140e 50%, #14100a 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 110px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .custom-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            font-family: 'STKaiti', 'KaiTi', 'Microsoft YaHei', serif;
+        }
+        .custom-navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .custom-navbar .logo-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a0a;
+        }
+        .custom-navbar .logo-circle::before {
+            content: '';
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1px solid #d4af37;
+        }
+        .custom-navbar .logo-circle::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4af37;
+        }
+        .custom-navbar .logo-text {
+            font-size: 16px;
+            color: #d4af37;
+            letter-spacing: 3px;
+        }
+        .custom-navbar .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .custom-navbar .nav-item {
+            position: relative;
+            padding: 8px 10px;
+            color: #c4b090;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .custom-navbar .nav-item:hover {
+            color: #d4af37;
+        }
+        .custom-navbar .nav-item.active {
+            color: #d4af37;
+        }
+        .custom-navbar .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .custom-navbar .nav-item:hover::after,
+        .custom-navbar .nav-item.active::after {
+            width: 60%;
+        }
+        @media (max-width: 768px) {
+            .custom-navbar {
+                padding: 0 20px;
+                height: auto;
+                min-height: 70px;
+                flex-wrap: wrap;
+                align-content: center;
+            }
+            .custom-navbar .logo-text {
+                display: none;
+            }
+            .custom-navbar .nav-menu {
+                gap: 15px;
+            }
+            .custom-navbar .nav-item {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+            body {
+                padding-top: 100px;
+            }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+            will-change: auto;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(184, 148, 28, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at top left, rgba(212, 175, 55, 0.12) 0%, transparent 20%),
+                radial-gradient(circle at top right, rgba(212, 175, 55, 0.12) 0%, transparent 20%),
+                radial-gradient(circle at bottom left, rgba(212, 175, 55, 0.08) 0%, transparent 20%),
+                radial-gradient(circle at bottom right, rgba(212, 175, 55, 0.08) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: 0;
+            will-change: opacity;
+            animation: lightPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes lightPulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .corner-decoration {
+            position: fixed;
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.4;
+        }
+
+        .corner-decoration::before,
+        .corner-decoration::after {
+            content: '';
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+        }
+
+        .corner-decoration::before {
+            width: 100%;
+            height: 1px;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+        }
+
+        .corner-decoration::after {
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+        }
+
+        .corner-tl { top: 20px; left: 20px; }
+        .corner-tr { top: 20px; right: 20px; }
+        .corner-bl { bottom: 20px; left: 20px; }
+        .corner-br { bottom: 20px; right: 20px; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            align-items: flex-start;
+        }
+
+        .title {
+            font-family: 'KaiTi', 'STKaiti', 'KaiTi_GB2312', '楷体', serif;
+            font-size: 6rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, 
+                #8b6f1c 0%, 
+                #b8941c 10%, 
+                #d4af37 25%, 
+                #f5e6a3 40%, 
+                #fff5c2 50%, 
+                #f5e6a3 60%, 
+                #d4af37 75%, 
+                #b8941c 90%, 
+                #8b6f1c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            letter-spacing: 0.4em;
+            position: relative;
+            text-shadow: 
+                0 0 60px rgba(212, 175, 55, 0.6),
+                0 0 120px rgba(212, 175, 55, 0.3);
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6));
+            animation: titleGlow 4s ease-in-out infinite;
+            will-change: filter;
+            padding: 0 0.4em;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 50px rgba(212, 175, 55, 0.4));
+            }
+            50% {
+                filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 100px rgba(212, 175, 55, 0.7));
+            }
+        }
+
+        .title::before {
+            content: '「';
+            position: absolute;
+            left: -0.5em;
+            top: 0.1em;
+            font-size: 0.8em;
+            color: rgba(212, 175, 55, 0.6);
+            -webkit-text-fill-color: rgba(212, 175, 55, 0.6);
+            background: none;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+
+        .title::after {
+            content: '」';
+            position: absolute;
+            right: -0.5em;
+            top: 0.1em;
+            font-size: 0.8em;
+            color: rgba(212, 175, 55, 0.6);
+            -webkit-text-fill-color: rgba(212, 175, 55, 0.6);
+            background: none;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+
+        .title-deco {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .title-deco-top {
+            top: -25px;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+        }
+
+        .title-deco-bottom {
+            bottom: -25px;
+            width: 300px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, rgba(212, 175, 55, 0.2) 20%, rgba(212, 175, 55, 0.7) 50%, rgba(212, 175, 55, 0.2) 80%, transparent 95%);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .title-deco-bottom::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            box-shadow: 0 0 10px #d4af37;
+        }
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(212, 175, 55, 0.75);
+            margin-top: 55px;
+            letter-spacing: 0.5em;
+            font-weight: 300;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            position: relative;
+            padding: 0 1.5em;
+        }
+
+        .subtitle::before,
+        .subtitle::after {
+            content: '◆';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 0.5em;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        .subtitle::before {
+            left: 0;
+        }
+
+        .subtitle::after {
+            right: 0;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            width: 180px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+            align-items: center;
+            padding: 30px 12px;
+            background: 
+                linear-gradient(180deg, rgba(45, 36, 26, 0.6) 0%, rgba(25, 20, 14, 0.4) 100%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .model-display {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 540px;
+            padding: 20px;
+        }
+
+        .image-carousel {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: 
+                linear-gradient(145deg, rgba(45, 36, 26, 0.9) 0%, rgba(25, 20, 14, 0.95) 100%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+            border-radius: 24px;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 
+                0 40px 100px rgba(0, 0, 0, 0.6),
+                0 0 80px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 -2px 0 rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .image-carousel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.8), transparent);
+            z-index: 2;
+        }
+
+        .image-carousel::after {
+            content: '';
+            position: absolute;
+            inset: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 18px;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .carousel-image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            padding: 40px;
+        }
+
+        .carousel-image-container::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .carousel-img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 40px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.1));
+            transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
+        }
+
+        .carousel-img:hover {
+            transform: scale(1.02);
+        }
+
+        .carousel-btn {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, rgba(30, 30, 30, 0.9) 0%, rgba(15, 15, 15, 0.95) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .carousel-btn:hover {
+            background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.15) 0%, rgba(20, 20, 20, 0.95) 100%);
+            border-color: rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 
+                0 8px 25px rgba(212, 175, 55, 0.15),
+                0 0 20px rgba(212, 175, 55, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .carousel-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .carousel-btn svg {
+            width: 20px;
+            height: 20px;
+            filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.3));
+        }
+
+        .carousel-prev {
+            left: 10px;
+        }
+
+        .carousel-next {
+            right: 10px;
+        }
+
+        .carousel-info {
+            text-align: center;
+            color: #d4af37;
+            padding: 15px 30px;
+            background: rgba(10, 10, 10, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(3px);
+            margin-top: 50px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-info {
+            text-align: center;
+            color: #d4af37;
+            padding: 28px 55px;
+            background: 
+                linear-gradient(145deg, rgba(45, 36, 26, 0.75) 0%, rgba(25, 20, 14, 0.9) 100%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            border-radius: 16px;
+            backdrop-filter: blur(12px);
+            margin-top: 32px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 
+                0 15px 50px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .carousel-info::before,
+        .carousel-info::after {
+            content: '◇';
+            position: absolute;
+            color: rgba(212, 175, 55, 0.4);
+            font-size: 0.8em;
+        }
+
+        .carousel-info {
+            position: relative;
+        }
+
+        .carousel-info h3 {
+            font-family: 'KaiTi', 'STKaiti', 'KaiTi_GB2312', '楷体', serif;
+            font-size: 2.6rem;
+            margin: 0 0 15px 0;
+            letter-spacing: 0.35em;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            position: relative;
+            padding-bottom: 15px;
+            background: linear-gradient(135deg, #c9a52b 0%, #d4af37 30%, #f5e6a3 50%, #d4af37 70%, #c9a52b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .carousel-info h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+        }
+
+        .carousel-info p {
+            font-size: 1.3rem;
+            margin: 8px 0;
+            color: rgba(212, 175, 55, 0.7);
+            letter-spacing: 0.25em;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+        }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 16px;
+            z-index: 10;
+            padding: 10px 20px;
+            background: 
+                linear-gradient(145deg, rgba(45, 36, 26, 0.6) 0%, rgba(20, 16, 12, 0.8) 100%);
+            border-radius: 24px;
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .indicator:hover {
+            background: rgba(212, 175, 55, 0.4);
+            transform: scale(1.2);
+        }
+
+        .indicator.active {
+            background: #d4af37;
+            transform: scale(1.3);
+            border-color: rgba(212, 175, 55, 0.8);
+            box-shadow: 
+                0 0 12px rgba(212, 175, 55, 0.6),
+                0 0 24px rgba(212, 175, 55, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            font-size: 1.2rem;
+            font-family: 'KaiTi', 'STKaiti', 'KaiTi_GB2312', '楷体', serif;
+            letter-spacing: 0.18em;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(60, 48, 32, 0.95) 0%, rgba(25, 20, 14, 0.98) 100%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            color: #d4af37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(212, 175, 55, 0.03),
+                0 8px 24px rgba(0, 0, 0, 0.5),
+                0 0 40px rgba(212, 175, 55, 0.06);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03), transparent);
+            transition: left 0.6s ease;
+            will-change: left;
+            pointer-events: none;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.04);
+            border-color: rgba(212, 175, 55, 0.6);
+            color: #f5e6a3;
+            box-shadow: 
+                0 20px 60px rgba(212, 175, 55, 0.2),
+                0 0 50px rgba(212, 175, 55, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 0 30px rgba(212, 175, 55, 0.06);
+        }
+
+        .btn:active {
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .btn-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn:hover .btn-icon {
+            opacity: 1;
+        }
+
+        .btn-1 {
+            background: url('黑地描金.png') center/cover no-repeat;
+        }
+
+        .btn-1::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+
+        .btn-1 .btn-text {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px 12px;
+            border-radius: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-2 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('犀皮漆.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-3 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('蛋壳镶嵌样.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-4 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('螺钿镶嵌法.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-4::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(180deg, rgba(176, 224, 230, 0.03) 0%, transparent 50%),
+                linear-gradient(90deg, rgba(176, 224, 230, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .btn-5 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('百宝嵌.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-6 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('雕漆.png');
+            background-size: cover;
+            background-position: center;
+            border-width: 2px;
+        }
+
+        .btn-7 {
+            background: 
+                linear-gradient(145deg, rgba(10, 10, 10, 0.6), rgba(20, 20, 20, 0.4)),
+                url('薄料彩图.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .btn-7::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 80%;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .glow-effect {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            transition: width 0.6s ease, height 0.6s ease;
+            pointer-events: none;
+        }
+
+        .btn:hover .glow-effect {
+            width: 300px;
+            height: 300px;
+        }
+
+        .footer {
+            margin-top: 60px;
+            text-align: center;
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 0.95rem;
+            letter-spacing: 0.4em;
+            position: relative;
+            z-index: 1;
+            padding-bottom: 25px;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 10%, rgba(212, 175, 55, 0.15) 40%, rgba(212, 175, 55, 0.3) 50%, rgba(212, 175, 55, 0.15) 60%, transparent 90%);
+        }
+
+        .footer p {
+            position: relative;
+            font-family: 'KaiTi', 'STKaiti', 'KaiTi_GB2312', '楷体', serif;
+            font-size: 1rem;
+            padding: 8px 0;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+
+            .buttons-container {
+                width: 100%;
+                max-width: 650px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 15px;
+            }
+
+            .btn {
+                flex: none;
+                width: 120px;
+                height: 120px;
+                font-size: 0.95rem;
+            }
+
+            .image-carousel {
+                height: 420px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.8rem;
+                letter-spacing: 0.15em;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                margin-top: 30px;
+                letter-spacing: 0.25em;
+            }
+
+            .buttons-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                max-width: 420px;
+                gap: 20px;
+            }
+
+            .btn {
+                width: 110px;
+                height: 110px;
+                font-size: 0.85rem;
+                padding: 0;
+            }
+
+            .model-display {
+                min-height: 380px;
+                padding: 10px;
+            }
+
+            .image-carousel {
+                height: 340px;
+            }
+
+            .carousel-info {
+                padding: 15px 25px;
+            }
+
+            .carousel-info h3 {
+                font-size: 1.8rem;
+            }
+
+            .carousel-info p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 自定义导航栏 -->
+    <nav class="custom-navbar">
+      <div class="logo">
+        <div class="logo-circle"></div>
+        <span class="logo-text">福州脱胎漆</span>
+      </div>
+      <div class="nav-menu">
+        <div class="nav-item" data-url="../index.html">首页</div>
+        <div class="nav-item" data-url="../脱胎漆域.html">脱胎漆域</div>
+        <div class="nav-item" data-url="../1.html">技艺源流</div>
+
+        <div class="nav-item" data-url="../脱胎漆的历史/index.html">历史溯源</div>
+        <div class="nav-item" data-url="../技法封面.html">技法传承</div>
+        <div class="nav-item" data-url="../脱胎漆的介绍＋优势/index.html">脱胎漆介绍</div>
+        <div class="nav-item active" data-url="index.html">黑金漆艺</div>
+        <div class="nav-item" data-url="../脱胎漆干燥程度/脱胎漆器干燥环境模拟器.html">干燥模拟</div>
+      </div>
+    </nav>
+    <script>
+      const navItems = document.querySelectorAll('.custom-navbar .nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          const url = item.dataset.url;
+          window.location.href = url;
+        });
+      });
+    </script>
+
+    <div class="corner-decoration corner-tl"></div>
+    <div class="corner-decoration corner-tr"></div>
+    <div class="corner-decoration corner-bl"></div>
+    <div class="corner-decoration corner-br"></div>
+
+    <div class="header">
+        <h1 class="title">黑金漆艺</h1>
+        <p class="subtitle">传统工艺 · 匠心传承</p>
+    </div>
+
+    <div class="main-content">
+        <div class="buttons-container">
+            <button class="btn btn-1" onclick="switchCategory('黑地描金')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">黑地描金</span>
+            </button>
+
+            <button class="btn btn-2" onclick="switchCategory('犀皮漆')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">犀皮漆</span>
+            </button>
+
+            <button class="btn btn-3" onclick="switchCategory('蛋壳镶嵌虫咬漆')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">蛋壳镶嵌<br/>虫咬漆</span>
+            </button>
+
+            <button class="btn btn-4" onclick="switchCategory('螺钿花细纹样')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">螺钿花细<br/>纹样</span>
+            </button>
+
+            <button class="btn btn-5" onclick="switchCategory('百宝嵌')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">百宝嵌</span>
+            </button>
+
+            <button class="btn btn-6" onclick="switchCategory('雕漆')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">雕漆</span>
+            </button>
+
+            <button class="btn btn-7" onclick="switchCategory('薄料彩绘')">
+                <span class="glow-effect"></span>
+                <span class="btn-text">薄料彩绘</span>
+            </button>
+        </div>
+
+        <div class="model-display">
+            <div class="image-carousel">
+                <button class="carousel-btn carousel-prev" onclick="prevImage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <div class="carousel-image-container">
+                    <img id="carousel-image" src="黑漆描金五龙圆盘.gif" alt="模型展示" class="carousel-img">
+                </div>
+                <button class="carousel-btn carousel-next" onclick="nextImage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+                <div class="carousel-indicators">
+                    <span class="indicator active" onclick="goToImage(0)"></span>
+                    <span class="indicator" onclick="goToImage(1)"></span>
+                    <span class="indicator" onclick="goToImage(2)"></span>
+                    <span class="indicator" onclick="goToImage(3)"></span>
+                    <span class="indicator" onclick="goToImage(4)"></span>
+                    <span class="indicator" onclick="goToImage(5)"></span>
+                </div>
+            </div>
+            <div class="carousel-info">
+                <h3 id="carousel-title">金五龙戏珠赏盘</h3>
+                <p id="carousel-author">作者：沈绍安家族</p>
+                <p id="carousel-period">时期：1890–1911</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>匠心独运 · 历久弥新</p>
+    </div>
+
+    <script>
+        // 按分类组织图片数据
+        const categoryData = {
+            '黑地描金': [
+                {
+                    src: '黑漆描金五龙圆盘.gif',
+                    title: '金五龙戏珠赏盘',
+                    author: '作者：沈绍安家族',
+                    period: '时期：1890–1911'
+                },
+                {
+                    src: '黑漆描金蝠莲纹梅花式盘.gif',
+                    title: '黑漆描金蝠莲纹梅花式盘',
+                    author: '作者：清宫造办处',
+                    period: '时期：公元 1736–1795 年'
+                },
+                {
+                    src: '青退描金云龙花瓶.gif',
+                    title: '青退描金云龙花瓶',
+                    author: '作者：沈正镐',
+                    period: '时期：1890–1920'
+                }
+            ],
+            '犀皮漆': [
+                {
+                    src: '蓝金斑犀皮漆梅瓶.gif',
+                    title: '蓝金斑犀皮漆梅瓶',
+                    author: '作者：甘而可',
+                    period: '时期：2015'
+                },
+                {
+                    src: '红金斑漆皮漆石榴尊.gif',
+                    title: '红金斑犀皮漆石榴尊',
+                    author: '作者：甘而可',
+                    period: '时期：2013'
+                },
+                {
+                    src: '玳瑁斑犀皮脱胎漆碗.gif',
+                    title: '玳瑁斑犀皮脱胎漆碗',
+                    author: '作者：甘而可',
+                    period: '时期：现代'
+                }
+            ],
+            '蛋壳镶嵌虫咬漆': [
+                {
+                    src: '蛋壳嵌孔雀纹大盘.gif',
+                    title: '蛋壳嵌孔雀纹大盘',
+                    author: '作者：陈思碧',
+                    period: '时期：1985'
+                },
+                {
+                    src: '鸳鸯戏水图.gif',
+                    title: '鸳鸯戏水图',
+                    author: '作者：陈思碧',
+                    period: '时期：现代'
+                },
+                {
+                    src: '四方梅花瓶.gif',
+                    title: '四方梅花瓶',
+                    author: '作者：黄时中',
+                    period: '时期：2015'
+                }
+            ],
+            '薄料彩绘': [
+                {
+                    src: '脱胎竹根瓶.gif',
+                    title: '脱胎竹根瓶',
+                    author: '作者：沈正镐',
+                    period: '时期：近代'
+                },
+                {
+                    src: '制荷叶脱胎漆瓶.gif',
+                    title: '制荷叶脱胎漆瓶',
+                    author: '作者：沈正镐',
+                    period: '时期：近代'
+                },
+                {
+                    src: '彩漆鳌鱼桃盘.gif',
+                    title: '彩漆鳌鱼桃盘',
+                    author: '作者：沈正镐',
+                    period: '时期：1910'
+                }
+            ],
+            '雕漆': [
+                {
+                    src: '银胎剔红龙纹扁酒壶.gif',
+                    title: '银胎剔红龙纹扁酒壶',
+                    author: '作者：文乾刚',
+                    period: '时期：当代'
+                },
+                {
+                    src: '九龙闹海盘.gif',
+                    title: '九龙闹海盘',
+                    author: '作者：文乾刚',
+                    period: '时期：当代'
+                },
+                {
+                    src: '剔红栀子花纹圆盘.gif',
+                    title: '剔红栀子花纹圆盘',
+                    author: '作者：张成',
+                    period: '时期：元代'
+                },
+                {
+                    src: '剔红山水人物笔筒.gif',
+                    title: '剔红山水人物笔筒',
+                    author: '作者：杨之新',
+                    period: '时期：明代'
+                }
+            ],
+            '百宝嵌': [
+                {
+                    src: '百宝嵌花鸟纹漆砂砚.gif',
+                    title: '百宝嵌花鸟纹漆砂砚',
+                    author: '作者：卢葵生',
+                    period: '时期：清代'
+                },
+                {
+                    src: '黑漆百宝嵌云龙纹长方信盒.gif',
+                    title: '黑漆百宝嵌云龙纹长方信盒',
+                    author: '作者：姜千里',
+                    period: '时期：明末清初'
+                },
+                {
+                    src: '琥珀百宝嵌婴戏图鼻烟壶.gif',
+                    title: '琥珀百宝嵌婴戏图鼻烟壶',
+                    author: '作者：清宫廷造办处',
+                    period: '时期：清代'
+                },
+                {
+                    src: '紫檀百宝嵌杂宝纹圆盖盒.gif',
+                    title: '紫檀百宝嵌杂宝纹圆盖盒',
+                    author: '作者：周柱',
+                    period: '时期：明代'
+                }
+            ],
+            '螺钿花细纹样': [
+                {
+                    src: '黑漆嵌螺钿海水龙纹菱花形盘.gif',
+                    title: '黑漆嵌螺钿海水龙纹菱花形盘',
+                    author: '作者：民间官办漆作工坊',
+                    period: '时期：14世纪'
+                },
+                {
+                    src: '黑漆嵌螺钿花鸟纹圆盘.gif',
+                    title: '黑漆嵌螺钿花鸟纹圆盘',
+                    author: '作者：江千里',
+                    period: '时期：17世纪中叶'
+                },
+                {
+                    src: '明江千里.gif',
+                    title: '明江千里',
+                    author: '作者：江千里',
+                    period: '时期：明末清初'
+                }
+            ]
+        };
+        
+        // 当前激活的分类
+        let currentCategory = '黑地描金';
+        let currentIndex = 0;
+        
+        function getCurrentImages() {
+            return categoryData[currentCategory];
+        }
+        
+        function getCurrentInfo() {
+            return categoryData[currentCategory][currentIndex];
+        }
+        
+        function updateImage() {
+            const images = getCurrentImages();
+            const info = getCurrentInfo();
+            
+            const img = document.getElementById('carousel-image');
+            
+            // 淡出动画
+            img.style.opacity = '0';
+            img.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+                img.src = images[currentIndex].src;
+                document.getElementById('carousel-title').textContent = info.title;
+                document.getElementById('carousel-author').textContent = info.author;
+                document.getElementById('carousel-period').textContent = info.period;
+                
+                // 淡入动画
+                requestAnimationFrame(() => {
+                    img.style.opacity = '1';
+                    img.style.transform = 'scale(1)';
+                });
+            }, 200);
+            
+            // 更新指示器
+            const indicators = document.querySelectorAll('.indicator');
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentIndex);
+                ind.style.display = idx < images.length ? 'inline-block' : 'none';
+            });
+        }
+        
+        function switchCategory(category) {
+            if (!categoryData[category]) return;
+            currentCategory = category;
+            currentIndex = 0;
+            updateImage();
+        }
+        
+        function nextImage() {
+            const images = getCurrentImages();
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImage();
+        }
+        
+        function prevImage() {
+            const images = getCurrentImages();
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImage();
+        }
+        
+        function goToImage(index) {
+            const images = getCurrentImages();
+            if (index < images.length) {
+                currentIndex = index;
+                updateImage();
+            }
+        }
+        
+        // 页面加载时初始化
+        window.onload = function() {
+            updateImage();
+        };
+    </script>
+</body>
+</html>

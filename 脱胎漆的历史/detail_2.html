@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>清末民初 沈家外销黄金时代 - 福州脱胎漆器</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:#1a1410;
+      min-height:100vh;
+      font-family:'Noto Serif SC', 'Ma Shan Zheng', serif;
+      color:#e8d9c4;
+      letter-spacing:0.02em;
+      line-height:1.8;
+    }
+    .bg-main{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:url('晚清·万国博览巅峰.png') center/cover no-repeat;
+      opacity:0.08;
+      z-index:1;
+    }
+    .bg-overlay{
+      position:absolute;top:0;left:0;right:0;bottom:0;
+      background:linear-gradient(135deg, rgba(13,10,8,0.9) 0%, rgba(26,20,16,0.85) 50%, rgba(13,10,8,0.9) 100%);
+      z-index:2;
+    }
+    .container{
+      position:relative;
+      z-index:10;
+      max-width:1200px;
+      margin:0 auto;
+      padding:80px 40px;
+    }
+    .header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:60px;
+    }
+    .back-btn{
+      border:1px solid #d4b87a;
+      background:transparent;color:#d4b87a;
+      padding:12px 30px;border-radius:99px;
+      cursor:pointer;
+      transition:all 0.3s;
+    }
+    .back-btn:hover{
+      background:#d4b87a;color:#1a1410;
+    }
+    .title-section{
+      text-align:center;
+      margin-bottom:80px;
+    }
+    .era-badge{
+      display:inline-block;
+      padding:8px 24px;
+      border:1px solid #d4b87a;
+      border-radius:99px;
+      font-size:14px;
+      color:#d4b87a;
+      margin-bottom:20px;
+    }
+    .main-title{
+      font-size:48px;color:#d4b87a;
+      margin-bottom:20px;
+    }
+    .subtitle{
+      font-size:20px;color:#c4b090;
+      opacity:0.8;
+    }
+    /* 横向圆弧时间线容器 */
+    .content-grid{
+      position:relative;
+      width:100%;
+      height:380px;
+      margin-bottom:60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    /* 圆弧SVG容器 */
+    .arc-container{
+      position:absolute;
+      width:100%;
+      height:200px;
+    }
+    .arc-container svg{
+      width:100%;
+      height:100%;
+      overflow:visible;
+    }
+    /* 圆弧曲线 */
+    .arc-line{
+      stroke:#c8a97c;
+      stroke-width:3;
+      fill:none;
+      opacity:0.6;
+    }
+    /* 发光滤镜 */
+    .glow-filter{
+      filter:url(#arcGlow);
+    }
+    /* 节点容器 */
+    .timeline-nodes{
+      position:relative;
+      width:100%;
+      height:100%;
+      display:flex;
+      justify-content:space-around;
+      align-items:flex-end;
+      padding:0 80px;
+    }
+    /* 单个节点 */
+    .info-card{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      position:relative;
+      z-index:10;
+    }
+    /* 节点圆圈 */
+    .node-circle{
+      width:70px;
+      height:70px;
+      border:3px solid #d4b87a;
+      border-radius:50%;
+      background:rgba(26,20,16,0.8);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:25px;
+      transition:all 0.3s ease;
+      position:relative;
+    }
+    .node-circle::before{
+      content:"";
+      position:absolute;
+      width:85px;
+      height:85px;
+      border:2px solid rgba(212,184,122,0.3);
+      border-radius:50%;
+      animation:pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%,100%{
+        transform:scale(1);
+        opacity:0.3;
+      }
+      50%{
+        transform:scale(1.2);
+        opacity:0;
+      }
+    }
+    .node-inner{
+      width:24px;
+      height:24px;
+      background:#d4b87a;
+      border-radius:50%;
+      transition:all 0.3s ease;
+    }
+    /* 悬停效果 */
+    .info-card:hover .node-circle{
+      border-width:3px;
+      transform:scale(1.1);
+      box-shadow:0 0 20px rgba(212,184,122,0.5);
+    }
+    .info-card:hover .node-inner{
+      transform:scale(1.3);
+      box-shadow:0 0 15px rgba(212,184,122,0.8);
+    }
+    .info-card:hover .card-title{
+      color:#d4b87a;
+      transform:translateY(-3px);
+    }
+    .card-title{
+      font-size:24px;color:#c4b090;
+      transition:all 0.3s ease;
+      white-space:nowrap;
+      margin-bottom:12px;
+      font-weight:600;
+    }
+    .card-content{
+      font-size:18px;color:#9a886a;
+      margin-top:8px;
+      text-align:center;
+    }
+
+    /* 模态框样式 */
+    .modal-overlay{
+      display:none;
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(13,10,8,0.9);
+      z-index:100;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter:blur(5px);
+    }
+    .modal-overlay.active{
+      display:flex;
+      animation:fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity:0;}
+      to{opacity:1;}
+    }
+    .modal{
+      background:#1a1410;
+      border:1px solid rgba(212,184,122,0.3);
+      border-radius:12px;
+      max-width:600px;
+      width:90%;
+      max-height:80vh;
+      overflow-y:auto;
+      animation:slideUp 0.3s ease;
+    }
+    @keyframes slideUp{
+      from{opacity:0;transform:translateY(20px);}
+      to{opacity:1;transform:translateY(0);}
+    }
+    .modal-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:25px 30px;
+      border-bottom:1px solid rgba(212,184,122,0.2);
+    }
+    .modal-title{
+      font-size:24px;color:#d4b87a;
+    }
+    .modal-close{
+      width:36px;height:36px;
+      border:none;
+      background:rgba(212,184,122,0.1);
+      color:#d4b87a;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:20px;
+      transition:all 0.3s;
+    }
+    .modal-close:hover{
+      background:#d4b87a;
+      color:#1a1410;
+    }
+    .modal-content{
+      padding:30px;
+    }
+    .modal-content p{
+      font-size:16px;line-height:1.9;
+      color:#d4c4a8;
+      margin-bottom:15px;
+    }
+    .modal-content ul{
+      list-style:none;
+      padding-left:0;
+    }
+    .modal-content li{
+      padding:10px 0;
+      padding-left:25px;
+      position:relative;
+      border-bottom:1px solid rgba(212,184,122,0.1);
+    }
+    .modal-content li:last-child{
+      border-bottom:none;
+    }
+    .modal-content li::before{
+      content:"◆";
+      position:absolute;left:0;top:50%;
+      transform:translateY(-50%);
+      color:#d4b87a;
+      font-size:12px;
+    }
+    .modal-content strong{
+      color:#d4b87a;
+    }
+    .work-item{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:30px;
+      padding:22px 0;
+      border-bottom:1px solid rgba(212,184,122,0.1);
+    }
+    .work-item:last-child{border-bottom:none;}
+    .work-text{
+      flex:1;
+      font-size:21px;
+      color:#d4c4a8;
+    }
+    .work-image{
+      flex:0 0 220px;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .work-image img{
+      width:100%;
+      height:auto;
+      max-height:150px;
+      object-fit:contain;
+    }
+    .modal-content::-webkit-scrollbar{
+      width:8px;
+    }
+    .modal-content::-webkit-scrollbar-track{
+      background:rgba(212,184,122,0.1);
+      border-radius:4px;
+    }
+    .modal-content::-webkit-scrollbar-thumb{
+      background:linear-gradient(180deg, #d4b87a 0%, #b89a5c 100%);
+      border-radius:4px;
+      border:1px solid rgba(255,255,255,0.2);
+    }
+    .modal-content::-webkit-scrollbar-thumb:hover{
+      background:linear-gradient(180deg, #e5c98a 0%, #c9aa6c 100%);
+    }
+    .highlight-box{
+      background:linear-gradient(135deg, rgba(212,184,122,0.1) 0%, rgba(212,184,122,0.05) 100%);
+      border-left:3px solid #d4b87a;
+      padding:20px 25px;
+      margin-top:30px;
+    }
+    .highlight-box p{
+      font-style:italic;
+      color:#c4b090;
+      margin:0;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-main"></div>
+  <div class="bg-overlay"></div>
+  
+  <div class="container">
+    <div class="header">
+      <button class="back-btn" onclick="window.history.back()">← 返回首页</button>
+      <div class="era-badge">晚清时期</div>
+    </div>
+    
+    <div class="title-section">
+      <h1 class="main-title">沈家外销黄金时代</h1>
+      <p class="subtitle">万国博览巅峰</p>
+    </div>
+    
+    <div class="content-grid">
+      <!-- 横向圆弧曲线 -->
+      <div class="arc-container">
+        <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+          <defs>
+            <filter id="arcGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <!-- 横向圆弧曲线 -->
+          <path class="arc-line glow-filter" d="M50,180 Q300,20 600,50 T1150,180" />
+        </svg>
+      </div>
+      
+      <!-- 节点容器 -->
+      <div class="timeline-nodes">
+        <div class="info-card" data-modal="modal1">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">世博辉煌</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal2">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">工艺三宝</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal3">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">外销盛况</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+        
+        <div class="info-card" data-modal="modal4">
+          <div class="node-circle">
+            <div class="node-inner"></div>
+          </div>
+          <h2 class="card-title">经典作品</h2>
+          <div class="card-content">点击查看详情</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框1 - 世博辉煌 -->
+    <div class="modal-overlay" id="modal1">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">世博辉煌</h3>
+          <button class="modal-close" onclick="closeModal('modal1')">×</button>
+        </div>
+        <div class="modal-content">
+          <p>沈正镐、沈正恂兄弟执掌商号期间，福州脱胎漆器开始走向世界。</p>
+          <ul>
+            <li><strong>1900年</strong>：巴黎世博会金奖</li>
+            <li><strong>1904年</strong>：圣路易斯世博会金奖</li>
+          </ul>
+          <p>福州脱胎漆器凭借其精湛的工艺和独特的艺术魅力，在国际博览会上屡获殊荣，成为中国工艺美术的一张亮丽名片。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框2 - 工艺三宝 -->
+    <div class="modal-overlay" id="modal2">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">工艺三宝</h3>
+          <button class="modal-close" onclick="closeModal('modal2')">×</button>
+        </div>
+        <div class="modal-content">
+          <p>福州脱胎漆器与景泰蓝、景德镇瓷器并称为"中华工艺三宝"。</p>
+          <p>其独特的艺术风格和精湛的制作工艺深受国际赞誉。</p>
+          <p>脱胎漆器以其"薄如纸、轻如翼、亮如镜"的特点，展现了中国传统漆艺的最高水平。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框3 - 外销盛况 -->
+    <div class="modal-overlay" id="modal3">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">外销盛况</h3>
+          <button class="modal-close" onclick="closeModal('modal3')">×</button>
+        </div>
+        <div class="modal-content">
+          <ul>
+            <li><strong>欧洲市场</strong>：英国、法国、德国</li>
+            <li><strong>美洲市场</strong>：美国、加拿大</li>
+            <li><strong>亚洲市场</strong>：日本、东南亚</li>
+          </ul>
+          <p>鼎盛时期，福州脱胎漆器远销世界各地，成为当时中国最重要的出口工艺品之一，为国家创造了大量外汇收入。</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 模态框4 - 经典作品 -->
+    <div class="modal-overlay" id="modal4">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 class="modal-title">经典作品</h3>
+          <button class="modal-close" onclick="closeModal('modal4')">×</button>
+        </div>
+        <div class="modal-content">
+          <div class="work-item">
+            <span class="work-text"><strong>脱胎观音像</strong>：轻盈如纸，神态庄严</span>
+            <div class="work-image"><img src="脱胎观音像.gif" alt="脱胎观音像" /></div>
+          </div>
+          <div class="work-item">
+            <span class="work-text"><strong>百宝嵌屏风</strong>：镶嵌各种珍贵材料</span>
+            <div class="work-image"><img src="百宝嵌屏风.gif" alt="百宝嵌屏风" /></div>
+          </div>
+          <div class="work-item">
+            <span class="work-text"><strong>漆雕花瓶</strong>：精雕细琢，金碧辉煌</span>
+            <div class="work-image"><img src="漆雕花瓶.gif" alt="漆雕花瓶" /></div>
+          </div>
+          <p>这些经典作品代表了福州脱胎漆器的最高工艺水平，被国内外博物馆和收藏家视为珍品。</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="highlight-box">
+      <p>"福州漆器，精工绝伦，为世界所珍视。" — 1904年圣路易斯世博会评语</p>
+    </div>
+  </div>
+  
+  <script>
+    // 打开模态框
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    
+    // 关闭模态框
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+    
+    // 点击板块打开对应模态框
+    const infoCards = document.querySelectorAll('.info-card');
+    infoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const modalId = card.dataset.modal;
+        openModal(modalId);
+      });
+    });
+    
+    // 点击模态框背景关闭
+    const modalOverlays = document.querySelectorAll('.modal-overlay');
+    modalOverlays.forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+    
+    // ESC键关闭模态框
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+          activeModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>

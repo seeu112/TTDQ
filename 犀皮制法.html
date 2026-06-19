@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>锦绣西南 - 犀皮制法</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(ellipse at top, #1a1410 0%, #0a0a0a 50%, #050505 100%);
+      min-height: 100vh;
+      padding: 140px 40px 80px;
+      font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      overflow-x: hidden;
+    }
+    
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      z-index: 1000;
+      padding: 15px 20px;
+    }
+    
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-title {
+      color: #d4af37;
+      font-size: 1.2rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 4px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    
+    .nav-links a {
+      color: rgba(212, 175, 55, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    .nav-links a.active {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.15);
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .gallery-container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 100px;
+      position: relative;
+      padding: 60px 0;
+    }
+
+    .gallery-header::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      border-radius: 1px;
+    }
+
+    .gallery-header::after {
+      content: '';
+      position: absolute;
+      top: calc(20% - 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #d4af37, #b8941f);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6), 0 0 40px rgba(212, 175, 55, 0.3);
+    }
+
+    .gallery-header .divider {
+      position: absolute;
+      bottom: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+    }
+
+    .gallery-header .divider::before,
+    .gallery-header .divider::after {
+      content: '';
+      position: absolute;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.5);
+    }
+
+    .gallery-header .divider::before {
+      left: 10%;
+    }
+
+    .gallery-header .divider::after {
+      right: 10%;
+    }
+
+    .gallery-title {
+      font-family: 'STKaiti', 'KaiTi', '楷体', 'SimKai', serif;
+      font-size: 4rem;
+      font-weight: 500;
+      letter-spacing: 30px;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+      background: linear-gradient(135deg, #f4d03f 0%, #d4af37 25%, #b8941f 50%, #d4af37 75%, #f4d03f 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.3));
+      padding: 0 25px;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% {
+        background-position: 0% 50%;
+        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5)) drop-shadow(0 0 40px rgba(212, 175, 55, 0.3));
+      }
+      50% {
+        background-position: 100% 50%;
+        filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.7)) drop-shadow(0 0 60px rgba(212, 175, 55, 0.4));
+      }
+    }
+
+    .gallery-title::before,
+    .gallery-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6));
+    }
+
+    .gallery-title::before {
+      left: -140px;
+    }
+
+    .gallery-title::after {
+      right: -140px;
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.6), transparent);
+    }
+
+    .gallery-subtitle {
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      color: rgba(212, 175, 55, 0.7);
+      font-size: 0.85rem;
+      letter-spacing: 10px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 36px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(145deg, rgba(28, 24, 20, 0.95), rgba(12, 10, 8, 0.98));
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      backdrop-filter: blur(20px);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: rgba(212, 175, 55, 0.4);
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.6), 
+        0 0 40px rgba(212, 175, 55, 0.15),
+        inset 0 0 60px rgba(212, 175, 55, 0.02);
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 270px;
+      object-fit: contain;
+      display: block;
+      background: linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.04);
+    }
+
+    .gallery-item .number {
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(145deg, #f4d03f, #d4af37, #b8941f);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 0.85rem;
+      font-weight: 800;
+      z-index: 2;
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      letter-spacing: 2px;
+      box-shadow: 
+        0 4px 15px rgba(212, 175, 55, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.3);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .gallery-item:hover .number {
+      transform: scale(1.15);
+      box-shadow: 
+        0 8px 25px rgba(212, 175, 55, 0.6),
+        0 0 30px rgba(212, 175, 55, 0.5),
+        0 0 50px rgba(212, 175, 55, 0.3);
+    }
+
+    .gallery-item .caption {
+      padding: 20px 24px 24px;
+      text-align: center;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+    }
+
+    .gallery-item .caption-text {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      font-weight: 300;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    }
+
+    .gallery-item .caption-num {
+      color: rgba(212, 175, 55, 0.7);
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      margin-top: 6px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-item:hover .caption-num {
+      opacity: 1;
+    }
+
+    .gallery-item .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.82rem;
+      line-height: 1.75;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      text-align: justify;
+      text-indent: 2em;
+    }
+
+    .gallery-item .description.show {
+      opacity: 1;
+      max-height: 220px;
+    }
+
+    .gallery-item img {
+      cursor: pointer;
+    }
+
+    .gallery-item .media-container {
+      position: relative;
+      width: 100%;
+      height: 270px;
+      overflow: hidden;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .gallery-item .media-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #000;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-item .hidden-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #000;
+    }
+
+    .gallery-item .hidden-video.show {
+      display: block;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 1400px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      body {
+        padding: 40px 25px;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 22px;
+      }
+
+      .gallery-title {
+        font-size: 2.5rem;
+        letter-spacing: 18px;
+      }
+
+      .gallery-title::before,
+      .gallery-title::after {
+        width: 80px;
+      }
+
+      .gallery-title::before {
+        left: -100px;
+      }
+
+      .gallery-title::after {
+        right: -100px;
+      }
+
+      .gallery-item img {
+        height: 220px;
+      }
+
+      .gallery-item .media-container {
+        height: 220px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 30px 15px;
+      }
+      
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .gallery-title {
+        font-size: 1.8rem;
+        letter-spacing: 12px;
+      }
+
+      .gallery-title::before,
+      .gallery-title::after {
+        display: none;
+      }
+
+      .gallery-header::before,
+      .gallery-header::after {
+        display: none;
+      }
+
+      .gallery-item img {
+        height: 180px;
+      }
+
+      .gallery-item .media-container {
+        height: 180px;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .gallery-item {
+      animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      opacity: 0;
+    }
+
+    .gallery-item:nth-child(1) { animation-delay: 0.05s; }
+    .gallery-item:nth-child(2) { animation-delay: 0.1s; }
+    .gallery-item:nth-child(3) { animation-delay: 0.15s; }
+    .gallery-item:nth-child(4) { animation-delay: 0.2s; }
+    .gallery-item:nth-child(5) { animation-delay: 0.25s; }
+    .gallery-item:nth-child(6) { animation-delay: 0.3s; }
+    .gallery-item:nth-child(7) { animation-delay: 0.35s; }
+    .gallery-item:nth-child(8) { animation-delay: 0.4s; }
+    .gallery-item:nth-child(9) { animation-delay: 0.45s; }
+    .gallery-item:nth-child(10) { animation-delay: 0.5s; }
+    .gallery-item:nth-child(11) { animation-delay: 0.55s; }
+    .gallery-item:nth-child(12) { animation-delay: 0.6s; }
+    .gallery-item:nth-child(13) { animation-delay: 0.65s; }
+    .gallery-item:nth-child(14) { animation-delay: 0.7s; }
+  </style>
+</head>
+<body>
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="nav-title">技法</div>
+      <div class="nav-links">
+        <a href="戗金/戗金.html">戗金</a>
+        <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+        <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+        <a href="堆红做法.html">堆红</a>
+        <a href="制作贴金.html">贴金</a>
+        <a href="犀皮制法.html" class="active">犀皮</a>
+        <a href="灰条制法.html">灰条</a>
+        <a href="金缮做法.html">金缮</a>
+        <a href="采漆方法.html">采漆</a>
+        <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+        <a href="描金法_files/描金法.html">描金</a>
+        <a href="制作朱漆.html">朱漆</a>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-header">
+      <h1 class="gallery-title">犀皮制法</h1>
+      <p class="gallery-subtitle">传统工艺 · 匠心传承</p>
+      <div class="divider"></div>
+    </div>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <span class="number">01</span>
+        <img src="./犀皮制法_files/1.jpeg" alt="步骤1" onclick="toggleDescription(this)">
+        <div class="caption">
+          <div class="caption-text">基底准备</div>
+          <div class="caption-num">STEP 01</div>
+          <div class="description">准备一块上过灰漆的平实漆板。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">02</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/2.jpeg" alt="步骤2" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/2.mp4" poster="./犀皮制法_files/2.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">调配漆料</div>
+          <div class="caption-num">STEP 02</div>
+          <div class="description">调制打捻漆，取鸡蛋的蛋清加入预备打捻的色漆中，大致比例为蛋清二、色漆八。加入蛋清，是为了让漆液更黏稠，便于下一步塑起形状。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">03</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/3.jpeg" alt="步骤3" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/3.mp4" poster="./犀皮制法_files/3.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">调匀漆液</div>
+          <div class="caption-num">STEP 03</div>
+          <div class="description">用刮板将蛋清和漆液调匀。调匀后还需往复翻拌几次，直至漆液黏稠如牙膏状。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">04</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/4.jpeg" alt="步骤4" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/4.mp4" poster="./犀皮制法_files/4.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">打捻</div>
+          <div class="caption-num">STEP 04</div>
+          <div class="description">打捻，刮板上蘸取适量漆液在漆板上打起捻子。打捻的时候需要注意，捻的高度要尽量一致，通常在两毫米；捻的形状大小和风格要尽量一致；捻与捻之间的分布要基本均衡、美观。打捻完毕后，还可以参考这几点要求再做整体调整。捻打得越高，干燥得就越慢，也越容易起皱。打捻完成后将漆板放入荫房待干。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">05</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/5.jpeg" alt="步骤5" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/5.mp4" poster="./犀皮制法_files/5.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">调黄色漆</div>
+          <div class="caption-num">STEP 05</div>
+          <div class="description">调黄色漆，漆里面加入少量樟脑油稍作稀释。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">06</span>
+        <img src="./犀皮制法_files/6.jpeg" alt="步骤6" onclick="toggleDescription(this)">
+        <div class="caption">
+          <div class="caption-text">髹涂黄漆</div>
+          <div class="caption-num">STEP 06</div>
+          <div class="description">髹涂黄色漆层。涂的时候需要注意，每一层漆必须干透才能再上第二层，如有漏涂或髹涂厚薄不均的地方，应及时处理。涂好后将漆板放入荫房待干。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">07</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/7.jpeg" alt="步骤7" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/7.mp4" poster="./犀皮制法_files/7.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">调红色漆</div>
+          <div class="caption-num">STEP 07</div>
+          <div class="description">调红色漆。髹涂不同颜色的漆层时，注意髹刷不要混用，以免影响最终犀皮的效果。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">08</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/8.jpeg" alt="步骤8" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/8.mp4" poster="./犀皮制法_files/8.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">髹涂红漆</div>
+          <div class="caption-num">STEP 08</div>
+          <div class="description">在干透的黄色漆层上继续髹涂红色漆层。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">09</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/9.jpeg" alt="步骤9" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/9.mp4" poster="./犀皮制法_files/9.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">调金漆</div>
+          <div class="caption-num">STEP 09</div>
+          <div class="description">调金漆，金粉和透明漆的比例大致为一比一，用笔或刮板慢慢调拌至两者完全融合。金粉较轻，容易四处飘散，使用时应戴好防护口罩。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">10</span>
+        <img src="./犀皮制法_files/10.jpeg" alt="步骤10" onclick="toggleDescription(this)">
+        <div class="caption">
+          <div class="caption-text">髹涂金漆</div>
+          <div class="caption-num">STEP 10</div>
+          <div class="description">髹涂金漆，涂好后将漆板放入荫房待干。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">11</span>
+        <img src="./犀皮制法_files/11.jpeg" alt="步骤11" onclick="toggleDescription(this)">
+        <div class="caption">
+          <div class="caption-text">重复髹涂</div>
+          <div class="caption-num">STEP 11</div>
+          <div class="description">按照红色-金色-红色的步骤重复涂漆层。每一层漆干透后再髹涂第二层。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">12</span>
+        <img src="./犀皮制法_files/12.jpeg" alt="步骤12" onclick="toggleDescription(this)">
+        <div class="caption">
+          <div class="caption-text">打磨漆面</div>
+          <div class="caption-num">STEP 12</div>
+          <div class="description">髹涂好的漆板完全干透后，用磨条蘸水打磨漆面。磨的时候要用力均匀，把所有突起的捻磨至同一高度，不要只打磨一处。磨完一道，就更换目数更大的磨条继续打磨，基本打磨到2000目为止。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">13</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/13.jpeg" alt="步骤13" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/13.mp4" poster="./犀皮制法_files/13.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">推光处理</div>
+          <div class="caption-num">STEP 13</div>
+          <div class="description">磨好后，进一步给器表推光。</div>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <span class="number">14</span>
+        <div class="media-container">
+          <img src="./犀皮制法_files/14.jpeg" alt="步骤14" onclick="playVideo(this)">
+          <video class="hidden-video" src="./犀皮制法_files/14.mp4" poster="./犀皮制法_files/14.jpeg" preload="auto" playsinline></video>
+        </div>
+        <div class="caption">
+          <div class="caption-text">完成制作</div>
+          <div class="caption-num">STEP 14</div>
+          <div class="description">一块犀皮的试验板就制成了。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDescription(img) {
+      const caption = img.nextElementSibling;
+      const description = caption.querySelector('.description');
+      if (description) {
+        description.classList.toggle('show');
+      }
+    }
+
+    function playVideo(img) {
+      const container = img.parentElement;
+      const video = container.querySelector('.hidden-video');
+      if (video) {
+        img.style.display = 'none';
+        video.classList.add('show');
+        video.load();
+        video.play().catch(e => {
+          console.log('Autoplay blocked:', e);
+          console.log('Video source:', video.src);
+          console.log('Video readyState:', video.readyState);
+        });
+      }
+      
+      const caption = container.nextElementSibling;
+      const description = caption.querySelector('.description');
+      if (description) {
+        description.classList.add('show');
+      }
+    }
+  </script>
+</body>
+</html>

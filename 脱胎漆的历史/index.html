@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福州脱胎漆器 圆弧时间导航</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:serif}
+body{
+  width:100vw;height:100vh;
+  background:#1a1410;
+  display:flex;overflow:hidden;
+  position:relative;
+  padding-top: 70px;
+}
+/* 顶部导航栏 */
+.nav-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  z-index: 1000;
+  padding: 0 40px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+.nav-content {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-logo-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  position: relative;
+}
+.nav-logo-circle::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #d4af37;
+}
+.nav-logo-circle::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4af37;
+  position: absolute;
+}
+.nav-title {
+  color: #d4af37;
+  font-size: 16px;
+  font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+  letter-spacing: 3px;
+}
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+.main-nav-item {
+  position: relative;
+  padding: 8px 12px;
+  color: #c4b090;
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'STKaiti', 'KaiTi', serif;
+}
+.main-nav-item:hover {
+  color: #d4af37;
+}
+.main-nav-item.active {
+  color: #d4af37;
+}
+.main-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #d4af37;
+  transform: translateX(-50%);
+  transition: width 0.3s ease;
+}
+.main-nav-item:hover::after,
+.main-nav-item.active::after {
+  width: 60%;
+}
+/* 背景图 - 如需更换背景图，请修改下面的URL地址 */
+.bg-main{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  /* 更换背景图方法：将下面的URL替换为您自己的图片地址即可 */
+  background:url('https://neeko-copilot.bytedance.net/api/text2image?prompt=Chinese%20traditional%20lacquer%20artisan%20painting%20a%20gourd%20vase%20with%20red%20and%20black%20lacquer%20in%20his%20workshop%20with%20ancient%20Chinese%20style%20paintings%20watercolor%20illustration&image_size=landscape_16_9') center/cover no-repeat;
+  opacity:0.18;
+  pointer-events:none;
+  filter:sepia(15%) brightness(80%) contrast(110%);
+  z-index:1;
+}
+/* 暗色覆盖层 */
+.bg-overlay{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  background:linear-gradient(135deg, rgba(13,10,8,0.7) 0%, rgba(26,20,16,0.6) 50%, rgba(13,10,8,0.7) 100%);
+  pointer-events:none;
+  z-index:2;
+}
+/* 粒子动画画布 */
+.particle-canvas{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:3;
+}
+/* 中间文字面板 */
+.left-panel{
+  width:100%;height:100%;
+  padding:180px 60px 60px;
+  padding-left:150px;
+  color:#e8d9c4;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  text-align:left;
+  z-index:10;
+}
+.button-panel{
+  padding:60px;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+}
+
+.main-title{
+  font-size:42px;color:#d4b87a;
+  margin-bottom:12px;
+  position:relative;
+}
+.time-period{
+  font-size:18px;color:#c4b090;
+  margin-bottom:25px;
+  padding-bottom:15px;
+  border-bottom:1px solid rgba(212,184,122,0.2);
+  letter-spacing:3px;
+}
+.desc-text{
+  margin:30px 0 50px;
+  font-size:18px;line-height:1.8;opacity:0.9;
+}
+.start-btn{
+  border:1px solid #d4b87a;
+  background:transparent;color:#d4b87a;
+  padding:14px 40px;border-radius:99px;
+  font-size:18px;cursor:pointer;
+  transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position:relative;
+  overflow:hidden;
+}
+.start-btn:hover{
+  background:#d4b87a;color:#1a1410;
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 20px rgba(212,184,122,0.4),
+    0 0 40px rgba(212,184,122,0.3),
+    0 0 60px rgba(212,184,122,0.2),
+    0 8px 25px rgba(0,0,0,0.3);
+}
+.start-btn:active{
+  transform:translateY(0) scale(0.98);
+}
+.start-btn{
+  animation:btn-glow 3s ease-in-out infinite;
+}
+@keyframes btn-glow{
+  0%,100%{
+    box-shadow:0 0 5px rgba(212,184,122,0.2);
+  }
+  50%{
+    box-shadow:0 0 15px rgba(212,184,122,0.4);
+  }
+}
+.start-btn::before{
+  content:"";
+  position:absolute;top:50%;left:50%;
+  width:0;height:0;
+  background:rgba(212,184,122,0.3);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:width 0.6s, height 0.6s;
+}
+.start-btn:active::before{
+  width:300px;height:300px;
+}
+
+/* 右侧圆弧导航容器 */
+.right-nav{
+  flex:1;position:relative;height:100%;
+  background:url('') center/cover no-repeat;
+}
+/* 圆弧轨道SVG */
+.arc-wrap{
+  position:absolute;right:120px;top:50%;transform:translateY(-50%);
+  width:480px;height:720px;
+}
+svg{width:100%;height:100%;overflow:visible}
+.arc-line{stroke:#c8a97c;stroke-width:2;fill:none;opacity:0.7}
+/* 节点通用样式 */
+.dot{
+  cursor:pointer;
+  filter:drop-shadow(0 0 0 rgba(212,184,122,0));
+  transition:filter 0.3s ease;
+}
+.dot-circle{
+  fill:#1a1410;stroke:#d4b87a;stroke-width:1.5;
+  transition:stroke-width 0.3s ease, r 0.3s ease;
+}
+.dot-fill{
+  fill:#d4b87a;
+  transition:all 0.3s ease;
+  filter:url(#glow);
+}
+/* 悬停效果只应用到圆圈，文字保持不变 */
+.dot:hover .dot-circle{
+  stroke-width:2;
+  r:8;
+}
+.dot:hover .dot-fill{
+  r:8;
+}
+.dot:hover{
+  filter:drop-shadow(0 0 10px rgba(212,184,122,0.6));
+}
+.dot-active circle{
+  stroke-width:3;
+  r:14;
+}
+.dot-active{
+  filter:drop-shadow(0 0 15px rgba(212,184,122,0.8));
+}
+/* 选中节点发光效果 */
+.dot-active .dot-glow{
+  opacity:1;
+}
+/* 发光圈 */
+.dot-glow{
+  fill:none;
+  stroke:#d4b87a;
+  stroke-width:2;
+  opacity:0;
+  transition:opacity 0.3s ease;
+  animation:glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse{
+  0%,100%{
+    r:20;
+    opacity:0.4;
+    stroke-width:1;
+  }
+  50%{
+    r:35;
+    opacity:0.8;
+    stroke-width:2;
+  }
+}
+.chapter-text{
+  fill:#e8d9c4;font-size:16px;
+  transition:fill 0.3s;
+}
+.dot:hover .chapter-text{
+  fill:#d4b87a;
+}
+/* 涟漪效果容器 */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(212,184,122,0.3);
+  animation:ripple-effect 0.6s ease-out forwards;
+  pointer-events:none;
+}
+@keyframes ripple-effect{
+  from{width:10px;height:10px;opacity:1;}
+  to{width:60px;height:60px;opacity:0;}
+}
+/* 内容过渡动画 */
+.main-title, .desc-text{
+  transition:all 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.content-transition{
+  animation:fadeInUp 0.5s ease-out;
+}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+<body>
+<!-- 顶部导航栏 -->
+<div class="nav-header">
+  <div class="nav-content">
+    <div class="nav-logo">
+      <div class="nav-logo-circle"></div>
+      <span class="nav-title">福州脱胎漆</span>
+    </div>
+    <div class="main-nav">
+      <div class="main-nav-item" onclick="window.location.href='../index.html'">首页</div>
+      <div class="main-nav-item" onclick="window.location.href='../脱胎漆的介绍＋优势/index.html'">脱胎漆介绍</div>
+      <div class="main-nav-item active">历史溯源</div>
+      <div class="main-nav-item" onclick="window.location.href='../脱胎漆域.html'">脱胎漆域</div>
+      <div class="main-nav-item" onclick="window.location.href='../1.html'">技艺源流</div>
+      <div class="main-nav-item" onclick="window.location.href='../技法封面.html'">技法传承</div>
+      <div class="main-nav-item" onclick="window.location.href='../黑金漆艺/index.html'">脱胎纹貌</div>
+      <div class="main-nav-item" onclick="window.location.href='../脱胎漆干燥程度/脱胎漆器干燥环境模拟器.html'">干燥模拟</div>
+    </div>
+  </div>
+</div>
+<!-- 背景层 -->
+<div class="bg-main"></div>
+<div class="bg-overlay"></div>
+<!-- 粒子动画层 -->
+<canvas class="particle-canvas"></canvas>
+
+<div class="left-panel">
+  <h1 class="main-title" id="page-title">福州脱胎漆器 · 工艺源流</h1>
+  <div class="time-period" id="page-time"></div>
+  <div class="desc-text" id="page-desc">
+    源自上古夹纻技艺，清乾隆由沈绍安改良创立，历经百年外销、国营国礼、非遗传承、现代文创迭代。
+  </div>
+</div>
+<div class="button-panel">
+  <button class="start-btn" id="enter-library">进入资料库</button>
+</div>
+
+
+
+<div class="right-nav">
+  <div class="arc-wrap">
+    <!-- SVG圆弧轨道+6个点位 对应6个历史阶段 -->
+    <svg viewBox="0 0 480 720">
+      <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+        <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+          <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <!-- 圆弧主线 -->
+      <path class="arc-line" d="M60,40 A180,320 0 0,1 60,680" />
+
+      <!-- 节点1 战国夹纻 -->
+      <g class="dot" data-index="0" transform="translate(60,40)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-circle" r="6"/>
+        <text class="chapter-text" x="30" y="5">战国·夹纻起源</text>
+      </g>
+      <!-- 节点2 清沈绍安 -->
+      <g class="dot" data-index="1" transform="translate(200,160)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-fill" r="6"/>
+        <text class="chapter-text" x="30" y="5">乾隆·沈绍安创艺</text>
+      </g>
+      <!-- 节点3 晚清国际金奖 默认激活 -->
+      <g class="dot dot-active" data-index="2" transform="translate(240,360)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-fill" r="10"/>
+        <text class="chapter-text" x="35" y="8">晚清·万国博览巅峰</text>
+      </g>
+      <!-- 节点4 建国国营厂 -->
+      <g class="dot" data-index="3" transform="translate(200,520)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-fill" r="6"/>
+        <text class="chapter-text" x="30" y="5">1949后·国礼漆器</text>
+      </g>
+      <!-- 节点5 2006非遗 -->
+      <g class="dot" data-index="4" transform="translate(120,620)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-fill" r="6"/>
+        <text class="chapter-text" x="30" y="5">2006·国家级非遗</text>
+      </g>
+      <!-- 节点6 当代文创 -->
+      <g class="dot" data-index="5" transform="translate(60,680)">
+        <circle class="dot-glow" r="18"/>
+        <circle class="dot-circle" r="6"/>
+        <text class="chapter-text" x="30" y="5">现代·漆艺文创复兴</text>
+      </g>
+    </svg>
+  </div>
+</div>
+
+<script>
+// 每个节点对应文案库和图片
+const contentList = [
+  {
+    title:"夹纻初形 古漆本源",
+    time:"公元前 300 年 — 公元 589 年",
+    desc:"战国至汉魏，以苎麻布漆灰裱模脱模，为脱胎漆原始形态，多用于佛像、礼器。《髹饰录》称重布胎。",
+    image:"战国.png"
+  },
+  {
+    title:"清乾隆 沈绍安创立福州脱胎",
+    time:"1767年—1835年",
+    desc:"侯官匠人沈绍安修复朽木匾额时复原夹纻，改良薄料髹涂，器物轻如蝉翼，进贡宫廷受皇室赏识。",
+    image:"乾隆.png"
+  },
+  {
+    title:"晚清沈家外销黄金时代",
+    time:"1880 年 —1937 年",
+    desc:"沈正镐、沈正恂执掌商号，拿下巴黎、圣路易斯世博会金奖，与景泰蓝、瓷器并称中华工艺三宝。",
+    image:"晚清·万国博览巅峰.png"
+  },
+  {
+    title:"建国国营漆器厂时代",
+    time:"1949 年 —1999 年",
+    desc:"福州组建专业漆工厂，量产高端陈设器，长期作为外交国礼，赤宝砂、堆漆浮雕工艺标准化成熟。",
+    image:"949后·国礼漆器.png"
+  },
+  {
+    title:"2006列入首批国家级非遗",
+    time:"2006 年 5 月 20 日",
+    desc:"国务院正式将福州脱胎漆器髹饰技艺录入国家级非物质文化遗产名录，启动系统性保护传承。",
+    image:"2006·国家级非遗.png"
+  },
+  {
+    title:"当代年轻文创转型",
+    time:"2010 年 — 至今（2026）",
+    desc:"传统大漆结合首饰、装置、空间设计，新生代匠人开拓耳饰、茶器、数字漆艺等年轻化产品线。",
+    image:"现代·漆艺文创复兴.png"
+  }
+];
+
+const dots = document.querySelectorAll('.dot');
+const titleDom = document.getElementById('page-title');
+const timeDom = document.getElementById('page-time');
+const descDom = document.getElementById('page-desc');
+const arcWrap = document.querySelector('.arc-wrap');
+let currentIndex = 2; // 默认选中第三个节点
+let isScrolling = false; // 防止滚动抖动
+
+// 创建涟漪效果
+function createRipple(event, dot) {
+  const rect = dot.getBoundingClientRect();
+  const arcRect = arcWrap.getBoundingClientRect();
+  const x = event.clientX - arcRect.left;
+  const y = event.clientY - arcRect.top;
+  
+  const ripple = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+  ripple.setAttribute('cx', x);
+  ripple.setAttribute('cy', y);
+  ripple.setAttribute('r', '10');
+  ripple.setAttribute('fill', 'rgba(212,184,122,0.4)');
+  ripple.setAttribute('class', 'ripple-circle');
+  
+  const svg = arcWrap.querySelector('svg');
+  svg.appendChild(ripple);
+  
+  // 动画完成后移除
+  setTimeout(() => {
+    ripple.remove();
+  }, 600);
+}
+
+// 切换到指定索引的节点
+function switchToIndex(index) {
+  if (index < 0 || index >= dots.length || index === currentIndex) return;
+  
+  // 清除所有激活
+  dots.forEach(d => d.classList.remove('dot-active'));
+  
+  // 点亮当前
+  const dot = dots[index];
+  dot.classList.add('dot-active');
+  currentIndex = index;
+  
+  // 更新内容
+  titleDom.classList.remove('content-transition');
+  timeDom.classList.remove('content-transition');
+  descDom.classList.remove('content-transition');
+  void titleDom.offsetWidth; // 强制重绘
+  
+  titleDom.innerText = contentList[index].title;
+  timeDom.innerText = contentList[index].time;
+  descDom.innerText = contentList[index].desc;
+  
+  titleDom.classList.add('content-transition');
+  timeDom.classList.add('content-transition');
+  descDom.classList.add('content-transition');
+}
+
+// 点击切换内容+激活高亮
+dots.forEach(dot => {
+  dot.addEventListener('click', (e) => {
+    createRipple(e, dot);
+    const idx = parseInt(dot.dataset.index);
+    switchToIndex(idx);
+  });
+});
+
+// 滚轮滚动切换节点
+document.addEventListener('wheel', (e) => {
+  if (isScrolling) return;
+  
+  isScrolling = true;
+  
+  if (e.deltaY > 0) {
+    // 向下滚动，切换到下一个节点
+    switchToIndex(currentIndex + 1);
+  } else {
+    // 向上滚动，切换到上一个节点
+    switchToIndex(currentIndex - 1);
+  }
+  
+  setTimeout(() => {
+    isScrolling = false;
+  }, 500); // 500ms内忽略重复滚动
+  
+  e.preventDefault();
+}, { passive: false });
+
+// 键盘上下键切换节点
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowDown') {
+    switchToIndex(currentIndex + 1);
+    e.preventDefault();
+  } else if (e.key === 'ArrowUp') {
+    switchToIndex(currentIndex - 1);
+    e.preventDefault();
+  }
+});
+
+// 触摸滑动切换节点
+let touchStartY = 0;
+let touchEndY = 0;
+
+document.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchmove', (e) => {
+  touchEndY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener('touchend', () => {
+  if (isScrolling) return;
+  
+  const deltaY = touchStartY - touchEndY;
+  const minSwipeDistance = 50; // 最小滑动距离
+  
+  if (Math.abs(deltaY) > minSwipeDistance) {
+    isScrolling = true;
+    
+    if (deltaY > 0) {
+      // 向上滑动，切换到下一个节点
+      switchToIndex(currentIndex + 1);
+    } else {
+      // 向下滑动，切换到上一个节点
+      switchToIndex(currentIndex - 1);
+    }
+    
+    setTimeout(() => {
+      isScrolling = false;
+    }, 500);
+  }
+}, { passive: true });
+
+// 进入资料库按钮点击事件
+const enterLibraryBtn = document.getElementById('enter-library');
+if (enterLibraryBtn) {
+  enterLibraryBtn.addEventListener('click', () => {
+    // 所有时期都先跳转到封面页面
+    if (currentIndex === 0) {
+      window.location.href = 'cover_0.html';
+    } else if (currentIndex === 1) {
+      window.location.href = 'cover_1.html';
+    } else if (currentIndex === 2) {
+      window.location.href = 'cover_2.html';
+    } else if (currentIndex === 3) {
+      window.location.href = 'cover_3.html';
+    } else if (currentIndex === 4) {
+      window.location.href = 'cover_4.html';
+    } else if (currentIndex === 5) {
+      window.location.href = 'cover_5.html';
+    } else {
+      window.location.href = `detail_${currentIndex}.html`;
+    }
+  });
+}
+
+// 高级粒子动画系统
+class AdvancedParticleSystem {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.particles = [];
+    this.orb = [];
+    this.trails = [];
+    this.resize();
+    this.initParticles();
+    this.initOrbs();
+    this.animate();
+  }
+  
+  resize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+  
+  initParticles() {
+    const particleCount = 100;
+    for (let i = 0; i < particleCount; i++) {
+      this.particles.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() - 0.5) * 0.4,
+        opacity: Math.random() * 0.4 + 0.1,
+        hue: Math.random() * 30 + 25, // 金色色调变化
+        pulsePhase: Math.random() * Math.PI * 2,
+        pulseSpeed: Math.random() * 0.02 + 0.01
+      });
+    }
+  }
+  
+  initOrbs() {
+    // 添加大型光斑
+    const orbCount = 4;
+    for (let i = 0; i < orbCount; i++) {
+      this.orb.push({
+        x: Math.random() * this.canvas.width,
+        y: Math.random() * this.canvas.height,
+        size: Math.random() * 150 + 100,
+        speedX: (Math.random() - 0.5) * 0.2,
+        speedY: (Math.random() - 0.5) * 0.2,
+        opacity: Math.random() * 0.05 + 0.02,
+        hue: Math.random() * 20 + 30
+      });
+    }
+  }
+  
+  update() {
+    // 更新粒子
+    this.particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      
+      if (p.x < 0 || p.x > this.canvas.width) p.speedX *= -1;
+      if (p.y < 0 || p.y > this.canvas.height) p.speedY *= -1;
+      
+      p.pulsePhase += p.pulseSpeed;
+      p.opacity = 0.1 + Math.sin(p.pulsePhase) * 0.25;
+    });
+    
+    // 更新光斑
+    this.orb.forEach(o => {
+      o.x += o.speedX;
+      o.y += o.speedY;
+      
+      if (o.x < -o.size || o.x > this.canvas.width + o.size) o.speedX *= -1;
+      if (o.y < -o.size || o.y > this.canvas.height + o.size) o.speedY *= -1;
+    });
+  }
+  
+  draw() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
+    // 绘制大型光斑背景
+    this.orb.forEach(o => {
+      const gradient = this.ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.size);
+      gradient.addColorStop(0, `hsla(${o.hue}, 50%, 50%, ${o.opacity})`);
+      gradient.addColorStop(0.5, `hsla(${o.hue}, 40%, 40%, ${o.opacity * 0.5})`);
+      gradient.addColorStop(1, `hsla(${o.hue}, 30%, 30%, 0)`);
+      
+      this.ctx.beginPath();
+      this.ctx.arc(o.x, o.y, o.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = gradient;
+      this.ctx.fill();
+    });
+    
+    // 绘制粒子发光效果
+    this.particles.forEach(p => {
+      const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 5);
+      gradient.addColorStop(0, `hsla(${p.hue}, 60%, 65%, ${p.opacity})`);
+      gradient.addColorStop(0.3, `hsla(${p.hue}, 50%, 55%, ${p.opacity * 0.6})`);
+      gradient.addColorStop(1, `hsla(${p.hue}, 40%, 45%, 0)`);
+      
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size * 5, 0, Math.PI * 2);
+      this.ctx.fillStyle = gradient;
+      this.ctx.fill();
+      
+      // 粒子核心
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      this.ctx.fillStyle = `hsla(${p.hue}, 50%, 80%, ${p.opacity * 1.5})`;
+      this.ctx.fill();
+    });
+    
+    // 绘制粒子连线
+    this.drawConnections();
+  }
+  
+  drawConnections() {
+    const maxDistance = 120;
+    
+    for (let i = 0; i < this.particles.length; i++) {
+      for (let j = i + 1; j < this.particles.length; j++) {
+        const dx = this.particles[i].x - this.particles[j].x;
+        const dy = this.particles[i].y - this.particles[j].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < maxDistance) {
+          const opacity = (1 - distance / maxDistance) * 0.12;
+          this.ctx.beginPath();
+          this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+          this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+          this.ctx.strokeStyle = `hsla(35, 50%, 60%, ${opacity})`;
+          this.ctx.lineWidth = 0.5;
+          this.ctx.stroke();
+        }
+      }
+    }
+  }
+  
+  animate() {
+    this.update();
+    this.draw();
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
+// 初始化高级粒子系统
+const particleCanvas = document.querySelector('.particle-canvas');
+if (particleCanvas) {
+  const advancedParticleSystem = new AdvancedParticleSystem(particleCanvas);
+  
+  window.addEventListener('resize', () => {
+    advancedParticleSystem.resize();
+  });
+}
+
+// 页面加载完成后初始化默认显示内容
+document.addEventListener('DOMContentLoaded', () => {
+  // 设置默认选中节点的激活状态
+  dots.forEach(d => d.classList.remove('dot-active'));
+  dots[currentIndex].classList.add('dot-active');
+  
+  // 显示默认内容
+  titleDom.innerText = contentList[currentIndex].title;
+  timeDom.innerText = contentList[currentIndex].time;
+  descDom.innerText = contentList[currentIndex].desc;
+});
+</script>
+<style>
+/* 涟漪圆圈动画 */
+.ripple-circle{
+  animation:ripple-expand 0.6s ease-out forwards;
+}
+@keyframes ripple-expand{
+  from{
+    r:5;
+    opacity:0.8;
+  }
+  to{
+    r:40;
+    opacity:0;
+  }
+}
+</style>
+</body>
+</html>

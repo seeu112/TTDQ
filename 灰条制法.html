@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>锦绣西南 - 工艺流程</title>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #000000;
+    font-family: 'Source Han Sans CN', sans-serif;
+    padding-top: 80px;
+  }
+  
+  .nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    z-index: 1000;
+    padding: 15px 20px;
+  }
+  
+  .nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .nav-title {
+    color: #d4af37;
+    font-size: 1.2rem;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    letter-spacing: 4px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  
+  .nav-links a {
+    color: rgba(212, 175, 55, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.1);
+  }
+  
+  .nav-links a.active {
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.15);
+  }
+
+  .gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .gallery-title-wrapper {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  .title-decoration-top {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .title-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #b8860b, #daa520);
+  }
+
+  .title-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #daa520;
+    box-shadow: 0 0 8px rgba(218, 165, 32, 0.5);
+  }
+
+  .gallery-title {
+    position: relative;
+    color: #daa520;
+    font-size: 3.5rem;
+    letter-spacing: 25px;
+    font-weight: 400;
+    margin: 25px 0 20px;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    text-shadow: 
+      0 0 20px rgba(218, 165, 32, 0.3),
+      0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .gallery-title::before,
+  .gallery-title::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.3), rgba(218, 165, 32, 0.8));
+  }
+
+  .gallery-title::before {
+    left: -180px;
+  }
+
+  .gallery-title::after {
+    right: -180px;
+    background: linear-gradient(90deg, rgba(218, 165, 32, 0.8), rgba(218, 165, 32, 0.3));
+  }
+
+  .gallery-subtitle {
+    color: #b8860b;
+    font-size: 0.95rem;
+    letter-spacing: 8px;
+    font-weight: 300;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-top: 10px;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(218, 165, 32, 0.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .gallery-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(218,165,32,0.2), rgba(255,255,255,0.05), rgba(218,165,32,0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .gallery-item:hover::before {
+    opacity: 1;
+  }
+
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .gallery-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 16px;
+    background: #000;
+  }
+
+  .gallery-video.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+
+
+  .gallery-item.has-video {
+    cursor: pointer;
+  }
+
+  .gallery-item.has-video img {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(218, 165, 32, 0.1);
+    border-color: rgba(218, 165, 32, 0.3);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .gallery-item .image-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #daa520;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover .image-number {
+    background: rgba(218, 165, 32, 0.2);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+  }
+
+  .gallery-item .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 20px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    transform: translateY(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover .image-caption {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .image-caption p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+  }
+
+  .gallery-item.has-detail {
+    cursor: pointer;
+  }
+
+  .item-detail {
+    background: linear-gradient(145deg, #0a0a0a 0%, #1a1510 50%, #0a0a0a 100%);
+    border: 1px solid rgba(218, 165, 32, 0.4);
+    border-radius: 16px;
+    padding: 28px 35px;
+    margin: 25px 15px 15px;
+    box-shadow: 
+      0 0 20px rgba(218, 165, 32, 0.1),
+      inset 0 0 30px rgba(0, 0, 0, 0.5),
+      0 2px 10px rgba(0, 0, 0, 0.3);
+    transform: translateY(-100%) scale(0.95);
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+  }
+
+  .item-detail::before {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 14px;
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    pointer-events: none;
+  }
+
+  .item-detail.show {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    height: auto;
+  }
+
+  .item-detail p {
+    color: #daa520;
+    font-size: 1.15rem;
+    line-height: 2;
+    letter-spacing: 3px;
+    text-align: center;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    text-shadow: 
+      0 0 10px rgba(218, 165, 32, 0.4),
+      0 1px 2px rgba(0, 0, 0, 0.5);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .gallery-container {
+      padding: 40px 20px;
+    }
+
+    .gallery-title {
+      font-size: 2rem;
+      letter-spacing: 12px;
+    }
+
+    .gallery-title::before,
+    .gallery-title::after {
+      width: 60px;
+    }
+
+    .gallery-title::before {
+      left: -80px;
+    }
+
+    .gallery-title::after {
+      right: -80px;
+    }
+
+    .gallery-subtitle {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+    }
+
+    .gallery-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="nav-title">技法</div>
+      <div class="nav-links">
+        <a href="戗金/戗金.html">戗金</a>
+        <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+        <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+        <a href="堆红做法.html">堆红</a>
+        <a href="制作贴金.html">贴金</a>
+        <a href="犀皮制法.html">犀皮</a>
+        <a href="灰条制法.html" class="active">灰条</a>
+        <a href="金缮做法.html">金缮</a>
+        <a href="采漆方法.html">采漆</a>
+        <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+        <a href="描金法_files/描金法.html">描金</a>
+        <a href="制作朱漆.html">朱漆</a>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-title-wrapper">
+      <div class="title-decoration-top">
+        <span class="title-line"></span>
+        <span class="title-dot"></span>
+        <span class="title-line"></span>
+      </div>
+      <h1 class="gallery-title">灰条制法</h1>
+      <p class="gallery-subtitle">ASH STRIP METHOD</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item has-detail" onclick="toggleDetail(1)">
+        <span class="image-number">1</span>
+        <img src="./灰条制法_files/1.png" alt="步骤1">
+        <div class="image-caption">
+          <p>备料研磨</p>
+        </div>
+        <div class="item-detail" id="detail-1">
+          <p>砖灰磨细成粉</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(2)">
+        <span class="image-number">2</span>
+        <img src="./灰条制法_files/2.png" alt="步骤2" id="video-cover-2">
+        <video id="video-2" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/2.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>调和浆料</p>
+        </div>
+        <div class="item-detail" id="detail-2">
+          <p>打磨成粉的砖灰加人水漂洗。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(3)">
+        <span class="image-number">3</span>
+        <img src="./灰条制法_files/3.png" alt="步骤3" id="video-cover-3">
+        <video id="video-3" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/3.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>过滤提纯</p>
+        </div>
+        <div class="item-detail" id="detail-3">
+          <p>极细的粉末随水漂出并收集，三四道后，粗质的粉末就去尽了。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(4)">
+        <span class="image-number">4</span>
+        <img src="./灰条制法_files/4.png" alt="步骤4" id="video-cover-4">
+        <video id="video-4" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/4.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>静置沉淀</p>
+        </div>
+        <div class="item-detail" id="detail-4">
+          <p>漂洗后的粉末铺平晒干。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(5)">
+        <span class="image-number">5</span>
+        <img src="./灰条制法_files/5.png" alt="步骤5" id="video-cover-5">
+        <video id="video-5" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/5.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>精细筛分</p>
+        </div>
+        <div class="item-detail" id="detail-5">
+          <p>晒干的灰料再次碾碎，过细筛箩。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-detail" onclick="toggleDetail(6)">
+        <span class="image-number">6</span>
+        <img src="./灰条制法_files/6.png" alt="步骤6">
+        <div class="image-caption">
+          <p>调配比例</p>
+        </div>
+        <div class="item-detail" id="detail-6">
+          <p>收集起筛过的粉末。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(7)">
+        <span class="image-number">7</span>
+        <img src="./灰条制法_files/7.png" alt="步骤7" id="video-cover-7">
+        <video id="video-7" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/7.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>均匀搅拌</p>
+        </div>
+        <div class="item-detail" id="detail-7">
+          <p>筛好的细灰内加人适量煎过的桐油和猪血料，调拌均匀。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-video" onclick="toggleVideo(8)">
+        <span class="image-number">8</span>
+        <img src="./灰条制法_files/8.png" alt="步骤8" id="video-cover-8">
+        <video id="video-8" class="gallery-video" playsinline webkit-playsinline preload="metadata">
+          <source src="./灰条制法_files/8.mp4" type="video/mp4">
+        </video>
+        <div class="image-caption">
+          <p>陈化熟成</p>
+        </div>
+        <div class="item-detail" id="detail-8">
+          <p>将灰料调拌至状如包饺子的面。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-detail" onclick="toggleDetail(9)">
+        <span class="image-number">9</span>
+        <img src="./灰条制法_files/9.png" alt="步骤9">
+        <div class="image-caption">
+          <p>成品检验</p>
+        </div>
+        <div class="item-detail" id="detail-9">
+          <p>灰料未干时，搓条切段，塑形后风干。</p>
+        </div>
+      </div>
+      <div class="gallery-item has-detail" onclick="toggleDetail(10)">
+        <span class="image-number">10</span>
+        <img src="./灰条制法_files/10.png" alt="步骤10">
+        <div class="image-caption">
+          <p>封装储存</p>
+        </div>
+        <div class="item-detail" id="detail-10">
+          <p>风干后，灰条就制成了。打磨时，将灰条蘸水磨漆即可。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggleDetail(id) {
+      var detail = document.getElementById('detail-' + id);
+      if (detail) {
+        detail.classList.toggle('show');
+      }
+    }
+
+    function toggleVideo(id) {
+      var video = document.getElementById('video-' + id);
+      var cover = document.getElementById('video-cover-' + id);
+      var detail = document.getElementById('detail-' + id);
+      
+      if (video && cover) {
+        if (video.classList.contains('show')) {
+          video.classList.remove('show');
+          cover.style.opacity = '1';
+          video.pause();
+          if (detail) {
+            detail.classList.remove('show');
+          }
+        } else {
+          video.classList.add('show');
+          cover.style.opacity = '0';
+          video.play().catch(function(e) {
+            console.log('Autoplay prevented, waiting for user interaction');
+          });
+          if (detail) {
+            detail.classList.add('show');
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

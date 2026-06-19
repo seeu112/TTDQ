@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脱胎漆器干燥环境模拟器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Noto Serif SC", "SimSun", serif;
+        }
+        
+        :root {
+            --gold-primary: #d4af37;
+            --gold-secondary: #f0d77e;
+            --gold-dark: #b8960c;
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a160f 50%, #0d0d0d 100%);
+            min-height: 100vh;
+            padding-top: 110px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 40px;
+            text-align: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .custom-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            z-index: 1000;
+            font-family: 'STKaiti', 'KaiTi', 'Microsoft YaHei', serif;
+        }
+        .custom-navbar .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .custom-navbar .logo-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #d4af37;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a0a;
+        }
+        .custom-navbar .logo-circle::before {
+            content: '';
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            border: 1px solid #d4af37;
+        }
+        .custom-navbar .logo-circle::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #d4af37;
+        }
+        .custom-navbar .logo-text {
+            font-size: 16px;
+            color: #d4af37;
+            letter-spacing: 3px;
+        }
+        .custom-navbar .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .custom-navbar .nav-item {
+            position: relative;
+            padding: 8px 10px;
+            color: #c4b090;
+            font-size: 13px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .custom-navbar .nav-item:hover {
+            color: #d4af37;
+        }
+        .custom-navbar .nav-item.active {
+            color: #d4af37;
+        }
+        .custom-navbar .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .custom-navbar .nav-item:hover::after,
+        .custom-navbar .nav-item.active::after {
+            width: 60%;
+        }
+        @media (max-width: 768px) {
+            .custom-navbar {
+                padding: 0 20px;
+                height: auto;
+                min-height: 70px;
+                flex-wrap: wrap;
+                align-content: center;
+            }
+            .custom-navbar .logo-text {
+                display: none;
+            }
+            .custom-navbar .nav-menu {
+                gap: 15px;
+            }
+            .custom-navbar .nav-item {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+            body {
+                padding-top: 100px;
+            }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.02) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 38px;
+            color: var(--gold-primary);
+            margin-bottom: 6px;
+            letter-spacing: 6px;
+            text-shadow: 
+                0 0 20px rgba(212, 175, 55, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .title-en {
+            font-size: 14px;
+            color: rgba(212, 175, 55, 0.6);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            font-family: "Georgia", "Times New Roman", serif;
+            font-style: italic;
+            animation: fadeInDown 1s ease-out 0.1s both;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: rgba(212, 175, 55, 0.4);
+            letter-spacing: 3px;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out 0.2s both;
+        }
+
+        .box-img-wrap {
+            width: 420px;
+            height: 420px;
+            margin: 0 auto 50px;
+            position: relative;
+            animation: fadeIn 1s ease-out 0.4s both;
+        }
+
+        .box-img-wrap::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            border-radius: 12px;
+            z-index: -2;
+            box-shadow: 
+                0 0 40px rgba(212, 175, 55, 0.3),
+                inset 0 0 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .box-img-wrap::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            background: #0a0a0a;
+            border-radius: 10px;
+            z-index: -1;
+        }
+
+        .img-container {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #1a1a1a 0%, #0f0f0f 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            opacity: 0.5;
+        }
+
+        .img-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+            opacity: 0.5;
+        }
+
+        #lacquerImg {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        #lacquerImg:hover {
+            transform: scale(1.02);
+        }
+
+        .tip-default {
+            color: rgba(212, 175, 55, 0.6);
+            font-size: 16px;
+        }
+
+        .control-panel {
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.9) 0%, rgba(10, 10, 10, 0.95) 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px 40px;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .slider-item {
+            margin-bottom: 32px;
+        }
+
+        .slider-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .txt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .label-text {
+            font-size: 18px;
+            color: var(--gold-secondary);
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .label-text::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--gold-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--gold-primary);
+        }
+
+        .value-text {
+            font-size: 20px;
+            color: var(--gold-primary);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            height: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(145deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 0 15px rgba(212, 175, 55, 0.5),
+                0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 
+                0 0 25px rgba(212, 175, 55, 0.7),
+                0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            background: linear-gradient(145deg, var(--gold-primary) 0%, var(--gold-dark) 100%);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 
+                0 0 15px rgba(212, 175, 55, 0.5),
+                0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.15);
+            box-shadow: 
+                0 0 25px rgba(212, 175, 55, 0.7),
+                0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            background: linear-gradient(90deg, var(--gold-primary) 0%, rgba(212, 175, 55, 0.1) 100%);
+            border-radius: 3px;
+        }
+
+        .bottom-tip {
+            margin-top: 45px;
+            padding: 20px 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 12px;
+            font-size: 19px;
+            color: var(--gold-secondary);
+            letter-spacing: 2px;
+            transition: all 0.5s ease;
+            animation: fadeInUp 1s ease-out 0.8s both;
+            min-height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bottom-tip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .bottom-tip:hover::before {
+            left: 100%;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold-primary);
+            box-shadow: 0 0 10px var(--gold-primary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: rgba(212, 175, 55, 0.3);
+            letter-spacing: 2px;
+            animation: fadeIn 1s ease-out 1s both;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+
+            .box-img-wrap {
+                width: 320px;
+                height: 320px;
+            }
+
+            .control-panel {
+                padding: 25px 20px;
+            }
+
+            .txt-row {
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 自定义导航栏 -->
+    <nav class="custom-navbar">
+      <div class="logo">
+        <div class="logo-circle"></div>
+        <span class="logo-text">福州脱胎漆</span>
+      </div>
+      <div class="nav-menu">
+        <div class="nav-item" data-url="../index.html">首页</div>
+        <div class="nav-item" data-url="../脱胎漆的介绍＋优势/index.html">脱胎漆介绍</div>
+        <div class="nav-item" data-url="../脱胎漆的历史/index.html">历史溯源</div>
+        <div class="nav-item" data-url="../脱胎漆域.html">脱胎漆域</div>
+        <div class="nav-item" data-url="../1.html">技艺源流</div>
+        <div class="nav-item" data-url="../技法封面.html">技法传承</div>
+        <div class="nav-item" data-url="../黑金漆艺/index.html">脱胎纹貌</div>
+        <div class="nav-item active" data-url="脱胎漆器干燥环境模拟器.html">干燥模拟</div>
+      </div>
+    </nav>
+    <script>
+      const navItems = document.querySelectorAll('.custom-navbar .nav-item');
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          navItems.forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          const url = item.dataset.url;
+          window.location.href = url;
+        });
+      });
+    </script>
+
+    <div class="container">
+        <h1>脱胎漆器干燥环境模拟器</h1>
+        <p class="title-en">Dry Environment Simulator for Lacquerware</p>
+        <p class="subtitle">传统工艺 · 匠心传承</p>
+
+        <div class="box-img-wrap">
+            <div class="img-container">
+                <img id="lacquerImg" alt="漆器">
+                <div id="tip-default" class="tip-default">图片加载中...</div>
+            </div>
+        </div>
+
+        <div class="control-panel">
+            <div class="slider-item">
+                <div class="txt-row">
+                    <span class="label-text">湿度</span>
+                    <span class="value-text" id="humValue">74%</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="humSlider" min="50" max="100" value="74">
+                </div>
+            </div>
+
+            <div class="slider-item">
+                <div class="txt-row">
+                    <span class="label-text">温度</span>
+                    <span class="value-text" id="tempValue">45℃</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="tempSlider" min="10" max="60" value="45">
+                </div>
+            </div>
+
+            <div class="slider-item">
+                <div class="txt-row">
+                    <span class="label-text">风速</span>
+                    <span class="value-text" id="windValue">4m/s</span>
+                </div>
+                <div class="slider-wrapper">
+                    <input type="range" id="windSlider" min="0" max="8" value="4">
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-tip" id="stateTip">
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>环境适宜，漆膜固化均匀</span>
+            </div>
+        </div>
+
+        <p class="footer">非遗技艺数字化保护</p>
+    </div>
+
+    <script>
+        const humSlider = document.getElementById('humSlider');
+        const tempSlider = document.getElementById('tempSlider');
+        const windSlider = document.getElementById('windSlider');
+
+        const humValueText = document.getElementById('humValue');
+        const tempValueText = document.getElementById('tempValue');
+        const windValueText = document.getElementById('windValue');
+        const lacquerImg = document.getElementById('lacquerImg');
+        const tipDefault = document.getElementById('tip-default');
+        const stateTip = document.getElementById('stateTip');
+
+        const imgSrc = {
+            perfect: "perfect.png.jpg",
+            cracked: "cracked.png.png",
+            severe_crack: "severe_crack.png.png",
+            minor_imperfection: "minor_imperfection.png.png",
+            wet: "wet.png.png",
+            soft: "soft.png.png",
+            scrapped: "scrapped.png.png"
+        }
+
+        let imgLoadOk = false;
+        const testImg = new Image();
+        testImg.src = imgSrc.perfect;
+        testImg.onload = () => {
+            imgLoadOk = true;
+            tipDefault.style.display = "none";
+            updateState();
+        }
+
+        function updateState() {
+            let hum = Number(humSlider.value);
+            let tempVal = Number(tempSlider.value);
+            let wind = Number(windSlider.value);
+
+            humValueText.textContent = hum + "%";
+            tempValueText.textContent = tempVal + "℃";
+            windValueText.textContent = wind + "m/s";
+
+            let finalImg = imgSrc.perfect;
+            let finalText = "";
+
+            const goodEnv = (hum >=70 && hum <=80) && (tempVal >=25 && tempVal <=35) && (wind >=1 && wind <=2);
+
+            if (goodEnv) {
+                finalImg = imgSrc.perfect;
+                finalText = "环境适宜，漆膜固化均匀";
+            }
+            else if (hum < 55) {
+                finalImg = imgSrc.severe_crack;
+                finalText = "湿度极低，漆面严重龟裂";
+            }
+            else if (hum >= 55 && hum < 65) {
+                finalImg = imgSrc.cracked;
+                finalText = "湿度过低，漆面产生裂纹";
+            }
+            else if (hum > 90) {
+                finalImg = imgSrc.scrapped;
+                finalText = "湿度极高，漆器报废";
+            }
+            else if (hum > 85) {
+                finalImg = imgSrc.wet;
+                finalText = "湿度过高，漆面黏稠无法干透";
+            }
+            else if (tempVal < 15) {
+                finalImg = imgSrc.soft;
+                finalText = "温度过低，胎体软塌变形";
+            }
+            else if (tempVal > 50) {
+                finalImg = imgSrc.severe_crack;
+                finalText = "温度过高，漆面严重开裂";
+            }
+            else if (tempVal > 40) {
+                finalImg = imgSrc.cracked;
+                finalText = "温度偏高，漆面出现裂纹";
+            }
+            else if (wind > 6) {
+                finalImg = imgSrc.severe_crack;
+                finalText = "风速过大，漆面剧烈龟裂";
+            }
+            else if (wind > 4) {
+                finalImg = imgSrc.cracked;
+                finalText = "风速偏高，漆面产生细纹";
+            }
+            else if (wind === 0) {
+                finalImg = imgSrc.wet;
+                finalText = "无风环境，漆面不易干燥";
+            }
+            else {
+                finalImg = imgSrc.minor_imperfection;
+                finalText = "轻微偏离最佳环境，有少许瑕疵";
+            }
+
+            if(imgLoadOk){
+                lacquerImg.src = finalImg;
+            }
+            stateTip.innerHTML = `<div class="status-indicator"><span class="status-dot"></span><span>${finalText}</span></div>`;
+        }
+
+        humSlider.oninput = updateState;
+        tempSlider.oninput = updateState;
+        windSlider.oninput = updateState;
+        updateState();
+    </script>
+</body>
+</html>

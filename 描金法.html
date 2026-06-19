@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>描金法</title>
+    <link rel="stylesheet" href="app.6391d0c8.css">
+</head>
+<body>
+    <div class="container">
+        <div class="title-section">
+                <div class="title-line-top">
+                    <span class="dot"></span>
+                    <span class="line"></span>
+                    <span class="dot"></span>
+                </div>
+                <h1 class="title">金缮做法</h1>
+                <div class="title-line-bottom">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                </div>
+                <p class="subtitle">KINTSUGI TECHNIQUE</p>
+            </div>
+        
+        <div class="gallery">
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item">
+                    <img src="描金/1.jpg" alt="描金法步骤1" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 01</div>
+                    </div>
+                </div>
+                <div class="description-box">
+                    <p>准备一块髹漆饱满、漆面平滑的朱漆地板子。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item" data-video="描金/2.mp4">
+                    <img src="描金/2.jpg" alt="描金法步骤2" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 02</div>
+                    </div>
+                    <video class="gallery-video" controls>
+                        <source src="描金/2.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+                <div class="description-box">
+                    <p>准备一块髹漆饱满、漆面平滑的朱漆地板子。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item" data-video="描金/3.mp4">
+                    <img src="描金/3.jpg" alt="描金法步骤3" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 03</div>
+                    </div>
+                    <video class="gallery-video" controls>
+                        <source src="描金/3.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+                <div class="description-box">
+                    <p>蘸金底漆薄薄地描绘花纹，描好后放人荫房静置约10~15分钟，贴金所制的描金花纹就制成了。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item" data-video="描金/4.mp4">
+                    <img src="描金/4.jpg" alt="描金法步骤4" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 04</div>
+                    </div>
+                    <video class="gallery-video" controls>
+                        <source src="描金/4.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+                <div class="description-box">
+                    <p>从荫房取出漆板，用小手指在金底漆上轻轻弹点观察此时能否上金。脱手时，有轻而脆的声响，手指上也不粘漆，说明可以上金了;如果手指上粘漆，脱手时又没发出声音，说明火候未到;如果手指上不粘漆，也没有声响，说明为时已晚。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item" data-video="描金/5.mp4">
+                    <img src="描金/5.jpg" alt="描金法步骤5" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 05</div>
+                    </div>
+                    <video class="gallery-video" controls>
+                        <source src="描金/5.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+                <div class="description-box">
+                    <p>上金，用丝绵球蘸细金粉，轻轻搽敷金底漆描绘的花纹处。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item">
+                    <img src="描金/6.jpg" alt="描金法步骤6" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 06</div>
+                    </div>
+                </div>
+                <div class="description-box">
+                    <p>金粉搽敷完毕，将漆板放人荫房待干。</p>
+                </div>
+            </div>
+            
+            <div class="gallery-item-wrapper">
+                <div class="gallery-item" data-video="描金/7.mp4">
+                    <img src="描金/7.jpg" alt="描金法步骤7" class="gallery-img">
+                    <div class="overlay">
+                        <div class="number">步骤 07</div>
+                    </div>
+                    <video class="gallery-video" controls>
+                        <source src="描金/7.mp4" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                </div>
+                <div class="description-box">
+                    <p>待漆面完全干透后，用帚笔轻扫去多余的金粉。轻扫完毕，可以再用棉布蘸少许酒精，轻轻擦拭溢出花纹的金粉以清洁漆面。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item[data-video]');
+            
+            galleryItems.forEach(item => {
+                const img = item.querySelector('.gallery-img');
+                const video = item.querySelector('.gallery-video');
+                const overlay = item.querySelector('.overlay');
+                const wrapper = item.closest('.gallery-item-wrapper');
+                
+                // 隐藏视频，显示图片
+                video.style.display = 'none';
+                img.style.display = 'block';
+                
+                // 点击图片播放视频并显示描述
+                img.addEventListener('click', function() {
+                    img.style.display = 'none';
+                    overlay.style.display = 'none';
+                    video.style.display = 'block';
+                    video.play();
+                    // 如果有wrapper，显示描述
+                    if (wrapper) {
+                        wrapper.classList.add('active');
+                    }
+                });
+                
+                // 视频结束后显示图片
+                video.addEventListener('ended', function() {
+                    video.style.display = 'none';
+                    img.style.display = 'block';
+                    overlay.style.display = 'block';
+                    // 如果有wrapper，隐藏描述
+                    if (wrapper) {
+                        wrapper.classList.remove('active');
+                    }
+                });
+                
+                // 点击视频暂停/播放
+                video.addEventListener('click', function() {
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            });
+            
+            // 处理不带视频但带描述的图片点击
+            const descriptionWrappers = document.querySelectorAll('.gallery-item-wrapper:not(:has(.gallery-item[data-video]))');
+            descriptionWrappers.forEach(wrapper => {
+                const img = wrapper.querySelector('.gallery-img');
+                
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    wrapper.classList.toggle('active');
+                });
+                
+                // 点击其他地方关闭描述
+                document.addEventListener('click', function(e) {
+                    if (!wrapper.contains(e.target)) {
+                        wrapper.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
