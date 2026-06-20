@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>锦绣西南 - 堆红做法</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background-color: #000000;
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      padding-top: 80px;
+    }
+    
+    .nav-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+      z-index: 1000;
+      padding: 15px 20px;
+    }
+    
+    .nav-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-title {
+      color: #d4af37;
+      font-size: 1.2rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 4px;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    
+    .nav-links a {
+      color: rgba(212, 175, 55, 0.6);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-links a:hover {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+    }
+    
+    .nav-links a.active {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.15);
+    }
+
+    .gallery-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .gallery-title-section {
+      text-align: center;
+      margin-bottom: 50px;
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .gallery-title-top-line {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 2px;
+      background: #daa520;
+    }
+
+    .gallery-title-top-line::before,
+    .gallery-title-top-line::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: #daa520;
+      border-radius: 50%;
+    }
+
+    .gallery-title-top-line::before {
+      left: -15px;
+    }
+
+    .gallery-title-top-line::after {
+      right: -15px;
+    }
+
+    .gallery-title {
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      font-size: 4rem;
+      font-weight: 500;
+      letter-spacing: 45px;
+      color: #c9a227;
+      position: relative;
+      padding: 20px 0;
+      text-shadow: 0 0 30px rgba(201, 162, 39, 0.3);
+    }
+
+    .gallery-title::before,
+    .gallery-title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 15%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #daa520);
+    }
+
+    .gallery-title::before {
+      left: 0;
+    }
+
+    .gallery-title::after {
+      right: 0;
+      background: linear-gradient(to left, transparent, #daa520);
+    }
+
+    .gallery-subtitle {
+      font-family: 'Playfair Display', 'Georgia', serif;
+      font-size: 1rem;
+      letter-spacing: 15px;
+      color: #a88b24;
+      opacity: 0.75;
+      text-transform: uppercase;
+      margin-top: 30px;
+      font-weight: 400;
+      font-style: italic;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-row-gap: 80px;
+      grid-column-gap: 25px;
+      padding: 20px 0;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .clickable-item {
+      overflow: visible;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-8px);
+    }
+
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(218, 165, 32, 0.3), rgba(139, 90, 43, 0.2));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .gallery-item:hover::before {
+      opacity: 1;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .video-thumbnail {
+      cursor: pointer;
+    }
+
+    .clickable-item img {
+      cursor: pointer;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .description {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 20px);
+      transform: translateY(-50%);
+      width: 260px;
+      padding: 16px 20px;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 12px;
+      border: 2px solid #c9a227;
+      box-shadow: 0 0 15px rgba(201, 162, 39, 0.5), 0 0 30px rgba(201, 162, 39, 0.3), inset 0 0 20px rgba(201, 162, 39, 0.1);
+      color: #d4af37;
+      font-family: 'Noto Serif SC', 'Songti SC', serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      text-align: left;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 5;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .description.left {
+      left: auto;
+      right: calc(100% + 20px);
+    }
+
+    .description.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .gallery-item .number {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(201, 162, 39, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a227;
+      font-family: 'Noto Serif SC', 'Songti SC', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover .number {
+      background: rgba(218, 165, 32, 0.2);
+      border-color: rgba(218, 165, 32, 0.8);
+      transform: scale(1.1);
+    }
+
+    .gallery-item .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-item .title {
+      color: #e8d5a3;
+      font-family: 'Noto Serif SC', 'Songti SC', serif;
+      font-size: 1rem;
+      letter-spacing: 4px;
+      font-weight: 400;
+    }
+
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(6),
+    .gallery-item:nth-child(11) {
+      grid-column: span 2;
+    }
+
+    .gallery-item:nth-child(1) img,
+    .gallery-item:nth-child(6) img,
+    .gallery-item:nth-child(11) img {
+      height: 380px;
+    }
+
+    .gallery-item:not(:nth-child(1)):not(:nth-child(6)):not(:nth-child(11)) img {
+      height: 220px;
+    }
+
+    .video-item {
+      cursor: pointer;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 2;
+      border: 2px solid rgba(201, 162, 39, 0.5);
+      pointer-events: none;
+    }
+
+    .video-item:hover .play-icon {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .play-icon svg {
+      width: 22px;
+      height: 22px;
+      margin-left: 3px;
+    }
+
+    .video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      border-radius: 12px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      overflow: hidden;
+    }
+
+    .video-container.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 35px;
+      height: 35px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 11;
+    }
+
+    .video-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .video-close svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .gallery-title {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+      }
+
+      .gallery-item:nth-child(1),
+      .gallery-item:nth-child(6),
+      .gallery-item:nth-child(11) {
+        grid-column: span 1;
+      }
+
+      .gallery-item img {
+        height: 200px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="nav-header">
+    <div class="nav-content">
+      <div class="nav-title">技法</div>
+      <div class="nav-links">
+        <a href="戗金/戗金.html">戗金</a>
+        <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+        <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+        <a href="堆红做法.html" class="active">堆红</a>
+        <a href="制作贴金.html">贴金</a>
+        <a href="犀皮制法.html">犀皮</a>
+        <a href="灰条制法.html">灰条</a>
+        <a href="金缮做法.html">金缮</a>
+        <a href="采漆方法.html">采漆</a>
+        <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+        <a href="描金法_files/描金法.html">描金</a>
+        <a href="制作朱漆.html">朱漆</a>
+      </div>
+    </div>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-title-section">
+      <div class="gallery-title-top-line"></div>
+      <h1 class="gallery-title">堆红做法</h1>
+      <div class="gallery-subtitle">DUIHONG TECHNIQUE</div>
+    </div>
+    
+    <div class="gallery-grid">
+      <div class="gallery-item clickable-item" data-index="0">
+        <img src="./堆红做法_files/1.jpg" alt="步骤1">
+        <span class="number">01</span>
+        <div class="overlay">
+          <div class="title">步骤一</div>
+        </div>
+        <div class="description" id="desc1">准备一块上过灰漆的平实漆板。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="1">
+        <img src="./堆红做法_files/2.jpg" alt="步骤2" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">02</span>
+        <div class="overlay">
+          <div class="title">步骤二</div>
+        </div>
+        <div class="video-container" id="videoContainer">
+          <video id="videoPlayer">
+            <source src="./堆红做法_files/2.mp4" type="video/mp4">
+          </video>
+          <button class="video-close" id="videoClose">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc2">调灰漆，细瓦灰中加人适量生漆，调拌至牙膏状，这种状态下的灰漆可塑性强又不会稀软无力。福州漆工在制作堆红所用的灰漆时，会在细瓦灰中加人少量滑石粉、蛤粉和鱼鳔胶，其中，滑石粉使其绵软，蛤粉增强其透气性，鱼鳔使其黏性更佳。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="2">
+        <img src="./堆红做法_files/3.jpg" alt="步骤3" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">03</span>
+        <div class="overlay">
+          <div class="title">步骤三</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/3.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc3">蘸取调好的灰漆在胎地上堆剔出花纹。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="3">
+        <img src="./堆红做法_files/4.jpg" alt="步骤4" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">04</span>
+        <div class="overlay">
+          <div class="title">步骤四</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/4.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc4">堆好后可用笔或刮板、雕刀等略加雕刻修饰，然后放人荫房待干。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="4">
+        <img src="./堆红做法_files/5.jpg" alt="步骤5" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">05</span>
+        <div class="overlay">
+          <div class="title">步骤五</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/5.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc5">待漆灰完全干固后，磨石蘸水顺着灰漆纹样的高低稍微打磨。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="5">
+        <img src="./堆红做法_files/6.jpg" alt="步骤6" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">06</span>
+        <div class="overlay">
+          <div class="title">步骤六</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/6.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc6">调朱漆，朱漆中加适量樟脑油稀释。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="6">
+        <img src="./堆红做法_files/7.jpg" alt="步骤7" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">07</span>
+        <div class="overlay">
+          <div class="title">步骤七</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/7.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc7">全面涂堆起的漆灰花纹，髹好后放人荫房待干。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="7">
+        <img src="./堆红做法_files/8.jpg" alt="步骤8" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">08</span>
+        <div class="overlay">
+          <div class="title">步骤八</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/8.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc8">每道朱漆干固后都可以再髹涂，如此反复髹涂数层，直至朱漆厚度均匀、呈色饱满。</div>
+      </div>
+      <div class="gallery-item clickable-item" data-index="8">
+        <img src="./堆红做法_files/9.jpg" alt="步骤9">
+        <span class="number">09</span>
+        <div class="overlay">
+          <div class="title">步骤九</div>
+        </div>
+        <div class="description" id="desc9">朱漆层全部涂完毕后，用炭棒细致打磨漆面。</div>
+      </div>
+      <div class="gallery-item video-item clickable-item" data-index="9">
+        <img src="./堆红做法_files/10.jpg" alt="步骤10" class="video-thumbnail">
+        <div class="play-icon">
+          <svg viewBox="0 0 24 24" fill="#c9a227">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+        <span class="number">10</span>
+        <div class="overlay">
+          <div class="title">步骤十</div>
+        </div>
+        <div class="video-container">
+          <video>
+            <source src="./堆红做法_files/10.mp4" type="video/mp4">
+          </video>
+          <button class="video-close">
+            <svg viewBox="0 0 24 24" fill="#fff">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="description" id="desc10">如果需要进一步地美化，就可以在棉球上蘸取珍珠粉和少量菜籽油，细致擦磨漆面以抛光。</div>
+      </div>
+      <div class="gallery-item clickable-item" data-index="10">
+        <img src="./堆红做法_files/11.jpg" alt="步骤11">
+        <span class="number">11</span>
+        <div class="overlay">
+          <div class="title">步骤十一</div>
+        </div>
+        <div class="description" id="desc11">一块堆红的试验板就制成了。</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach((item) => {
+      if (item.classList.contains('video-item')) {
+        const videoThumbnail = item.querySelector('.video-thumbnail');
+        videoThumbnail.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const videoContainer = item.querySelector('.video-container');
+          const videoPlayer = item.querySelector('video');
+          const description = item.querySelector('.description');
+          
+          const rect = item.getBoundingClientRect();
+          const windowWidth = window.innerWidth;
+          const availableSpaceRight = windowWidth - rect.right;
+          const availableSpaceLeft = rect.left;
+          
+          if (availableSpaceLeft > availableSpaceRight && availableSpaceLeft > 280) {
+            description.classList.add('left');
+          } else {
+            description.classList.remove('left');
+          }
+          
+          videoContainer.classList.add('active');
+          description.classList.add('active');
+          videoPlayer.play().catch(() => {});
+        });
+      }
+    });
+
+    const videoItems = document.querySelectorAll('.video-item');
+    videoItems.forEach((item) => {
+      const videoContainer = item.querySelector('.video-container');
+      const videoPlayer = item.querySelector('video');
+      
+      videoPlayer.addEventListener('ended', () => {
+        videoContainer.classList.remove('active');
+        videoPlayer.currentTime = 0;
+      });
+    });
+
+    const clickableItems = document.querySelectorAll('.clickable-item');
+    clickableItems.forEach((item) => {
+      const img = item.querySelector('img');
+      const description = item.querySelector('.description');
+      
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        description.classList.toggle('active');
+      });
+    });
+  </script>
+</body>
+</html>

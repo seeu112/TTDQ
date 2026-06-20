@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>制作朱漆</title>
+<style type="text/css">
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400&display=swap');
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: #0a0a0a;
+    overflow-x: hidden;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+  }
+  .page {
+    width: 100%;
+    min-height: 100%;
+    background: #0a0a0a;
+    padding: 140px 40px 60px;
+    box-sizing: border-box;
+  }
+  
+  .nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    z-index: 1000;
+    padding: 15px 20px;
+  }
+  
+  .nav-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .nav-title {
+    color: #d4af37;
+    font-size: 1.2rem;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    letter-spacing: 4px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  
+  .nav-links a {
+    color: rgba(212, 175, 55, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.1);
+  }
+  
+  .nav-links a.active {
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.15);
+  }
+  .gallery-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    justify-items: center;
+  }
+  .image-item-wrapper {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .image-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+  .image-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 
+      0 16px 48px rgba(0, 0, 0, 0.6),
+      0 0 30px rgba(212, 175, 55, 0.2);
+  }
+  .image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .image-number {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(180, 140, 50, 0.3));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #d4af37;
+    font-size: 1rem;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  }
+  .image-caption {
+    padding: 25px 30px;
+    background: rgba(10, 10, 10, 0.95);
+    border-radius: 12px;
+    border: 2px solid #d4af37;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 0 20px rgba(212, 175, 55, 0.4),
+      0 0 40px rgba(212, 175, 55, 0.2),
+      inset 0 0 20px rgba(212, 175, 55, 0.05);
+  }
+  .image-caption.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  .image-caption p {
+    color: #d4af37;
+    font-size: 1.1rem;
+    line-height: 2;
+    margin: 0;
+    text-align: justify;
+    font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+    letter-spacing: 2px;
+  }
+  .image-caption .caption-title {
+    color: #d4af37;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    padding-bottom: 10px;
+  }
+  .page-title {
+    text-align: center;
+    margin-bottom: 60px;
+    padding-top: 20px;
+  }
+  .title-chinese {
+    display: block;
+    font-size: 4rem;
+    color: #d4af37;
+    letter-spacing: 20px;
+    font-weight: 300;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    margin-bottom: 25px;
+    position: relative;
+    font-family: 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
+  }
+  .title-chinese::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+  }
+  .title-chinese::after {
+    content: '◆';
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #d4af37;
+    letter-spacing: 0;
+  }
+  .title-english {
+    display: block;
+    font-size: 0.85rem;
+    color: rgba(212, 175, 55, 0.65);
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Georgia', 'Times New Roman', serif;
+  }
+  .video-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .video-overlay.show {
+    display: flex;
+  }
+  .video-overlay-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+    pointer-events: none;
+  }
+  .video-overlay-img.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .image-item img {
+    position: relative;
+    z-index: 5;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .image-item.video-playing img {
+    opacity: 0;
+    visibility: hidden;
+  }
+</style>
+</head>
+<body class="">
+<div class="nav-header">
+  <div class="nav-content">
+    <div class="nav-title">技法</div>
+    <div class="nav-links">
+      <a href="戗金/戗金.html">戗金</a>
+      <a href="螺钿镶嵌法.html">螺钿镶嵌</a>
+      <a href="单色漆画做法_files/单色漆画做法.html">单色漆画</a>
+      <a href="堆红做法.html">堆红</a>
+      <a href="制作贴金.html">贴金</a>
+      <a href="犀皮制法.html">犀皮</a>
+      <a href="灰条制法.html">灰条</a>
+      <a href="金缮做法.html">金缮</a>
+      <a href="采漆方法.html">采漆</a>
+      <a href="鱼鳔胶制法.html">鱼鳔胶</a>
+      <a href="描金法_files/描金法.html">描金</a>
+      <a href="制作朱漆.html" class="active">朱漆</a>
+    </div>
+  </div>
+</div>
+<div class="page">
+  <div class="page-title">
+    <h1 class="title-chinese">制作朱漆</h1>
+    <span class="title-english">RED LACQUER MAKING</span>
+  </div>
+  <div class="gallery-container">
+    <div class="image-item-wrapper">
+      <div class="image-item clickable" id="img1">
+        <img src="制作朱漆_files/1.jpg" alt="朱漆工艺步骤 1">
+        <video id="videoPlayer" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/1.mp4" type="video/mp4">
+        </video>
+        <div class="image-number">1</div>
+      </div>
+      <div class="image-caption" id="caption1">
+        <p>精制的透明漆中加人少量广油和樟脑油，调拌均匀。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img2">
+        <img src="制作朱漆_files/2.jpg" alt="朱漆工艺步骤 2">
+        <video id="videoPlayer2" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/2..mp4" type="video/mp4">
+        </video>
+        <div class="image-number">2</div>
+      </div>
+      <div class="image-caption" id="caption2">
+        <p>稀释好的透明漆中加人朱色颜料，用刮板反复按压研磨，调拌均匀。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img3">
+        <img src="制作朱漆_files/3.jpg" alt="朱漆工艺步骤 3">
+        <video id="videoPlayer3" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/3.0.mp4" type="video/mp4">
+        </video>
+        <div class="image-number">3</div>
+      </div>
+      <div class="image-caption" id="caption3">
+        <p>二者混合到一定程度后，将其装人碗中并用皮纸盖好，隔绝空气，静置一晚。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img4">
+        <img src="制作朱漆_files/4.jpg" alt="朱漆工艺步骤 4">
+        <video id="videoPlayer4" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/4.mp4" type="video/mp4">
+        </video>
+        <div class="image-number">4</div>
+      </div>
+      <div class="image-caption" id="caption4">
+        <p>将静置好的朱漆倒在调色板上。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img5">
+        <img src="制作朱漆_files/5.jpg" alt="朱漆工艺步骤 5">
+        <video id="videoPlayer5" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/5.mp4" type="video/mp4">
+        </video>
+        <div class="image-number">5</div>
+      </div>
+      <div class="image-caption" id="caption5">
+        <p>使用研磨棒反复揉炼，直至感觉细试黏稠。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img6">
+        <img src="制作朱漆_files/6.jpg" alt="朱漆工艺步骤 6">
+        <div class="image-number">6</div>
+      </div>
+      <div class="image-caption" id="caption6">
+        <p>将漆液挑人绵纸中。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img7">
+        <img src="制作朱漆_files/7.jpg" alt="朱漆工艺步骤 7">
+        <video id="videoPlayer7" class="video-overlay-img" autoplay muted playsinline>
+          <source src="制作朱漆_files/7.mp4" type="video/mp4">
+        </video>
+        <div class="image-number">7</div>
+      </div>
+      <div class="image-caption" id="caption7">
+        <p>用手拧住绵纸两端，慢慢转动，过滤漆液。</p>
+      </div>
+    </div>
+    <div class="image-item-wrapper">
+      <div class="image-item" id="img8">
+        <img src="制作朱漆_files/8.jpg" alt="朱漆工艺步骤 8">
+        <div class="image-number">8</div>
+      </div>
+      <div class="image-caption" id="caption8">
+        <p>髹涂用的朱漆就制好了。</p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var img1 = document.getElementById('img1');
+  var caption1 = document.getElementById('caption1');
+  var videoPlayer1 = document.getElementById('videoPlayer');
+  var img2 = document.getElementById('img2');
+  var caption2 = document.getElementById('caption2');
+  var videoPlayer2 = document.getElementById('videoPlayer2');
+  var img3 = document.getElementById('img3');
+  var caption3 = document.getElementById('caption3');
+  var videoPlayer3 = document.getElementById('videoPlayer3');
+  var img4 = document.getElementById('img4');
+  var caption4 = document.getElementById('caption4');
+  var videoPlayer4 = document.getElementById('videoPlayer4');
+  var img5 = document.getElementById('img5');
+  var caption5 = document.getElementById('caption5');
+  var videoPlayer5 = document.getElementById('videoPlayer5');
+  var img6 = document.getElementById('img6');
+  var caption6 = document.getElementById('caption6');
+  var img7 = document.getElementById('img7');
+  var caption7 = document.getElementById('caption7');
+  var videoPlayer7 = document.getElementById('videoPlayer7');
+  var img8 = document.getElementById('img8');
+  var caption8 = document.getElementById('caption8');
+  
+  var currentPlayingImg = null;
+  var currentVideoPlayer = null;
+  
+  function stopAllVideos() {
+    var videos = [videoPlayer1, videoPlayer2, videoPlayer3, videoPlayer4, videoPlayer5, null, videoPlayer7, null];
+    var imgs = [img1, img2, img3, img4, img5, img6, img7, img8];
+    for (var i = 0; i < videos.length; i++) {
+      if (videos[i]) {
+        videos[i].pause();
+        videos[i].currentTime = 0;
+        videos[i].classList.remove('show');
+      }
+      if (imgs[i]) {
+        imgs[i].classList.remove('video-playing');
+      }
+    }
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  }
+  
+  function toggleVideo(img, videoPlayer, caption) {
+    if (currentPlayingImg === img) {
+      img.classList.remove('video-playing');
+      videoPlayer.classList.remove('show');
+      videoPlayer.pause();
+      videoPlayer.currentTime = 0;
+      caption.classList.remove('show');
+      currentPlayingImg = null;
+      currentVideoPlayer = null;
+    } else {
+      stopAllVideos();
+      img.classList.add('video-playing');
+      videoPlayer.classList.add('show');
+      videoPlayer.play();
+      caption.classList.add('show');
+      currentPlayingImg = img;
+      currentVideoPlayer = videoPlayer;
+    }
+  }
+  
+  img1.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img1, videoPlayer1, caption1);
+  });
+  
+  img2.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img2, videoPlayer2, caption2);
+  });
+  
+  img3.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img3, videoPlayer3, caption3);
+  });
+  
+  img4.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img4, videoPlayer4, caption4);
+  });
+  
+  img5.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img5, videoPlayer5, caption5);
+  });
+  
+  img6.addEventListener('click', function(e) {
+    e.stopPropagation();
+    stopAllVideos();
+    var captions = [caption1, caption2, caption3, caption4, caption5, caption6, caption7, caption8];
+    captions.forEach(function(cap) {
+      if (cap !== caption6) cap.classList.remove('show');
+    });
+    caption6.classList.toggle('show');
+  });
+  
+  img7.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleVideo(img7, videoPlayer7, caption7);
+  });
+  
+  img8.addEventListener('click', function(e) {
+    e.stopPropagation();
+    stopAllVideos();
+    var captions = [caption1, caption2, caption3, caption4, caption5, caption6, caption7, caption8];
+    captions.forEach(function(cap) {
+      if (cap !== caption8) cap.classList.remove('show');
+    });
+    caption8.classList.toggle('show');
+  });
+  
+  videoPlayer1.addEventListener('ended', function() {
+    img1.classList.remove('video-playing');
+    videoPlayer1.classList.remove('show');
+    videoPlayer1.currentTime = 0;
+    caption1.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  videoPlayer2.addEventListener('ended', function() {
+    img2.classList.remove('video-playing');
+    videoPlayer2.classList.remove('show');
+    videoPlayer2.currentTime = 0;
+    caption2.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  videoPlayer3.addEventListener('ended', function() {
+    img3.classList.remove('video-playing');
+    videoPlayer3.classList.remove('show');
+    videoPlayer3.currentTime = 0;
+    caption3.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  videoPlayer4.addEventListener('ended', function() {
+    img4.classList.remove('video-playing');
+    videoPlayer4.classList.remove('show');
+    videoPlayer4.currentTime = 0;
+    caption4.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  videoPlayer5.addEventListener('ended', function() {
+    img5.classList.remove('video-playing');
+    videoPlayer5.classList.remove('show');
+    videoPlayer5.currentTime = 0;
+    caption5.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  videoPlayer7.addEventListener('ended', function() {
+    img7.classList.remove('video-playing');
+    videoPlayer7.classList.remove('show');
+    videoPlayer7.currentTime = 0;
+    caption7.classList.remove('show');
+    currentPlayingImg = null;
+    currentVideoPlayer = null;
+  });
+  
+  document.addEventListener('click', function(e) {
+    if (!img1.contains(e.target) && !caption1.contains(e.target) &&
+        !img2.contains(e.target) && !caption2.contains(e.target) &&
+        !img3.contains(e.target) && !caption3.contains(e.target) &&
+        !img4.contains(e.target) && !caption4.contains(e.target) &&
+        !img5.contains(e.target) && !caption5.contains(e.target) &&
+        !img6.contains(e.target) && !caption6.contains(e.target) &&
+        !img7.contains(e.target) && !caption7.contains(e.target) &&
+        !img8.contains(e.target) && !caption8.contains(e.target)) {
+      stopAllVideos();
+      var captions = [caption1, caption2, caption3, caption4, caption5, caption6, caption7, caption8];
+      captions.forEach(function(caption) {
+        caption.classList.remove('show');
+      });
+    }
+  });
+</script>
+</body>
+</html>
