@@ -507,76 +507,12 @@
       background: rgba(218, 165, 32, 0.9);
       color: #000;
     }
-    /* 视频容器 */
-    .gallery-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      z-index: 2;
-    }
-    .gallery-item.video-active .gallery-video {
-      opacity: 1;
-      visibility: visible;
-    }
-    .gallery-item.video-active .gallery-item-image img {
-      opacity: 0;
-      visibility: hidden;
-    }
-    /* 隐藏视频播放器控件 */
-    .gallery-video::-webkit-media-controls {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-enclosure {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-panel {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-play-button {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-volume-slider {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-mute-button {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-timeline {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-current-time-display {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-time-remaining-display {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-fullscreen-button {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-download-button {
-      display: none !important;
-    }
-    .gallery-video::-webkit-media-controls-overflow-button {
-      display: none !important;
-    }
+
     /* 图片下方说明文字 */
     .gallery-item-description {
-      padding: 0;
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-      border-top: none;
-    }
-    .gallery-item.active .gallery-item-description {
       padding: 20px;
       max-height: 200px;
+      overflow: visible;
       opacity: 1;
       background: rgba(0, 0, 0, 0.95);
       border-top: 1px solid rgba(218, 165, 32, 0.3);
@@ -586,18 +522,72 @@
         0 0 40px rgba(218, 165, 32, 0.2),
         inset 0 0 30px rgba(218, 165, 32, 0.1);
       border-radius: 0 0 16px 16px;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     .gallery-item-description p {
       color: #daa520;
       font-size: 0.95rem;
       line-height: 1.8;
-      margin: 0;
+      margin: 0 0 12px 0;
       padding: 0;
       text-align: center;
       letter-spacing: 1.5px;
       text-shadow: 
         0 0 10px rgba(218, 165, 32, 0.8),
         0 0 20px rgba(218, 165, 32, 0.5);
+    }
+    /* 音频播放按钮 */
+    .audio-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 8px 20px;
+      background: linear-gradient(135deg, rgba(218,165,32,0.15) 0%, rgba(139,90,43,0.1) 100%);
+      border: 1px solid rgba(218,165,32,0.4);
+      border-radius: 20px;
+      color: #daa520;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      outline: none;
+      box-shadow: 
+        0 2px 10px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .audio-btn:hover {
+      background: linear-gradient(135deg, rgba(218,165,32,0.25) 0%, rgba(139,90,43,0.15) 100%);
+      border-color: rgba(218,165,32,0.6);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 6px 20px rgba(0,0,0,0.4),
+        0 0 15px rgba(218,165,32,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+    }
+    .audio-btn:active {
+      transform: translateY(0);
+      box-shadow: 
+        0 2px 8px rgba(0,0,0,0.3),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+    .audio-btn.playing {
+      background: linear-gradient(135deg, rgba(218,165,32,0.35) 0%, rgba(139,90,43,0.25) 100%);
+      border-color: rgba(218,165,32,0.8);
+      animation: pulseBtn 1.5s ease-in-out infinite;
+    }
+    .audio-btn.playing::before {
+      content: '播放中...';
+    }
+    @keyframes pulseBtn {
+      0%, 100% {
+        box-shadow: 
+          0 2px 10px rgba(0,0,0,0.3),
+          0 0 10px rgba(218,165,32,0.4);
+      }
+      50% {
+        box-shadow: 
+          0 4px 15px rgba(0,0,0,0.4),
+          0 0 25px rgba(218,165,32,0.6);
+      }
     }
     /* 标题容器 */
     .gallery-title-container {
@@ -1054,53 +1044,6 @@
         navPanel.classList.remove('show');
       }
     });
-    
-    // 点击图片切换说明文字显示
-    function toggleDescription(element) {
-      var items = document.querySelectorAll('.gallery-item');
-      items.forEach(function(item) {
-        if (item !== element) {
-          item.classList.remove('active');
-        }
-      });
-      element.classList.toggle('active');
-    }
-    
-    // 点击图片切换视频显示（同时显示文字说明）
-    function toggleVideo(element) {
-      var items = document.querySelectorAll('.gallery-item');
-      items.forEach(function(item) {
-        if (item !== element) {
-          item.classList.remove('active');
-          item.classList.remove('video-active');
-          var video = item.querySelector('.gallery-video');
-          if (video) {
-            video.pause();
-            video.currentTime = 0;
-          }
-        }
-      });
-      
-      var isActive = element.classList.contains('video-active');
-      if (isActive) {
-        element.classList.remove('video-active');
-        element.classList.remove('active');
-        var video = element.querySelector('.gallery-video');
-        if (video) {
-          video.pause();
-          video.currentTime = 0;
-        }
-      } else {
-        element.classList.add('video-active');
-        element.classList.add('active');
-        var video = element.querySelector('.gallery-video');
-        if (video) {
-          video.play().catch(function(e) {
-            console.log('视频播放失败:', e);
-          });
-        }
-      }
-    }
   </script>
   
   <!-- 图片画廊 -->
@@ -1114,146 +1057,148 @@
     </div>
     
     <div class="gallery-grid">
-      <div class="gallery-item" onclick="toggleDescription(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="1">
           <img src="鱼鳔胶制法_files/1.jpg" alt="步骤1">
         </div>
         <div class="gallery-item-description">
           <p>取大草鱼的鱼鳔。</p>
+          <button class="audio-btn" onclick="playAudio(1, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="2">
-          <img src="鱼鳔胶制法_files/2.jpg" alt="步骤2">
-          <video class="gallery-video" src="鱼鳔胶制法_files/2.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/2.gif" alt="步骤2">
         </div>
         <div class="gallery-item-description">
           <p>鱼鳔取出后，悬挂在阴凉通风处自然惊干。</p>
+          <button class="audio-btn" onclick="playAudio(2, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="3">
-          <img src="鱼鳔胶制法_files/3.jpg" alt="步骤3">
-          <video class="gallery-video" src="鱼鳔胶制法_files/3.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/3.gif" alt="步骤3">
         </div>
         <div class="gallery-item-description">
           <p>晾干的鱼鳔，用清水浸泡一天，其间最好勤换水。</p>
+          <button class="audio-btn" onclick="playAudio(3, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="4">
-          <img src="鱼鳔胶制法_files/4.jpg" alt="步骤4">
-          <video class="gallery-video" src="鱼鳔胶制法_files/4.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/4.gif" alt="步骤4">
         </div>
         <div class="gallery-item-description">
           <p>浸泡好的鱼鳔取出攥干水分。</p>
+          <button class="audio-btn" onclick="playAudio(4, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="5">
-          <img src="鱼鳔胶制法_files/5.jpg" alt="步骤5">
-          <video class="gallery-video" src="鱼鳔胶制法_files/5.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/5.gif" alt="步骤5">
         </div>
         <div class="gallery-item-description">
           <p>鱼鳔上锅蒸1小时。</p>
+          <button class="audio-btn" onclick="playAudio(5, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="6">
-          <img src="鱼鳔胶制法_files/6.jpg" alt="步骤6">
-          <video class="gallery-video" src="鱼鳔胶制法_files/6.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/6.gif" alt="步骤6">
         </div>
         <div class="gallery-item-description">
           <p>蒸好的鱼鳔中加热水。</p>
+          <button class="audio-btn" onclick="playAudio(6, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="7">
-          <img src="鱼鳔胶制法_files/7.jpg" alt="步骤7">
-          <video class="gallery-video" src="鱼鳔胶制法_files/7.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/7.gif" alt="步骤7">
         </div>
         <div class="gallery-item-description">
           <p>加过热水的鱼鳔放入白子里春捣成泥，这是为了使鱼鳔中的胶质更好地析出。</p>
+          <button class="audio-btn" onclick="playAudio(7, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="8">
-          <img src="鱼鳔胶制法_files/8.jpg" alt="步骤8">
-          <video class="gallery-video" src="鱼鳔胶制法_files/8.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/8.gif" alt="步骤8">
         </div>
         <div class="gallery-item-description">
           <p>春成泥状的鱼鳔汁液里再加人少许水，再次上锅，隔水加热。</p>
+          <button class="audio-btn" onclick="playAudio(8, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="9">
-          <img src="鱼鳔胶制法_files/9.jpg" alt="步骤9">
-          <video class="gallery-video" src="鱼鳔胶制法_files/9.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/9.gif" alt="步骤9">
         </div>
         <div class="gallery-item-description">
           <p>加热好的胶液用棉纱过滤几道，除去渣状杂质。</p>
+          <button class="audio-btn" onclick="playAudio(9, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="10">
-          <img src="鱼鳔胶制法_files/10.jpg" alt="步骤10">
-          <video class="gallery-video" src="鱼鳔胶制法_files/10.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/10.gif" alt="步骤10">
         </div>
         <div class="gallery-item-description">
           <p>手握纱布过滤胶液。</p>
+          <button class="audio-btn" onclick="playAudio(10, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="11">
-          <img src="鱼鳔胶制法_files/11.jpg" alt="步骤11">
-          <video class="gallery-video" src="鱼鳔胶制法_files/11.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/11.gif" alt="步骤11">
         </div>
         <div class="gallery-item-description">
           <p>将滤净后的胶液倒人托盘晾凉。胶液晾凉后，会自然凝固成膏状。</p>
+          <button class="audio-btn" onclick="playAudio(11, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="12">
-          <img src="鱼鳔胶制法_files/12.jpg" alt="步骤12">
-          <video class="gallery-video" src="鱼鳔胶制法_files/12.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/12.gif" alt="步骤12">
         </div>
         <div class="gallery-item-description">
           <p>将膏状胶块从托盘中取出，切成薄薄的小块。</p>
+          <button class="audio-btn" onclick="playAudio(12, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="13">
-          <img src="鱼鳔胶制法_files/13.jpg" alt="步骤13">
-          <video class="gallery-video" src="鱼鳔胶制法_files/13.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/13.gif" alt="步骤13">
         </div>
         <div class="gallery-item-description">
           <p>膏块置于阴凉处晾干后，鱼鳔胶就制好了。</p>
+          <button class="audio-btn" onclick="playAudio(13, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="14">
-          <img src="鱼鳔胶制法_files/14.jpg" alt="步骤14">
-          <video class="gallery-video" src="鱼鳔胶制法_files/14.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/14.gif" alt="步骤14">
         </div>
         <div class="gallery-item-description">
           <p>使用时，提前将晾干的鱼鳔胶块用水浸泡一晚。</p>
+          <button class="audio-btn" onclick="playAudio(14, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleVideo(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="15">
-          <img src="鱼鳔胶制法_files/15.jpg" alt="步骤15">
-          <video class="gallery-video" src="鱼鳔胶制法_files/15.mp4" muted playsinline></video>
+          <img src="鱼鳔胶制法_files/15.gif" alt="步骤15">
         </div>
         <div class="gallery-item-description">
           <p>次日，碗中加与鳔胶齐平的水，再将碗中的胶块和水加热、隔水融化、调拌均匀即可使用，鳔液呈银耳汤状的浓度最好。</p>
+          <button class="audio-btn" onclick="playAudio(15, this)">播放音频</button>
         </div>
       </div>
-      <div class="gallery-item" onclick="toggleDescription(this)">
+      <div class="gallery-item">
         <div class="gallery-item-image" data-index="16">
           <img src="鱼鳔胶制法_files/16.jpg" alt="步骤16">
         </div>
         <div class="gallery-item-description">
           <p>水浴后的鳔液若短时间不会再用，则可倒人大平底容器中，置于通风处使其自然干燥，干燥后亦可长久保存。</p>
+          <button class="audio-btn" onclick="playAudio(16, this)">播放音频</button>
         </div>
       </div>
     </div>
@@ -1277,5 +1222,64 @@
     '</div></div></div>';
   document.body.insertAdjacentHTML('afterbegin', navHtml);
 })();
+
+// 音频播放函数
+var currentAudio = null;
+var currentBtn = null;
+
+function playAudio(index, btn) {
+  var ext = index === 14 ? 'mp4' : 'mp3';
+  var audioSrc = '鱼鳔胶制法_files/' + index + '.' + ext;
+  
+  if (currentAudio && currentAudio.src.indexOf(audioSrc) !== -1) {
+    if (currentAudio.paused) {
+      currentAudio.play();
+      btn.classList.add('playing');
+      btn.textContent = '';
+    } else {
+      currentAudio.pause();
+      btn.classList.remove('playing');
+      btn.textContent = '播放音频';
+    }
+    return;
+  }
+  
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    if (currentBtn) {
+      currentBtn.classList.remove('playing');
+      currentBtn.textContent = '播放音频';
+    }
+  }
+  
+  currentAudio = new Audio(audioSrc);
+  currentBtn = btn;
+  
+  currentAudio.onplay = function() {
+    btn.classList.add('playing');
+    btn.textContent = '';
+  };
+  
+  currentAudio.onpause = function() {
+    btn.classList.remove('playing');
+    btn.textContent = '播放音频';
+  };
+  
+  currentAudio.onended = function() {
+    btn.classList.remove('playing');
+    btn.textContent = '播放音频';
+  };
+  
+  currentAudio.onerror = function() {
+    btn.classList.remove('playing');
+    btn.textContent = '播放失败';
+    setTimeout(function() {
+      btn.textContent = '播放音频';
+    }, 2000);
+  };
+  
+  currentAudio.play();
+}
 </script>
 </body></html>

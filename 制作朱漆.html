@@ -173,6 +173,48 @@
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     padding-bottom: 10px;
   }
+  .audio-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-radius: 30px;
+    color: #d4af37;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 8px;
+    font-family: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  }
+  .audio-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.7);
+  }
+  .audio-btn.playing {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: #d4af37;
+  }
+  .audio-btn svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+  .audio-btn .play-icon {
+    display: block;
+  }
+  .audio-btn .pause-icon {
+    display: none;
+  }
+  .audio-btn.playing .play-icon {
+    display: none;
+  }
+  .audio-btn.playing .pause-icon {
+    display: block;
+  }
   .page-title {
     text-align: center;
     margin-bottom: 60px;
@@ -251,14 +293,17 @@
     opacity: 1;
     visibility: visible;
   }
-  .image-item img {
+  .image-item img:not(.video-overlay-img):not(.static-img) {
     position: relative;
     z-index: 5;
     transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none;
   }
-  .image-item.video-playing img {
-    opacity: 0;
-    visibility: hidden;
+  .image-item img.static-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 </style>
 </head>
@@ -291,91 +336,127 @@
     <div class="image-item-wrapper">
       <div class="image-item clickable" id="img1">
         <img src="制作朱漆_files/1.jpg" alt="朱漆工艺步骤 1">
-        <video id="videoPlayer" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/1.mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer" class="video-overlay-img show" src="制作朱漆_files/1.gif" alt="朱漆工艺步骤 1">
         <div class="image-number">1</div>
       </div>
-      <div class="image-caption" id="caption1">
+      <div class="image-caption show" id="caption1">
         <p>精制的透明漆中加人少量广油和樟脑油，调拌均匀。</p>
+        <button class="audio-btn" data-audio="1">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio1" src="制作朱漆_files/1.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img2">
         <img src="制作朱漆_files/2.jpg" alt="朱漆工艺步骤 2">
-        <video id="videoPlayer2" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/2..mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer2" class="video-overlay-img show" src="制作朱漆_files/2.gif" alt="朱漆工艺步骤 2">
         <div class="image-number">2</div>
       </div>
-      <div class="image-caption" id="caption2">
+      <div class="image-caption show" id="caption2">
         <p>稀释好的透明漆中加人朱色颜料，用刮板反复按压研磨，调拌均匀。</p>
+        <button class="audio-btn" data-audio="2">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio2" src="制作朱漆_files/2.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img3">
         <img src="制作朱漆_files/3.jpg" alt="朱漆工艺步骤 3">
-        <video id="videoPlayer3" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/3.0.mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer3" class="video-overlay-img show" src="制作朱漆_files/3.gif" alt="朱漆工艺步骤 3">
         <div class="image-number">3</div>
       </div>
-      <div class="image-caption" id="caption3">
+      <div class="image-caption show" id="caption3">
         <p>二者混合到一定程度后，将其装人碗中并用皮纸盖好，隔绝空气，静置一晚。</p>
+        <button class="audio-btn" data-audio="3">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio3" src="制作朱漆_files/3.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img4">
         <img src="制作朱漆_files/4.jpg" alt="朱漆工艺步骤 4">
-        <video id="videoPlayer4" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/4.mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer4" class="video-overlay-img show" src="制作朱漆_files/4.gif" alt="朱漆工艺步骤 4">
         <div class="image-number">4</div>
       </div>
-      <div class="image-caption" id="caption4">
+      <div class="image-caption show" id="caption4">
         <p>将静置好的朱漆倒在调色板上。</p>
+        <button class="audio-btn" data-audio="4">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio4" src="制作朱漆_files/4.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img5">
         <img src="制作朱漆_files/5.jpg" alt="朱漆工艺步骤 5">
-        <video id="videoPlayer5" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/5.mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer5" class="video-overlay-img show" src="制作朱漆_files/5.gif" alt="朱漆工艺步骤 5">
         <div class="image-number">5</div>
       </div>
-      <div class="image-caption" id="caption5">
+      <div class="image-caption show" id="caption5">
         <p>使用研磨棒反复揉炼，直至感觉细试黏稠。</p>
+        <button class="audio-btn" data-audio="5">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio5" src="制作朱漆_files/5.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img6">
-        <img src="制作朱漆_files/6.jpg" alt="朱漆工艺步骤 6">
+        <img class="static-img" src="制作朱漆_files/6.jpg" alt="朱漆工艺步骤 6">
         <div class="image-number">6</div>
       </div>
-      <div class="image-caption" id="caption6">
+      <div class="image-caption show" id="caption6">
         <p>将漆液挑人绵纸中。</p>
+        <button class="audio-btn" data-audio="6">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio6" src="制作朱漆_files/6.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img7">
         <img src="制作朱漆_files/7.jpg" alt="朱漆工艺步骤 7">
-        <video id="videoPlayer7" class="video-overlay-img" autoplay muted playsinline>
-          <source src="制作朱漆_files/7.mp4" type="video/mp4">
-        </video>
+        <img id="videoPlayer7" class="video-overlay-img show" src="制作朱漆_files/7.gif" alt="朱漆工艺步骤 7">
         <div class="image-number">7</div>
       </div>
-      <div class="image-caption" id="caption7">
+      <div class="image-caption show" id="caption7">
         <p>用手拧住绵纸两端，慢慢转动，过滤漆液。</p>
+        <button class="audio-btn" data-audio="7">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio7" src="制作朱漆_files/7.mp3" preload="auto"></audio>
       </div>
     </div>
     <div class="image-item-wrapper">
       <div class="image-item" id="img8">
-        <img src="制作朱漆_files/8.jpg" alt="朱漆工艺步骤 8">
+        <img class="static-img" src="制作朱漆_files/8.jpg" alt="朱漆工艺步骤 8">
         <div class="image-number">8</div>
       </div>
-      <div class="image-caption" id="caption8">
+      <div class="image-caption show" id="caption8">
         <p>髹涂用的朱漆就制好了。</p>
+        <button class="audio-btn" data-audio="8">
+          <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          <span>播放解说</span>
+        </button>
+        <audio id="audio8" src="制作朱漆_files/8.mp3" preload="auto"></audio>
       </div>
     </div>
   </div>
@@ -412,8 +493,6 @@
     var imgs = [img1, img2, img3, img4, img5, img6, img7, img8];
     for (var i = 0; i < videos.length; i++) {
       if (videos[i]) {
-        videos[i].pause();
-        videos[i].currentTime = 0;
         videos[i].classList.remove('show');
       }
       if (imgs[i]) {
@@ -428,8 +507,6 @@
     if (currentPlayingImg === img) {
       img.classList.remove('video-playing');
       videoPlayer.classList.remove('show');
-      videoPlayer.pause();
-      videoPlayer.currentTime = 0;
       caption.classList.remove('show');
       currentPlayingImg = null;
       currentVideoPlayer = null;
@@ -437,7 +514,6 @@
       stopAllVideos();
       img.classList.add('video-playing');
       videoPlayer.classList.add('show');
-      videoPlayer.play();
       caption.classList.add('show');
       currentPlayingImg = img;
       currentVideoPlayer = videoPlayer;
@@ -494,60 +570,6 @@
     caption8.classList.toggle('show');
   });
   
-  videoPlayer1.addEventListener('ended', function() {
-    img1.classList.remove('video-playing');
-    videoPlayer1.classList.remove('show');
-    videoPlayer1.currentTime = 0;
-    caption1.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
-  videoPlayer2.addEventListener('ended', function() {
-    img2.classList.remove('video-playing');
-    videoPlayer2.classList.remove('show');
-    videoPlayer2.currentTime = 0;
-    caption2.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
-  videoPlayer3.addEventListener('ended', function() {
-    img3.classList.remove('video-playing');
-    videoPlayer3.classList.remove('show');
-    videoPlayer3.currentTime = 0;
-    caption3.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
-  videoPlayer4.addEventListener('ended', function() {
-    img4.classList.remove('video-playing');
-    videoPlayer4.classList.remove('show');
-    videoPlayer4.currentTime = 0;
-    caption4.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
-  videoPlayer5.addEventListener('ended', function() {
-    img5.classList.remove('video-playing');
-    videoPlayer5.classList.remove('show');
-    videoPlayer5.currentTime = 0;
-    caption5.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
-  videoPlayer7.addEventListener('ended', function() {
-    img7.classList.remove('video-playing');
-    videoPlayer7.classList.remove('show');
-    videoPlayer7.currentTime = 0;
-    caption7.classList.remove('show');
-    currentPlayingImg = null;
-    currentVideoPlayer = null;
-  });
-  
   document.addEventListener('click', function(e) {
     if (!img1.contains(e.target) && !caption1.contains(e.target) &&
         !img2.contains(e.target) && !caption2.contains(e.target) &&
@@ -563,6 +585,62 @@
         caption.classList.remove('show');
       });
     }
+  });
+
+  var currentAudio = null;
+
+  function stopAllAudios() {
+    var audios = document.querySelectorAll('audio');
+    audios.forEach(function(audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    });
+    var buttons = document.querySelectorAll('.audio-btn');
+    buttons.forEach(function(btn) {
+      btn.classList.remove('playing');
+    });
+    currentAudio = null;
+  }
+
+  function toggleAudio(btn, audioId) {
+    var audio = document.getElementById(audioId);
+    if (!audio) return;
+
+    if (currentAudio === audio) {
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+      }
+    } else {
+      stopAllAudios();
+      audio.play();
+      btn.classList.add('playing');
+      currentAudio = audio;
+    }
+  }
+
+  var audioButtons = document.querySelectorAll('.audio-btn');
+  audioButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var audioNum = this.getAttribute('data-audio');
+      toggleAudio(this, 'audio' + audioNum);
+    });
+  });
+
+  document.querySelectorAll('audio').forEach(function(audio) {
+    audio.addEventListener('ended', function() {
+      var btn = document.querySelector('.audio-btn[data-audio="' + this.id.replace('audio', '') + '"]');
+      if (btn) {
+        btn.classList.remove('playing');
+      }
+      if (currentAudio === this) {
+        currentAudio = null;
+      }
+    });
   });
 </script>
 </body>

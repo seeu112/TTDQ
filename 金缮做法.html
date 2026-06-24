@@ -134,173 +134,161 @@
       text-transform: uppercase;
     }
 
-    /* 描述框样式 */
-    .description-box {
-      position: fixed;
-      top: 200px;
-      right: 50px;
-      width: 360px;
-      min-height: 120px;
-      padding: 30px;
-      background: rgba(0, 0, 0, 0.95);
-      border: 2px solid #ffd700;
-      border-radius: 12px;
-      color: #ffd700;
-      font-size: 1.1rem;
-      line-height: 2;
-      letter-spacing: 2px;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 100;
-      box-shadow: 
-        0 0 15px #ffd700,
-        0 0 30px #ffd700,
-        0 0 45px rgba(255, 215, 0, 0.5),
-        inset 0 0 20px rgba(255, 215, 0, 0.1);
-      text-shadow: 
-        0 0 8px rgba(255, 215, 0, 0.8),
-        0 0 15px rgba(255, 215, 0, 0.5);
-    }
-
-    .description-box.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .description-box .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      width: 28px;
-      height: 28px;
-      line-height: 24px;
-      text-align: center;
-      color: #ffd700;
-      cursor: pointer;
-      font-size: 1.4rem;
-      transition: all 0.3s ease;
-      text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
-    }
-
-    .description-box .close-btn:hover {
-      opacity: 0.8;
-    }
-
     /* 视频播放样式 */
     .video-item {
-      cursor: pointer;
-    }
-
-    .video-item .video-player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      z-index: 10;
-      border-radius: 8px;
-    }
-
-    .video-item.video-playing .video-player {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .video-item.video-playing .video-thumbnail {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .video-item.video-playing .play-icon {
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    .play-icon {
-      display: none;
+      cursor: default;
     }
 
     .gallery {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 25px;
       padding: 40px;
       max-width: 1400px;
       margin: 0 auto;
     }
 
     .gallery-item {
-      position: relative;
-      aspect-ratio: 4/3;
-      overflow: hidden;
-      border-radius: 8px;
+      border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .gallery-item:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.25);
     }
 
     .gallery-item img {
       width: 100%;
-      height: 100%;
+      aspect-ratio: 4/3;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      border-radius: 12px;
+      transition: transform 0.4s ease;
     }
 
     .gallery-item:hover img {
-      transform: scale(1.05);
+      transform: scale(1.03);
+    }
+
+    .gallery-item .image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
     }
 
     .gallery-item .number {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      width: 30px;
-      height: 30px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(212, 175, 55, 0.5);
+      top: 12px;
+      left: 12px;
+      width: 32px;
+      height: 32px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(212, 175, 55, 0.6);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       color: #d4af37;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: bold;
+      z-index: 2;
     }
 
     .gallery-item .title {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-      color: #fff;
-      padding: 20px 10px 10px;
+      color: #d4af37;
+      padding: 12px 8px 8px;
       font-size: 0.85rem;
       text-align: center;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+      letter-spacing: 3px;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
     }
 
-    .gallery-item:hover .title {
-      opacity: 1;
+    .gallery-item .description {
+      display: block;
+      color: #d4af37;
+      padding: 0 10px 10px;
+      font-size: 0.72rem;
+      text-align: left;
+      letter-spacing: 1.5px;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .audio-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 0 auto 12px;
+      padding: 6px 14px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 20px;
+      color: #d4af37;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+    }
+
+    .audio-btn:hover {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: rgba(212, 175, 55, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+    }
+
+    .audio-btn.play-btn {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: rgba(212, 175, 55, 0.8);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .audio-btn.play-btn:hover {
+      background: rgba(212, 175, 55, 0.35);
+    }
+
+    .audio-btn .icon {
+      width: 12px;
+      height: 12px;
+      position: relative;
+    }
+
+    .audio-btn .icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 6px solid #d4af37;
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    .audio-btn.play-btn .icon::before {
+      display: none;
+    }
+
+    .audio-btn.play-btn .icon::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 1px;
+      width: 3px;
+      height: 8px;
+      background: #d4af37;
+      box-shadow: 4px 0 0 #d4af37;
     }
 
     /* 不规则布局 */
-    .gi-1 { grid-column: span 2; grid-row: span 2; }
-    .gi-3 { grid-row: span 2; }
-    .gi-7 { grid-row: span 2; }
-    .gi-11 { grid-row: span 2; }
-    .gi-16 { grid-row: span 2; }
-    .gi-21 { grid-row: span 2; }
+    .gi-1 { grid-column: span 2; }
+    .gi-1 .image-container img {
+      aspect-ratio: 16/9;
+    }
 
     footer {
       text-align: center;
@@ -375,198 +363,270 @@
     <p class="subtitle">KINTSUGI TECHNIQUE</p>
   </header>
 
-  <!-- 描述框 -->
-  <div class="description-box" id="descriptionBox">
-    <span class="close-btn" id="closeBtn">×</span>
-    <div id="descriptionContent"></div>
-  </div>
-
   <div class="gallery">
     <div class="gallery-item gi-1" data-description="此为破损的瓷碗。">
-      <img src="金缮做法_files/1.jpg" alt="步骤1">
-      <span class="number">01</span>
+      <div class="image-container">
+        <img src="金缮做法_files/1.jpg" alt="步骤1">
+        <span class="number">01</span>
+      </div>
       <span class="title">破损瓷碗</span>
+      <span class="description">此为破损的瓷碗。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/1.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-2 video-item" data-video="金缮做法_files/2.mp4" data-description="调制漆糊——糯米粉中加水制成面团，逐量加人生漆揉炼，直至黏度可以使漆糊拉起数厘米而不断。">
-      <img src="金缮做法_files/2.jpg" alt="步骤2" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/2.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/2.mp4" type="video/mp4">
-      </video>
-      <span class="number">02</span>
+    <div class="gallery-item gi-2 video-item" data-video="金缮做法_files/2.mp4" data-description="调制漆糊——糯米粉中加水制成面团，直至黏度可以使漆糊拉逐量加人生漆揉炼，起数厘米而不断。">
+      <div class="image-container">
+        <img src="金缮做法_files/2.gif" alt="步骤2">
+        <span class="number">02</span>
+      </div>
       <span class="title">调制漆糊</span>
-      <span class="play-icon">▶</span>
+      <span class="description">调制漆糊——糯米粉中加水制成面团，直至黏度可以使漆糊拉逐量加人生漆揉炼，起数厘米而不断。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/2.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-3 video-item" data-video="金缮做法_files/3.mp4" data-description="用刮板取漆糊涂在瓷碗破损处的两个截面，应均匀薄涂、全面覆盖。">
-      <img src="金缮做法_files/3.jpg" alt="步骤3" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/3.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/3.mp4" type="video/mp4">
-      </video>
-      <span class="number">03</span>
+    <div class="gallery-item gi-3 video-item" data-video="金缮做法_files/3.mp4" data-description="用刮板取漆糊涂在瓷碗破损处件两个截面，应均匀薄涂、全面覆盖。">
+      <div class="image-container">
+        <img src="金缮做法_files/3.gif" alt="步骤3">
+        <span class="number">03</span>
+      </div>
       <span class="title">涂抹漆糊</span>
-      <span class="play-icon">▶</span>
+      <span class="description">用刮板取漆糊涂在瓷碗破损处件两个截面，应均匀薄涂、全面覆盖。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/3.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-4 video-item" data-video="金缮做法_files/4.mp4" data-description="沿破损截面缓慢地切入，拼合碎片。">
-      <img src="金缮做法_files/4.jpg" alt="步骤4" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/4.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/4.mp4" type="video/mp4">
-      </video>
-      <span class="number">04</span>
+    <div class="gallery-item gi-4 video-item" data-video="金缮做法_files/4.mp4" data-description="沿破损截面缓慢地切人，拼合碎片。">
+      <div class="image-container">
+        <img src="金缮做法_files/4.gif" alt="步骤4">
+        <span class="number">04</span>
+      </div>
       <span class="title">拼合碎片</span>
-      <span class="play-icon">▶</span>
+      <span class="description">沿破损截面缓慢地切人，拼合碎片。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/4.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-5 video-item" data-video="金缮做法_files/5.mp4" data-description="慢慢加大力度按压接缝，用刮板刮除接缝中挤出来的漆糊，这也能够确认接缝处两侧是否有落差。">
-      <img src="金缮做法_files/5.jpg" alt="步骤5" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/5.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/5.mp4" type="video/mp4">
-      </video>
-      <span class="number">05</span>
+      <div class="image-container">
+        <img src="金缮做法_files/5.gif" alt="步骤5">
+        <span class="number">05</span>
+      </div>
       <span class="title">按压接缝</span>
-      <span class="play-icon">▶</span>
+      <span class="description">慢慢加大力度按压接缝，用刮板刮除接缝中挤出来的漆糊，这也能够确认接缝处两侧是否有落差。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/5.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-6 video-item" data-video="金缮做法_files/6.mp4" data-description="用砖块或硬木块夹紧粘好的瓷碗，这是为了给瓷片的接缝处一个作用力，使它黏合得更紧密。">
-      <img src="金缮做法_files/6.jpg" alt="步骤6" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/6.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/6.mp4" type="video/mp4">
-      </video>
-      <span class="number">06</span>
+      <div class="image-container">
+        <img src="金缮做法_files/6.gif" alt="步骤6">
+        <span class="number">06</span>
+      </div>
       <span class="title">夹紧固定</span>
-      <span class="play-icon">▶</span>
+      <span class="description">用砖块或硬木块夹紧粘好的瓷碗，这是为了给瓷片的接缝处一个作用力，使它黏合得更紧密。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/6.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-7 video-item" data-video="金缮做法_files/7.mp4" data-description="漆糊晾干后，轻轻挪开砖块，用刮刀剔除接缝附近多余的漆渍。">
-      <img src="金缮做法_files/7.jpg" alt="步骤7" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/7.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/7.mp4" type="video/mp4">
-      </video>
-      <span class="number">07</span>
+      <div class="image-container">
+        <img src="金缮做法_files/7.gif" alt="步骤7">
+        <span class="number">07</span>
+      </div>
       <span class="title">剔除漆渍</span>
-      <span class="play-icon">▶</span>
+      <span class="description">漆糊晾干后，轻轻挪开砖块，用刮刀剔除接缝附近多余的漆渍。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/7.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-8 video-item" data-video="金缮做法_files/8.mp4" data-description="调制灰漆——极细的瓦灰中调人少量水制成灰糊，再加入适量生漆拌匀。">
-      <img src="金缮做法_files/8.jpg" alt="步骤8" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/8.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/8.mp4" type="video/mp4">
-      </video>
-      <span class="number">08</span>
+    <div class="gallery-item gi-8 video-item" data-video="金缮做法_files/8.mp4" data-description="调制灰漆——极细的瓦灰中调人少量水调制灰漆制成灰糊，再加入适量生漆拌匀。">
+      <div class="image-container">
+        <img src="金缮做法_files/8.gif" alt="步骤8">
+        <span class="number">08</span>
+      </div>
       <span class="title">调制灰漆</span>
-      <span class="play-icon">▶</span>
+      <span class="description">调制灰漆——极细的瓦灰中调人少量水调制灰漆制成灰糊，再加入适量生漆拌匀。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/8.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-9 video-item" data-video="金缮做法_files/9.mp4" data-description="刮板蘸灰漆，对接缝处微小的缝隙或孔洞做进一步填补。">
-      <img src="金缮做法_files/9.jpg" alt="步骤9" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/9.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/9.mp4" type="video/mp4">
-      </video>
-      <span class="number">09</span>
+      <div class="image-container">
+        <img src="金缮做法_files/9.gif" alt="步骤9">
+        <span class="number">09</span>
+      </div>
       <span class="title">填补缝隙</span>
-      <span class="play-icon">▶</span>
+      <span class="description">刮板蘸灰漆，对接缝处微小的缝隙或孔洞做进一步填补。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/9.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-10 video-item" data-video="金缮做法_files/10.mp4" data-description="使用炭针蘸水精细打磨接缝处，注意不要伤到瓷器的釉面。">
-      <img src="金缮做法_files/10.jpg" alt="步骤10" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/10.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/10.mp4" type="video/mp4">
-      </video>
-      <span class="number">10</span>
+      <div class="image-container">
+        <img src="金缮做法_files/10.gif" alt="步骤10">
+        <span class="number">10</span>
+      </div>
       <span class="title">精细打磨</span>
-      <span class="play-icon">▶</span>
+      <span class="description">使用炭针蘸水精细打磨接缝处，注意不要伤到瓷器的釉面。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/10.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-11 video-item" data-video="金缮做法_files/11.mp4" data-description="取等量黑漆和生漆混合。">
-      <img src="金缮做法_files/11.jpg" alt="步骤11" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/11.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/11.mp4" type="video/mp4">
-      </video>
-      <span class="number">11</span>
+      <div class="image-container">
+        <img src="金缮做法_files/11.gif" alt="步骤11">
+        <span class="number">11</span>
+      </div>
       <span class="title">混合漆料</span>
-      <span class="play-icon">▶</span>
+      <span class="description">取等量黑漆和生漆混合。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/11.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-12 video-item" data-video="金缮做法_files/12.mp4" data-description="用笔在接缝处的灰漆上髹涂，内外两侧都需要髹漆，线条粗细一致。髹涂时最好保持线条流畅。">
-      <img src="金缮做法_files/12.jpg" alt="步骤12" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/12.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/12.mp4" type="video/mp4">
-      </video>
-      <span class="number">12</span>
+    <div class="gallery-item gi-12 video-item" data-video="金缮做法_files/12.mp4" data-description="用笔在接缝处的灰漆上髹涂，内外两侧都需要髹漆，髹涂时最好保持线条粗细一致。">
+      <div class="image-container">
+        <img src="金缮做法_files/12.gif" alt="步骤12">
+        <span class="number">12</span>
+      </div>
       <span class="title">髹涂黑漆</span>
-      <span class="play-icon">▶</span>
+      <span class="description">用笔在接缝处的灰漆上髹涂，内外两侧都需要髹漆，髹涂时最好保持线条粗细一致。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/12.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-13 video-item" data-video="金缮做法_files/13.mp4" data-description="髹涂好的碗放人荫房，待干后，用炭针蘸水打磨接缝处的漆面。">
-      <img src="金缮做法_files/13.jpg" alt="步骤13" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/13.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/13.mp4" type="video/mp4">
-      </video>
-      <span class="number">13</span>
+      <div class="image-container">
+        <img src="金缮做法_files/13.gif" alt="步骤13">
+        <span class="number">13</span>
+      </div>
       <span class="title">荫干打磨</span>
-      <span class="play-icon">▶</span>
+      <span class="description">髹涂好的碗放人荫房，待干后，用炭针蘸水打磨接缝处的漆面。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/13.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-14 video-item" data-video="金缮做法_files/14.mp4" data-description="在朱漆中加入适量樟脑油调制金底漆，这使漆液流平性更好，便于扫敷金粉。">
-      <img src="金缮做法_files/14.jpg" alt="步骤14" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/14.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/14.mp4" type="video/mp4">
-      </video>
-      <span class="number">14</span>
+    <div class="gallery-item gi-14 video-item" data-video="金缮做法_files/14.mp4" data-description="在朱漆中加人适量樟脑油调制金底漆，这使漆液流平性更好，便于扫敷金粉。">
+      <div class="image-container">
+        <img src="金缮做法_files/14.gif" alt="步骤14">
+        <span class="number">14</span>
+      </div>
       <span class="title">调制金底漆</span>
-      <span class="play-icon">▶</span>
+      <span class="description">在朱漆中加人适量樟脑油调制金底漆，这使漆液流平性更好，便于扫敷金粉。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/14.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-15 video-item" data-video="金缮做法_files/15.mp4" data-description="沿着之前涂黑漆的接缝处运笔，不要漏涂。">
-      <img src="金缮做法_files/15.jpg" alt="步骤15" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/15.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/15.mp4" type="video/mp4">
-      </video>
-      <span class="number">15</span>
+      <div class="image-container">
+        <img src="金缮做法_files/15.gif" alt="步骤15">
+        <span class="number">15</span>
+      </div>
       <span class="title">髹涂底漆</span>
-      <span class="play-icon">▶</span>
+      <span class="description">沿着之前涂黑漆的接缝处运笔，不要漏涂。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/15.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-16 video-item" data-video="金缮做法_files/16.mp4" data-description="髹涂后，静置15分钟左右，用丝绵球蘸金粉扫敷在碗内外的所有髹漆处。">
-      <img src="金缮做法_files/16.jpg" alt="步骤16" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/16.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/16.mp4" type="video/mp4">
-      </video>
-      <span class="number">16</span>
+    <div class="gallery-item gi-16 video-item" data-video="金缮做法_files/16.mp4" data-description="髹涂后，静置15分钟左右，用丝绵球蘸金粉扫敷在碗内外的所有漆处。">
+      <div class="image-container">
+        <img src="金缮做法_files/16.gif" alt="步骤16">
+        <span class="number">16</span>
+      </div>
       <span class="title">扫敷金粉</span>
-      <span class="play-icon">▶</span>
+      <span class="description">髹涂后，静置15分钟左右，用丝绵球蘸金粉扫敷在碗内外的所有漆处。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/16.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-17" data-description="放入荫房内晾干。">
-      <img src="金缮做法_files/17.jpg" alt="步骤17">
-      <span class="number">17</span>
+    <div class="gallery-item gi-17" data-description="放人荫房内晾干。">
+      <div class="image-container">
+        <img src="金缮做法_files/17.jpg" alt="步骤17">
+        <span class="number">17</span>
+      </div>
       <span class="title">荫房晾干</span>
+      <span class="description">放人荫房内晾干。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/17.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
     <div class="gallery-item gi-18 video-item" data-video="金缮做法_files/18.mp4" data-description="用丝绵球蘸取酒精，擦去碗内外多余的金粉。">
-      <img src="金缮做法_files/18.jpg" alt="步骤18" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/18.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/18.mp4" type="video/mp4">
-      </video>
-      <span class="number">18</span>
+      <div class="image-container">
+        <img src="金缮做法_files/18.gif" alt="步骤18">
+        <span class="number">18</span>
+      </div>
       <span class="title">擦拭金粉</span>
-      <span class="play-icon">▶</span>
+      <span class="description">用丝绵球蘸取酒精，擦去碗内外多余的金粉。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/18.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-19 video-item" data-video="金缮做法_files/19.mp4" data-description="透明漆中混合少许生漆调制，在调好的漆液中再加入两倍量的樟脑油，稀释漆液。">
-      <img src="金缮做法_files/19.jpg" alt="步骤19" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/19.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/19.mp4" type="video/mp4">
-      </video>
-      <span class="number">19</span>
+    <div class="gallery-item gi-19 video-item" data-video="金缮做法_files/19.mp4" data-description="透明漆中混合少许生漆调制，在调好的漆液中再加人两倍量的樟脑油，稀释漆液。">
+      <div class="image-container">
+        <img src="金缮做法_files/19.gif" alt="步骤19">
+        <span class="number">19</span>
+      </div>
       <span class="title">调制透明漆</span>
-      <span class="play-icon">▶</span>
+      <span class="description">透明漆中混合少许生漆调制，在调好的漆液中再加人两倍量的樟脑油，稀释漆液。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/19.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-20 video-item" data-video="金缮做法_files/20.mp4" data-description="蘸取稀释好的漆液点在接缝处的金粉上，让漆液渗入粉末里。">
-      <img src="金缮做法_files/20.jpg" alt="步骤20" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/20.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/20.mp4" type="video/mp4">
-      </video>
-      <span class="number">20</span>
+    <div class="gallery-item gi-20 video-item" data-video="金缮做法_files/20.mp4" data-description="蘸取稀释好的漆液点在接缝处的金粉上，让漆液渗人粉末里。">
+      <div class="image-container">
+        <img src="金缮做法_files/20.gif" alt="步骤20">
+        <span class="number">20</span>
+      </div>
       <span class="title">点涂漆液</span>
-      <span class="play-icon">▶</span>
+      <span class="description">蘸取稀释好的漆液点在接缝处的金粉上，让漆液渗人粉末里。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/20.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-21 video-item" data-video="金缮做法_files/21.mp4" data-description="小木棒的一端缠绑棉布制成棉棒。让漆液在接缝处短暂停留，数分钟后用棉棒擦去。多余的漆如果不及时擦掉，漆干燥后会变黑影响金粉呈色。">
-      <img src="金缮做法_files/21.jpg" alt="步骤21" class="video-thumbnail">
-      <video class="video-player" src="金缮做法_files/21.mp4" preload="metadata" playsinline>
-        <source src="金缮做法_files/21.mp4" type="video/mp4">
-      </video>
-      <span class="number">21</span>
+    <div class="gallery-item gi-21 video-item" data-video="金缮做法_files/21.mp4" data-description="小木棒的一端缠绑棉布制成柳棒。让漆液在接缝处短暂停留，数分钟后用棉棒擦去。多余的漆如果不及时擦掉，漆干燥后会变黑影响金粉呈色。">
+      <div class="image-container">
+        <img src="金缮做法_files/21.gif" alt="步骤21">
+        <span class="number">21</span>
+      </div>
       <span class="title">擦拭多余漆液</span>
-      <span class="play-icon">▶</span>
+      <span class="description">小木棒的一端缠绑棉布制成柳棒。让漆液在接缝处短暂停留，数分钟后用棉棒擦去。多余的漆如果不及时擦掉，漆干燥后会变黑影响金粉呈色。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/21.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
-    <div class="gallery-item gi-22" data-description="放入荫房内晾干，待干后，破损的瓷碗就金缮好了。">
-      <img src="金缮做法_files/22.jpg" alt="步骤22">
-      <span class="number">22</span>
+    <div class="gallery-item gi-22" data-description="放入荫房内晾干，待干后，一只破损的瓷碗就金缮好了。">
+      <div class="image-container">
+        <img src="金缮做法_files/22.jpg" alt="步骤22">
+        <span class="number">22</span>
+      </div>
       <span class="title">完成金缮</span>
+      <span class="description">放入荫房内晾干，待干后，一只破损的瓷碗就金缮好了。</span>
+      <button class="audio-btn" data-audio="金缮做法_files/22.MP3">
+        <span class="icon"></span>
+        <span>播放音频</span>
+      </button>
     </div>
   </div>
 
@@ -575,75 +635,60 @@
   </footer>
 
   <script>
-    const descriptionBox = document.getElementById('descriptionBox');
-    const descriptionContent = document.getElementById('descriptionContent');
-    const closeBtn = document.getElementById('closeBtn');
+    let currentAudio = null;
+    let currentBtn = null;
 
-    // 点击带描述的图片时显示描述框
-    document.querySelectorAll('.gallery-item[data-description]').forEach(item => {
-      item.addEventListener('click', () => {
-        const description = item.dataset.description;
-        descriptionContent.textContent = description;
-        descriptionBox.classList.add('show');
-      });
-    });
-
-    // 关闭描述框
-    closeBtn.addEventListener('click', () => {
-      descriptionBox.classList.remove('show');
-    });
-
-    // 点击其他地方关闭描述框
-    document.addEventListener('click', (e) => {
-      if (!descriptionBox.contains(e.target) && !e.target.closest('.gallery-item[data-description]')) {
-        descriptionBox.classList.remove('show');
-      }
-    });
-
-    // 视频播放功能
-    const videoItems = document.querySelectorAll('.video-item');
-    
-    videoItems.forEach(item => {
-      const video = item.querySelector('.video-player');
+    document.addEventListener('DOMContentLoaded', function() {
+      const audioBtns = document.querySelectorAll('.audio-btn');
       
-      item.addEventListener('click', (e) => {
-        // 显示描述框（如果有描述）
-        const description = item.dataset.description;
-        if (description) {
-          descriptionContent.textContent = description;
-          descriptionBox.classList.add('show');
-        }
-        
-        // 检查是否正在播放
-        if (item.classList.contains('video-playing')) {
-          video.pause();
-          item.classList.remove('video-playing');
-        } else {
-          // 暂停其他视频
-          videoItems.forEach(otherItem => {
-            const otherVideo = otherItem.querySelector('.video-player');
-            if (otherItem !== item && otherItem.classList.contains('video-playing')) {
-              otherVideo.pause();
-              otherItem.classList.remove('video-playing');
-            }
-          });
+      audioBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const audioSrc = this.getAttribute('data-audio');
           
-          // 播放当前视频
-          video.play().then(() => {
-            item.classList.add('video-playing');
-          }).catch(err => {
-            console.log('自动播放被阻止，需要用户交互');
-            // 如果自动播放失败，显示播放按钮让用户手动点击
-            item.classList.add('video-playing');
+          if (currentAudio && currentAudio.src.includes(audioSrc)) {
+            if (currentAudio.paused) {
+              currentAudio.play();
+              this.classList.add('play-btn');
+            } else {
+              currentAudio.pause();
+              this.classList.remove('play-btn');
+            }
+            return;
+          }
+
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            if (currentBtn) {
+              currentBtn.classList.remove('play-btn');
+            }
+          }
+
+          const audio = new Audio(audioSrc);
+          audio.play().then(function() {
+            currentAudio = audio;
+            currentBtn = btn;
+            btn.classList.add('play-btn');
+          }).catch(function(err) {
+            console.error('音频播放失败:', err);
           });
-        }
-      });
-      
-      // 视频播放结束后显示缩略图
-      video.addEventListener('ended', () => {
-        item.classList.remove('video-playing');
+
+          audio.addEventListener('ended', function() {
+            btn.classList.remove('play-btn');
+            currentAudio = null;
+            currentBtn = null;
+          });
+
+          audio.addEventListener('error', function() {
+            console.error('音频加载失败:', audioSrc);
+            btn.classList.remove('play-btn');
+            currentAudio = null;
+            currentBtn = null;
+          });
+        });
       });
     });
   </script>
-</body>
+
+  </body>
 </html>

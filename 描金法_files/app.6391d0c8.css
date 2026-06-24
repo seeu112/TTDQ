@@ -148,20 +148,14 @@ body {
     padding: 20px 24px;
     width: 100%;
     max-width: 400px;
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
     z-index: 10;
     box-shadow: 
         0 0 15px rgba(212, 175, 55, 0.6),
         0 0 30px rgba(212, 175, 55, 0.4),
         0 0 45px rgba(212, 175, 55, 0.3),
         inset 0 0 30px rgba(212, 175, 55, 0.1);
-    transition: all 0.3s ease;
-}
-
-.gallery-item-wrapper.active .description-box {
-    opacity: 1;
-    visibility: visible;
 }
 
 .description-box p {
@@ -237,6 +231,31 @@ body {
 .video-item video {
     width: 100%;
     display: block;
+}
+
+.audio-btn {
+    display: block;
+    margin-top: 12px;
+    padding: 8px 20px;
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    font-size: 14px;
+    font-family: 'STKaiti', 'KaiTi', 'SimKai', serif;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.audio-btn:hover {
+    background: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+.audio-btn.playing {
+    background: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
 }
 
 @media (max-width: 768px) {

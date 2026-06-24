@@ -155,7 +155,7 @@
         }
 
         .media-container img,
-        .media-container video {
+        .media-container .gif-container {
             position: absolute;
             top: 0;
             left: 0;
@@ -164,25 +164,24 @@
             object-fit: cover;
         }
 
-        .media-container img {
-            cursor: pointer;
-            transition: transform 0.3s ease;
+        .media-container .gif-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
         }
 
-        .media-container img:hover {
-            transform: scale(1.02);
+        .media-container .gif-container img {
+            position: static;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: default;
+            transition: none;
         }
 
-        .media-container video {
-            display: none;
-        }
-
-        .media-container video.active {
-            display: block;
-        }
-
-        .media-container img.hidden {
-            display: none;
+        .media-container .gif-container img:hover {
+            transform: none;
         }
 
         .gallery-text {
@@ -196,16 +195,114 @@
             border: 2px solid #c9a962;
             border-radius: 12px;
             box-shadow: 0 0 15px rgba(201, 169, 98, 0.5), 0 0 30px rgba(201, 169, 98, 0.3);
-            opacity: 0;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.4s ease;
+            margin-bottom: 12px;
         }
 
-        .gallery-text.show {
-            opacity: 1;
-            max-height: 150px;
-            margin-bottom: 15px;
+        .audio-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: fit-content;
+            margin: 0 auto;
+            padding: 10px 24px;
+            background: rgba(201, 169, 98, 0.1);
+            border: 1px solid #c9a962;
+            border-radius: 30px;
+            color: #c9a962;
+            font-family: 'STKaiti', 'KaiTi', serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn:hover {
+            background: rgba(201, 169, 98, 0.2);
+            box-shadow: 0 0 15px rgba(201, 169, 98, 0.4);
+        }
+
+        .audio-btn.playing {
+            background: rgba(201, 169, 98, 0.25);
+            animation: pulse 1.5s infinite;
+        }
+
+        .audio-btn .icon {
+            width: 18px;
+            height: 18px;
+            position: relative;
+        }
+
+        .audio-btn .icon::before,
+        .audio-btn .icon::after {
+            content: '';
+            position: absolute;
+            background: #c9a962;
+            transition: all 0.3s ease;
+        }
+
+        .audio-btn .icon::before {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 9px 0 9px 15px;
+            border-color: transparent transparent transparent #c9a962;
+            left: 0;
+            top: 0;
+        }
+
+        .audio-btn.playing .icon::before {
+            border-width: 0;
+        }
+
+        .audio-btn.playing .icon::after {
+            width: 4px;
+            height: 18px;
+            left: 0;
+            top: 0;
+            animation: sound 0.5s infinite;
+        }
+
+        .audio-btn.playing .icon::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 12px;
+            background: #c9a962;
+            left: 0;
+            top: 3px;
+            animation: sound 0.5s infinite;
+        }
+
+        .audio-btn.playing .icon::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 18px;
+            background: #c9a962;
+            left: 6px;
+            top: 0;
+            animation: sound 0.5s infinite 0.1s;
+        }
+
+        .audio-btn.playing .icon::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 10px;
+            background: #c9a962;
+            left: 12px;
+            top: 4px;
+            animation: sound 0.5s infinite 0.2s;
+        }
+
+        @keyframes sound {
+            0%, 100% { height: 12px; }
+            50% { height: 18px; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 10px rgba(201, 169, 98, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(201, 169, 98, 0.5); }
         }
 
         @media (max-width: 768px) {
@@ -272,79 +369,100 @@
                     <img src="1.jpg" alt="图片 1">
                 </div>
                 <p class="gallery-text">准备一块素髹的朱漆地板子。</p>
+                <button class="audio-btn" data-audio="1.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
             <div class="gallery-item">
                 <div class="media-container">
-                    <img src="2.jpg" alt="图片 2">
-                    <video src="2.mp4" controls></video>
+                    <div class="gif-container"><img src="2.gif" alt="图片 2"></div>
                 </div>
                 <p class="gallery-text">戗划，用尖针形的刀在板子上阴刻出花纹。</p>
+                <button class="audio-btn" data-audio="2.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
             <div class="gallery-item">
                 <div class="media-container">
-                    <img src="3.jpg" alt="图片 3">
-                    <video src="3.mp4" controls></video>
+                    <div class="gif-container"><img src="3.gif" alt="图片 3"></div>
                 </div>
                 <p class="gallery-text">在戗划好花纹的胎地上揩漆。</p>
+                <button class="audio-btn" data-audio="3.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
             <div class="gallery-item">
                 <div class="media-container">
-                    <img src="4.jpg" alt="图片 4">
-                    <video src="4.mp4" controls></video>
+                    <div class="gif-container"><img src="4.gif" alt="图片 4"></div>
                 </div>
                 <p class="gallery-text">在漆液将干未干时，用棉球蘸金箔粉或金泥擦入阴文，放入荫房待干。</p>
+                <button class="audio-btn" data-audio="4.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
             <div class="gallery-item">
                 <div class="media-container">
-                    <img src="5.jpg" alt="图片 5">
-                    <video src="5.mp4" controls></video>
+                    <div class="gif-container"><img src="5.gif" alt="图片 5"></div>
                 </div>
                 <p class="gallery-text">待漆完全干透，用棉纱布蘸酒精擦去溢上漆面的金箔粉或金泥。</p>
+                <button class="audio-btn" data-audio="5.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
             <div class="gallery-item">
                 <div class="media-container">
                     <img src="6.jpg" alt="图片 6">
                 </div>
                 <p class="gallery-text">一块戗金的试验板就制成了。</p>
+                <button class="audio-btn" data-audio="6.mp3">
+                    <span class="icon"></span>
+                    <span>播放讲解</span>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        
-        galleryItems.forEach((item, index) => {
-            const mediaContainer = item.querySelector('.media-container');
-            const img = item.querySelector('img');
-            const video = item.querySelector('video');
-            const text = item.querySelector('.gallery-text');
-            let hideTimeout = null;
-            
-            img.addEventListener('click', () => {
-                if (video) {
-                    img.classList.add('hidden');
-                    video.classList.add('active');
-                    video.play();
-                    text.classList.add('show');
-                } else {
-                    text.classList.add('show');
-                    if (hideTimeout) {
-                        clearTimeout(hideTimeout);
-                    }
-                    hideTimeout = setTimeout(() => {
-                        text.classList.remove('show');
-                        hideTimeout = null;
-                    }, 5000);
+        const audioBtns = document.querySelectorAll('.audio-btn');
+        let currentAudio = null;
+
+        audioBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const audioSrc = btn.dataset.audio;
+                
+                if (currentAudio && currentAudio.src.includes(audioSrc) && !currentAudio.paused) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    btn.classList.remove('playing');
+                    currentAudio = null;
+                    return;
                 }
-            });
-            
-            if (video) {
-                video.addEventListener('ended', () => {
-                    video.classList.remove('active');
-                    img.classList.remove('hidden');
-                    text.classList.remove('show');
+
+                if (currentAudio) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                    document.querySelector('.audio-btn.playing')?.classList.remove('playing');
+                }
+
+                currentAudio = new Audio(audioSrc);
+                currentAudio.play();
+                btn.classList.add('playing');
+
+                currentAudio.addEventListener('ended', () => {
+                    btn.classList.remove('playing');
+                    currentAudio = null;
                 });
-            }
+
+                currentAudio.addEventListener('error', () => {
+                    btn.classList.remove('playing');
+                    currentAudio = null;
+                });
+            });
         });
     </script>
 </body>

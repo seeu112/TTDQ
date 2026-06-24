@@ -38,9 +38,10 @@ function addBeautyStyles() {
     .yi2-item {
       position: relative;
       border-radius: 20px;
-      overflow: hidden;
+      overflow: visible;
       transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
       background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+      padding-bottom: 50px;
     }
 
     .yi2-item::before {
@@ -351,6 +352,48 @@ function addBeautyStyles() {
         rgba(218,165,32,0.2) 70%,
         transparent 100%);
     }
+
+    /* === 音频播放按钮 === */
+    .audio-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 8px 20px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(218,165,32,0.2) 0%, rgba(139,90,43,0.15) 100%);
+      border: 1px solid rgba(218,165,32,0.3);
+      color: #daa520;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .audio-btn:hover {
+      background: linear-gradient(135deg, rgba(218,165,32,0.35) 0%, rgba(139,90,43,0.25) 100%);
+      border-color: rgba(218,165,32,0.5);
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: 0 8px 20px rgba(218,165,32,0.2);
+    }
+
+    .audio-btn.playing {
+      background: linear-gradient(135deg, rgba(218,165,32,0.4) 0%, rgba(139,90,43,0.3) 100%);
+      border-color: rgba(218,165,32,0.6);
+    }
+
+    .audio-btn::before {
+      content: '🔊';
+      font-size: 16px;
+    }
+
+    .audio-btn.playing::before {
+      content: '🔉';
+    }
   `;
   document.head.appendChild(style);
 }
@@ -483,6 +526,57 @@ function createSideVideo() {
   }
 }
 
+let currentAudio = null;
+
+function playAudio(audioPath, btn) {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('playing'));
+  }
+
+  const fullPath = `file:///c:/Users/XXUZ/Desktop/灰条制法_files/${audioPath}`;
+  currentAudio = new Audio(fullPath);
+  currentAudio.play().then(() => {
+    btn.classList.add('playing');
+  }).catch(err => {
+    console.error('音频播放失败:', err);
+    console.log('尝试的音频路径:', fullPath);
+  });
+
+  currentAudio.addEventListener('ended', () => {
+    btn.classList.remove('playing');
+    currentAudio = null;
+  });
+
+  currentAudio.addEventListener('pause', () => {
+    btn.classList.remove('playing');
+  });
+}
+
+function addAudioButtons() {
+  const yi2Items = document.querySelectorAll('.yi2-item');
+  console.log('开始添加音频按钮，找到.yi2-item数量:', yi2Items.length);
+
+  yi2Items.forEach((item, index) => {
+    const audioFile = `${index + 1}.mp3`;
+    
+    const btn = document.createElement('button');
+    btn.className = 'audio-btn';
+    btn.textContent = '播放音频';
+    btn.style.bottom = '60px';
+    btn.style.zIndex = '100';
+    
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      playAudio(audioFile, btn);
+    });
+
+    item.appendChild(btn);
+    console.log(`为第 ${index + 1} 个图片添加音频按钮，对应音频: ${audioFile}`);
+  });
+}
+
 // 在容器中创建新视频
 function createNewVideoInBox(container) {
   console.log('创建新视频元素');
@@ -526,22 +620,24 @@ document.addEventListener('DOMContentLoaded', function() {
   setTimeout(createSideVideo, 1500);
   
   // 等待Vue组件渲染完成
-  setTimeout(function() {
-    console.log('开始查找.yi2-item元素');
-    
-    // 找到所有的.yi2-item元素
-    const yi2Items = document.querySelectorAll('.yi2-item');
-    console.log('找到.yi2-item元素数量:', yi2Items.length);
-    
-    // 遍历所有的.yi2-item元素
-    yi2Items.forEach(function(item) {
-      // 找到其中的图片元素
-      const img = item.querySelector('img');
-      if (img) {
-        console.log('找到图片:', img.src);
-      }
-    });
-  }, 1000);
+    setTimeout(function() {
+      console.log('开始查找.yi2-item元素');
+      
+      // 找到所有的.yi2-item元素
+      const yi2Items = document.querySelectorAll('.yi2-item');
+      console.log('找到.yi2-item元素数量:', yi2Items.length);
+      
+      // 遍历所有的.yi2-item元素
+      yi2Items.forEach(function(item) {
+        // 找到其中的图片元素
+        const img = item.querySelector('img');
+        if (img) {
+          console.log('找到图片:', img.src);
+        }
+      });
+    }, 1000);
+
+    setTimeout(addAudioButtons, 1500);
   
   // 使用事件委托，监听所有图片元素的点击事件
   document.addEventListener('click', function(event) {

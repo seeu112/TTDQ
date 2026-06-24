@@ -348,21 +348,10 @@
       margin-top: 16px;
       padding-top: 16px;
       border-top: 1px solid rgba(212, 175, 55, 0.2);
-      opacity: 0;
-      max-height: 0;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      text-align: justify;
-      text-indent: 2em;
-    }
-
-    .gallery-item .description.show {
       opacity: 1;
       max-height: 220px;
-    }
-
-    .gallery-item img {
-      cursor: pointer;
+      text-align: justify;
+      text-indent: 2em;
     }
 
     .gallery-item .media-container {
@@ -380,22 +369,6 @@
       display: block;
       background: #000;
       transition: transform 0.3s ease;
-    }
-
-    .gallery-item .hidden-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: none;
-      object-fit: contain;
-      border-radius: 8px;
-      background: #000;
-    }
-
-    .gallery-item .hidden-video.show {
-      display: block;
     }
 
     /* 响应式调整 */
@@ -506,6 +479,96 @@
     .gallery-item:nth-child(12) { animation-delay: 0.6s; }
     .gallery-item:nth-child(13) { animation-delay: 0.65s; }
     .gallery-item:nth-child(14) { animation-delay: 0.7s; }
+
+    .audio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 8px 20px;
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 30px;
+      color: #d4af37;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+      letter-spacing: 2px;
+    }
+
+    .audio-btn:hover {
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.15));
+      border-color: rgba(212, 175, 55, 0.7);
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .audio-btn.playing {
+      background: linear-gradient(145deg, rgba(212, 175, 55, 0.4), rgba(212, 175, 55, 0.2));
+      border-color: rgba(212, 175, 55, 0.9);
+      box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+    }
+
+    .audio-btn .icon {
+      width: 16px;
+      height: 16px;
+      position: relative;
+    }
+
+    .audio-btn .icon::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 0 6px 10px;
+      border-color: transparent transparent transparent #d4af37;
+      transition: all 0.3s ease;
+    }
+
+    .audio-btn.playing .icon::before {
+      border-width: 0;
+    }
+
+    .audio-btn.playing .icon::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 2px;
+      height: 12px;
+      background: #d4af37;
+      animation: soundWave 0.6s ease-in-out infinite;
+      box-shadow: 4px 0 0 #d4af37, 8px 0 0 #d4af37;
+    }
+
+    @keyframes soundWave {
+      0%, 100% {
+        height: 12px;
+        top: 2px;
+      }
+      50% {
+        height: 6px;
+        top: 5px;
+      }
+    }
+
+    .audio-btn.playing .icon::after {
+      animation-delay: 0s;
+    }
+
+    .audio-btn.playing .icon::after:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .audio-btn.playing .icon::after:nth-child(3) {
+      animation-delay: 0.2s;
+    }
   </style>
 </head>
 <body>
@@ -538,189 +601,266 @@
     <div class="gallery-grid">
       <div class="gallery-item">
         <span class="number">01</span>
-        <img src="./犀皮制法_files/1.jpeg" alt="步骤1" onclick="toggleDescription(this)">
+        <div class="media-container">
+          <img src="./犀皮制法_files/1.jpeg" alt="步骤1">
+        </div>
         <div class="caption">
           <div class="caption-text">基底准备</div>
           <div class="caption-num">STEP 01</div>
           <div class="description">准备一块上过灰漆的平实漆板。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/1.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">02</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/2.jpeg" alt="步骤2" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/2.mp4" poster="./犀皮制法_files/2.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/2.gif" alt="步骤2">
         </div>
         <div class="caption">
           <div class="caption-text">调配漆料</div>
           <div class="caption-num">STEP 02</div>
           <div class="description">调制打捻漆，取鸡蛋的蛋清加入预备打捻的色漆中，大致比例为蛋清二、色漆八。加入蛋清，是为了让漆液更黏稠，便于下一步塑起形状。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/2.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">03</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/3.jpeg" alt="步骤3" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/3.mp4" poster="./犀皮制法_files/3.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/3.gif" alt="步骤3">
         </div>
         <div class="caption">
           <div class="caption-text">调匀漆液</div>
           <div class="caption-num">STEP 03</div>
           <div class="description">用刮板将蛋清和漆液调匀。调匀后还需往复翻拌几次，直至漆液黏稠如牙膏状。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/3.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">04</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/4.jpeg" alt="步骤4" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/4.mp4" poster="./犀皮制法_files/4.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/4.gif" alt="步骤4">
         </div>
         <div class="caption">
           <div class="caption-text">打捻</div>
           <div class="caption-num">STEP 04</div>
           <div class="description">打捻，刮板上蘸取适量漆液在漆板上打起捻子。打捻的时候需要注意，捻的高度要尽量一致，通常在两毫米；捻的形状大小和风格要尽量一致；捻与捻之间的分布要基本均衡、美观。打捻完毕后，还可以参考这几点要求再做整体调整。捻打得越高，干燥得就越慢，也越容易起皱。打捻完成后将漆板放入荫房待干。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/4.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">05</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/5.jpeg" alt="步骤5" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/5.mp4" poster="./犀皮制法_files/5.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/5.gif" alt="步骤5">
         </div>
         <div class="caption">
           <div class="caption-text">调黄色漆</div>
           <div class="caption-num">STEP 05</div>
           <div class="description">调黄色漆，漆里面加入少量樟脑油稍作稀释。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/5.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">06</span>
-        <img src="./犀皮制法_files/6.jpeg" alt="步骤6" onclick="toggleDescription(this)">
+        <div class="media-container">
+          <img src="./犀皮制法_files/6.gif" alt="步骤6">
+        </div>
         <div class="caption">
           <div class="caption-text">髹涂黄漆</div>
           <div class="caption-num">STEP 06</div>
           <div class="description">髹涂黄色漆层。涂的时候需要注意，每一层漆必须干透才能再上第二层，如有漏涂或髹涂厚薄不均的地方，应及时处理。涂好后将漆板放入荫房待干。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/6.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">07</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/7.jpeg" alt="步骤7" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/7.mp4" poster="./犀皮制法_files/7.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/7.gif" alt="步骤7">
         </div>
         <div class="caption">
           <div class="caption-text">调红色漆</div>
           <div class="caption-num">STEP 07</div>
           <div class="description">调红色漆。髹涂不同颜色的漆层时，注意髹刷不要混用，以免影响最终犀皮的效果。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/7.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">08</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/8.jpeg" alt="步骤8" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/8.mp4" poster="./犀皮制法_files/8.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/8.gif" alt="步骤8">
         </div>
         <div class="caption">
           <div class="caption-text">髹涂红漆</div>
           <div class="caption-num">STEP 08</div>
           <div class="description">在干透的黄色漆层上继续髹涂红色漆层。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/8.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">09</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/9.jpeg" alt="步骤9" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/9.mp4" poster="./犀皮制法_files/9.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/9.gif" alt="步骤9">
         </div>
         <div class="caption">
           <div class="caption-text">调金漆</div>
           <div class="caption-num">STEP 09</div>
           <div class="description">调金漆，金粉和透明漆的比例大致为一比一，用笔或刮板慢慢调拌至两者完全融合。金粉较轻，容易四处飘散，使用时应戴好防护口罩。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/9.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">10</span>
-        <img src="./犀皮制法_files/10.jpeg" alt="步骤10" onclick="toggleDescription(this)">
+        <div class="media-container">
+          <img src="./犀皮制法_files/10.gif" alt="步骤10">
+        </div>
         <div class="caption">
           <div class="caption-text">髹涂金漆</div>
           <div class="caption-num">STEP 10</div>
           <div class="description">髹涂金漆，涂好后将漆板放入荫房待干。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/10.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">11</span>
-        <img src="./犀皮制法_files/11.jpeg" alt="步骤11" onclick="toggleDescription(this)">
+        <div class="media-container">
+          <img src="./犀皮制法_files/11.gif" alt="步骤11">
+        </div>
         <div class="caption">
           <div class="caption-text">重复髹涂</div>
           <div class="caption-num">STEP 11</div>
           <div class="description">按照红色-金色-红色的步骤重复涂漆层。每一层漆干透后再髹涂第二层。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/11.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">12</span>
-        <img src="./犀皮制法_files/12.jpeg" alt="步骤12" onclick="toggleDescription(this)">
+        <div class="media-container">
+          <img src="./犀皮制法_files/12.gif" alt="步骤12">
+        </div>
         <div class="caption">
           <div class="caption-text">打磨漆面</div>
           <div class="caption-num">STEP 12</div>
           <div class="description">髹涂好的漆板完全干透后，用磨条蘸水打磨漆面。磨的时候要用力均匀，把所有突起的捻磨至同一高度，不要只打磨一处。磨完一道，就更换目数更大的磨条继续打磨，基本打磨到2000目为止。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/12.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">13</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/13.jpeg" alt="步骤13" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/13.mp4" poster="./犀皮制法_files/13.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/13.gif" alt="步骤13">
         </div>
         <div class="caption">
           <div class="caption-text">推光处理</div>
           <div class="caption-num">STEP 13</div>
           <div class="description">磨好后，进一步给器表推光。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/13.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
       <div class="gallery-item">
         <span class="number">14</span>
         <div class="media-container">
-          <img src="./犀皮制法_files/14.jpeg" alt="步骤14" onclick="playVideo(this)">
-          <video class="hidden-video" src="./犀皮制法_files/14.mp4" poster="./犀皮制法_files/14.jpeg" preload="auto" playsinline></video>
+          <img src="./犀皮制法_files/14.gif" alt="步骤14">
         </div>
         <div class="caption">
           <div class="caption-text">完成制作</div>
           <div class="caption-num">STEP 14</div>
           <div class="description">一块犀皮的试验板就制成了。</div>
+          <div class="audio-btn" data-audio="./犀皮制法_files/14.MP3">
+            <span class="icon"></span>
+            <span>播放讲解</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    function toggleDescription(img) {
-      const caption = img.nextElementSibling;
-      const description = caption.querySelector('.description');
-      if (description) {
-        description.classList.toggle('show');
-      }
-    }
+    const audioButtons = document.querySelectorAll('.audio-btn');
+    let currentAudio = null;
+    let currentButton = null;
 
-    function playVideo(img) {
-      const container = img.parentElement;
-      const video = container.querySelector('.hidden-video');
-      if (video) {
-        img.style.display = 'none';
-        video.classList.add('show');
-        video.load();
-        video.play().catch(e => {
-          console.log('Autoplay blocked:', e);
-          console.log('Video source:', video.src);
-          console.log('Video readyState:', video.readyState);
+    audioButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const audioSrc = this.dataset.audio;
+        
+        if (currentAudio && currentAudio.src.includes(audioSrc)) {
+          if (currentAudio.paused) {
+            currentAudio.play();
+            this.classList.add('playing');
+          } else {
+            currentAudio.pause();
+            this.classList.remove('playing');
+          }
+          return;
+        }
+
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          if (currentButton) {
+            currentButton.classList.remove('playing');
+          }
+        }
+
+        currentAudio = new Audio(audioSrc);
+        currentButton = this;
+
+        currentAudio.play();
+        this.classList.add('playing');
+
+        currentAudio.addEventListener('ended', () => {
+          this.classList.remove('playing');
+          currentAudio = null;
+          currentButton = null;
         });
-      }
-      
-      const caption = container.nextElementSibling;
-      const description = caption.querySelector('.description');
-      if (description) {
-        description.classList.add('show');
-      }
-    }
+
+        currentAudio.addEventListener('error', () => {
+          this.classList.remove('playing');
+          alert('音频加载失败，请检查文件路径是否正确。');
+          currentAudio = null;
+          currentButton = null;
+        });
+      });
+    });
   </script>
+
 </body>
 </html>

@@ -267,48 +267,67 @@
             line-height: 1.6;
         }
         
-        .image-container.clickable {
-            cursor: pointer;
-        }
-        
-        .click-hint {
-            position: absolute;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.85rem;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 6px 16px;
-            border-radius: 20px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .image-container.clickable:hover .click-hint {
-            opacity: 1;
-        }
+
         
         .step-detail {
             padding: 15px 25px 25px;
             text-align: center;
             background: rgba(201, 169, 98, 0.08);
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .step-detail.show {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
         
         .step-detail p {
             color: #d4af37;
             font-size: 1rem;
             line-height: 1.8;
-            margin: 0;
+            margin: 0 0 15px;
             font-family: 'STKaiti', 'KaiTi', '楷体', 'AR PL UKai CN', serif;
             font-weight: 400;
             letter-spacing: 2px;
+        }
+        
+        .audio-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(201, 169, 98, 0.1));
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 30px;
+            color: #d4af37;
+            font-size: 0.9rem;
+            font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+        }
+        
+        .audio-btn:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.35), rgba(201, 169, 98, 0.2));
+            border-color: rgba(212, 175, 55, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .audio-btn.play-icon::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 8px solid #d4af37;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            display: inline-block;
+            margin-right: 2px;
+        }
+        
+        .audio-btn.pause-icon::before {
+            content: '';
+            width: 8px;
+            height: 10px;
+            border-left: 3px solid #d4af37;
+            border-right: 3px solid #d4af37;
+            display: inline-block;
         }
         
         @keyframes fadeIn {
@@ -386,68 +405,87 @@
         
         <div class="timeline">
             <div class="step-card">
-                <div class="image-container clickable" onclick="toggleDetail(this)">
+                <div class="image-container">
                     <img src="1.jpeg" alt="步骤一：准备漆板" class="step-image">
                     <span class="step-number">1</span>
-                    <div class="click-hint">点击查看详情</div>
                 </div>
                 <div class="step-content">
                     <h3 class="step-title">准备漆板</h3>
                 </div>
                 <div class="step-detail" id="detail-1">
                     <p>准备一块平整的黑漆地板子。</p>
+                    <button class="audio-btn play-icon" onclick="toggleAudio('audio-1', this)">播放音频</button>
+                    <audio id="audio-1" src="1.MP3"></audio>
                 </div>
             </div>
             
             <div class="step-card">
-                <div class="image-container clickable" onclick="toggleDetail(this)">
-                    <img src="2.jpeg" alt="步骤二：调配漆料" class="step-image">
+                <div class="image-container">
+                    <img src="2.gif" alt="步骤二：调配漆料" class="step-image">
                     <span class="step-number">2</span>
-                    <div class="click-hint">点击查看详情</div>
                 </div>
                 <div class="step-content">
                     <h3 class="step-title">调配漆料</h3>
                 </div>
                 <div class="step-detail" id="detail-2">
                     <p>调制朱漆，在黑漆地上作朱绘，古拙朴雅。</p>
+                    <button class="audio-btn play-icon" onclick="toggleAudio('audio-2', this)">播放音频</button>
+                    <audio id="audio-2" src="2.MP3">
                 </div>
             </div>
             
             <div class="step-card">
-                <div class="image-container clickable" onclick="toggleDetail(this)">
-                    <img src="3.jpeg" alt="步骤三：绘制图案" class="step-image">
+                <div class="image-container">
+                    <img src="3.gif" alt="步骤三：绘制图案" class="step-image">
                     <span class="step-number">3</span>
-                    <div class="click-hint">点击查看详情</div>
                 </div>
                 <div class="step-content">
                     <h3 class="step-title">绘制图案</h3>
                 </div>
                 <div class="step-detail" id="detail-3">
                     <p>笔头要吸漆饱满，描漆时运笔力度要均匀，漆液线条才能流畅，干了以后不起皱。</p>
+                    <button class="audio-btn play-icon" onclick="toggleAudio('audio-3', this)">播放音频</button>
+                    <audio id="audio-3" src="3.MP3">
                 </div>
             </div>
             
             <div class="step-card">
-                <div class="image-container clickable" onclick="toggleDetail(this)">
+                <div class="image-container">
                     <img src="4.jpeg" alt="步骤四：完成作品" class="step-image">
                     <span class="step-number">4</span>
-                    <div class="click-hint">点击查看详情</div>
                 </div>
                 <div class="step-content">
                     <h3 class="step-title">完成作品</h3>
                 </div>
                 <div class="step-detail" id="detail-4">
                     <p>最后，稍加打磨推光，描漆就更显细腻。</p>
+                    <button class="audio-btn play-icon" onclick="toggleAudio('audio-4', this)">播放音频</button>
+                    <audio id="audio-4" src="4.MP3">
                 </div>
             </div>
         </div>
     </div>
     <script>
-        function toggleDetail(container) {
-            var card = container.closest('.step-card');
-            var detail = card.querySelector('.step-detail');
-            detail.classList.toggle('show');
+        function toggleAudio(audioId, btn) {
+            var audio = document.getElementById(audioId);
+            if (audio.paused) {
+                audio.play();
+                btn.classList.remove('play-icon');
+                btn.classList.add('pause-icon');
+                btn.textContent = '暂停播放';
+            } else {
+                audio.pause();
+                btn.classList.remove('pause-icon');
+                btn.classList.add('play-icon');
+                btn.textContent = '播放音频';
+            }
+            audio.onended = function() {
+                btn.classList.remove('pause-icon');
+                btn.classList.add('play-icon');
+                btn.textContent = '播放音频';
+            };
         }
     </script>
+
 </body>
 </html>

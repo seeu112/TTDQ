@@ -441,45 +441,23 @@
     </div>
   </div>
 
-  <script>
-    // 图片路径数组
-    const imagePaths = [
-      '制作贴金_files/1.jpeg',
-      '制作贴金_files/2.jpeg',
-      '制作贴金_files/3.jpeg',
-      '制作贴金_files/4.jpeg',
-      '制作贴金_files/5.jpeg',
-      '制作贴金_files/6.jpeg',
-      '制作贴金_files/7.jpeg',
-      '制作贴金_files/8.jpeg',
-      '制作贴金_files/9.jpeg',
-      '制作贴金_files/10.jpeg',
-      '制作贴金_files/11.jpeg',
-      '制作贴金_files/12.jpeg',
-      '制作贴金_files/13.jpeg',
-      '制作贴金_files/14.jpeg',
-      '制作贴金_files/15.jpeg',
-      '制作贴金_files/16.jpeg',
-      '制作贴金_files/17.jpeg',
-      '制作贴金_files/18.jpeg',
-      '制作贴金_files/19.jpeg',
-      '制作贴金_files/20.jpeg'
-    ];
-
-    // 视频映射：index -> 视频文件名
-    const videoMap = {
-      2: '3、4.mp4',
-      4: '5.mp4',
-      5: '6.mp4',
-      6: '7.mp4',
-      7: '8.mp4',
-      8: '9.mp4',
-      10: '11.mp4',
-      11: '12.mp4',
-      12: '13.mp4',
-      13: '14.mp4',
-      14: '15.mp4',
-      15: '16.mp4'
+  <script src="制作贴金_files/script.js"></script>
+    <script>
+    // GIF映射：index -> GIF文件名（按名称对应）
+    const gifMap = {
+      2: '3.gif',
+      4: '5.gif',
+      5: '6.gif',
+      6: '7.gif',
+      7: '8.gif',
+      8: '9.gif',
+      10: '11.gif',
+      11: '12.gif',
+      12: '13.gif',
+      13: '14.gif',
+      14: '15.gif',
+      15: '16.gif',
+      16: '17.gif'
     };
 
     // 图片描述数组
@@ -508,34 +486,21 @@
 
     // 生成画廊HTML
     const galleryGrid = document.getElementById('galleryGrid');
-    imagePaths.forEach((path, index) => {
+    for (let index = 0; index < 20; index++) {
       const item = document.createElement('div');
       item.className = 'gallery-item';
       item.dataset.index = index;
       
-      // 如果有描述，则添加描述区域
+      // 检查是否有对应的GIF，有则使用GIF，否则使用原图
+      const hasGif = gifMap[index] !== undefined;
+      const mediaSrc = hasGif ? `制作贴金_files/${gifMap[index]}` : `制作贴金_files/${index + 1}.jpeg`;
+      
+      // 如果有描述，则添加描述区域（自动显示，添加show类）
       const descHtml = descriptions[index] ? 
-        `<div class="gallery-description" id="desc-${index}">${descriptions[index]}</div>` : '';
-      
-      // 检查当前图片是否有对应的视频
-      const hasVideo = videoMap[index] !== undefined;
-      
-      // 添加视频覆盖层（如果有视频）
-      const videoOverlay = hasVideo ? `
-        <div class="video-overlay" id="videoOverlay-${index}">
-          <div class="video-container">
-            <video class="gallery-video" id="video-${index}" playsinline>
-              <source src="制作贴金_files/${videoMap[index]}" type="video/mp4">
-            </video>
-            <div class="video-close" id="videoClose-${index}">×</div>
-          </div>
-          <div class="video-description">${descriptions[index]}</div>
-        </div>
-      ` : '';
+        `<div class="gallery-description show" id="desc-${index}">${descriptions[index]}</div>` : '';
       
       item.innerHTML = `
-        <img src="${path}" alt="图片 ${index + 1}" class="gallery-image">
-        ${videoOverlay}
+        <img src="${mediaSrc}" alt="步骤 ${index + 1}" class="gallery-image">
         <div class="gallery-info">
           <div class="gallery-number">${index + 1}</div>
           <div class="gallery-caption">步骤 ${index + 1}</div>
@@ -543,44 +508,7 @@
         </div>
       `;
       galleryGrid.appendChild(item);
-
-      // 有视频的图片点击播放视频
-      if (hasVideo) {
-        const image = item.querySelector('.gallery-image');
-        const videoOverlayEl = document.getElementById(`videoOverlay-${index}`);
-        const video = document.getElementById(`video-${index}`);
-        const videoClose = document.getElementById(`videoClose-${index}`);
-        
-        image.addEventListener('click', (e) => {
-          e.stopPropagation();
-          videoOverlayEl.classList.add('active');
-          video.play().catch(err => {
-            console.log('Autoplay prevented, will play on user interaction');
-          });
-        });
-        
-        videoClose.addEventListener('click', (e) => {
-          e.stopPropagation();
-          videoOverlayEl.classList.remove('active');
-          video.pause();
-          video.currentTime = 0;
-        });
-        
-        videoOverlayEl.addEventListener('click', () => {
-          videoOverlayEl.classList.remove('active');
-          video.pause();
-          video.currentTime = 0;
-        });
-      } else if (descriptions[index]) {
-        // 其他图片点击显示描述的功能
-        item.addEventListener('click', () => {
-          const desc = document.getElementById(`desc-${index}`);
-          if (desc) {
-            desc.classList.toggle('show');
-          }
-        });
-      }
-    });
+    }
   </script>
 </body>
 </html>

@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>髹刷制作</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000000;
+            min-height: 100vh;
+            font-family: 'STSong', 'SimSun', 'Microsoft YaHei', serif;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+        }
+
+        .title-decoration-top {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c9a962, transparent);
+        }
+
+        .title-decoration-top::before,
+        .title-decoration-top::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #c9a962;
+        }
+
+        .title-decoration-top::before { left: 0; }
+        .title-decoration-top::after { right: 0; }
+
+        .title {
+            color: #c9a962;
+            font-size: 4em;
+            font-weight: 400;
+            letter-spacing: 40px;
+            margin-bottom: 30px;
+            padding-left: 20px;
+            text-shadow: 0 0 20px rgba(201, 169, 98, 0.3);
+            position: relative;
+        }
+
+        .title::before,
+        .title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 169, 98, 0.5));
+        }
+
+        .title::before { left: -180px; }
+        .title::after { right: -180px; background: linear-gradient(90deg, rgba(201, 169, 98, 0.5), transparent); }
+
+        .subtitle {
+            color: rgba(201, 169, 98, 0.8);
+            font-size: 1.2em;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .image-wrapper {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-with-text {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .text-box {
+            background: #000000;
+            border: 2px solid #ffd700;
+            border-radius: 10px;
+            padding: 20px 25px;
+            text-align: center;
+            box-shadow: 
+                0 0 20px rgba(255, 215, 0, 0.5),
+                0 0 40px rgba(255, 215, 0, 0.3);
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .text-box.show {
+            opacity: 1;
+            height: auto;
+        }
+
+        .text-box p {
+            color: #c9a962;
+            font-size: 1.3em;
+            line-height: 1.4;
+            letter-spacing: 3px;
+            font-family: 'KaiTi', 'STKaiti', 'SimKai', 'AR PL UKai CN', 'AR PL UKai HK', 'AR PL UKai TW', 'AR PL UKai TW MBE', serif;
+            text-shadow: 
+                0 0 8px rgba(201, 169, 98, 0.6),
+                0 0 15px rgba(201, 169, 98, 0.4);
+            margin: 0;
+        }
+
+        @media (max-width: 1400px) {
+            .gallery { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        @media (max-width: 1024px) {
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+            .image-wrapper img { height: 180px; }
+        }
+
+        @media (max-width: 768px) {
+            .gallery { grid-template-columns: 1fr; }
+            .image-wrapper img { height: 250px; }
+            .title { font-size: 2.2em; letter-spacing: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title-decoration-top"></div>
+            <h1 class="title">髹刷制作</h1>
+            <p class="subtitle">TRADITIONAL CRAFT</p>
+        </div>
+        
+        <div class="gallery">
+            <!-- 步骤1 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./1.jpeg" alt="步骤1">
+                </div>
+                <div class="text-box" id="text1">
+                    <p>选取长三寸以上的女孩长发<br><br>用碱水洗涤干净。</p>
+                </div>
+            </div>
+
+            <!-- 步骤2 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./2.gif" alt="步骤2">
+                </div>
+                <div class="text-box" id="text2">
+                    <p>生漆混少许煤油调匀，将头发浸湿梳顺。</p>
+                </div>
+            </div>
+
+            <!-- 步骤3 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./3.gif" alt="步骤3">
+                </div>
+                <div class="text-box" id="text3">
+                    <p>用刮刀刮去头发上多余的漆</p>
+                </div>
+            </div>
+
+            <!-- 步骤4 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./4.gif" alt="步骤4">
+                </div>
+                <div class="text-box" id="text4">
+                    <p>将湿发放在石板或木板下，压成约一厘米厚的发片，长宽视所制发刷的大小而定。</p>
+                </div>
+            </div>
+
+            <!-- 步骤5 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./5_9.gif" alt="步骤5">
+                </div>
+                <div class="text-box" id="text5">
+                    <p>约四十八小时后发片会略微干硬，用薄刀片将其挑起，再用细麻绳捆绑于薄木板上。这一步是为了压出形状规整的发片。</p>
+                </div>
+            </div>
+
+            <!-- 步骤6 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./6.gif" alt="步骤6">
+                </div>
+                <div class="text-box" id="text6">
+                    <p>待数日后，发片完全干燥，用刀片将其裁切整齐。</p>
+                </div>
+            </div>
+
+            <!-- 步骤7 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./7.jpeg" alt="步骤7">
+                </div>
+                <div class="text-box" id="text7">
+                    <p>生漆中加糯米粉调制漆糊。</p>
+                </div>
+            </div>
+
+            <!-- 步骤8 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./8.gif" alt="步骤8">
+                </div>
+                <div class="text-box" id="text8">
+                    <p>将漆糊涂抹在做刷柄的木板上，黏合发片。</p>
+                </div>
+            </div>
+
+            <!-- 步骤9 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./9.jpeg" alt="步骤9">
+                </div>
+                <div class="text-box" id="text9">
+                    <p>发片四面均用薄木板黏漆糊拼夹后，再次用麻线绕绑。</p>
+                </div>
+            </div>
+
+            <!-- 步骤10 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./10.jpeg" alt="步骤10">
+                </div>
+                <div class="text-box" id="text10">
+                    <p>麻线绕绑后，可以在木板与麻线之间打入楔子，增加压力。</p>
+                </div>
+            </div>
+
+            <!-- 步骤11 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./11.jpeg" alt="步骤11">
+                </div>
+                <div class="text-box" id="text11">
+                    <p>待漆糊干固后，取去麻线，将夹住发片的木板刨削齐整。</p>
+                </div>
+            </div>
+
+            <!-- 步骤12 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./12.gif" alt="步骤12">
+                </div>
+                <div class="text-box" id="text12">
+                    <p>将木板的一端斜削约半厘米，削成齐整的斜刃形。</p>
+                </div>
+            </div>
+
+            <!-- 步骤13 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./13.gif" alt="步骤13">
+                </div>
+                <div class="text-box" id="text13">
+                    <p>用磨石打磨刷头，务必使毛刷尖端平齐成一线。</p>
+                </div>
+            </div>
+
+            <!-- 步骤14 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./14.gif" alt="步骤14">
+                </div>
+                <div class="text-box" id="text14">
+                    <p>将毛发轻轻锤松。</p>
+                </div>
+            </div>
+
+            <!-- 步骤15 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./15.gif" alt="步骤15">
+                </div>
+                <div class="text-box" id="text15">
+                    <p>用肥皂将刷毛揉洗干净。</p>
+                </div>
+            </div>
+
+            <!-- 步骤16 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./16.jpeg" alt="步骤16">
+                </div>
+                <div class="text-box" id="text16">
+                    <p>一把可以髹涂的发刷就制成了</p>
+                </div>
+            </div>
+
+            <!-- 步骤17 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./17.jpeg" alt="步骤17">
+                </div>
+                <div class="text-box" id="text17">
+                    <p>使用的时间久了，发刷的刷头难免秃坏。</p>
+                </div>
+            </div>
+
+            <!-- 步骤18 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./18.gif" alt="步骤18">
+                </div>
+                <div class="text-box" id="text18">
+                    <p>将刷头上的毛发齐根平切。</p>
+                </div>
+            </div>
+
+            <!-- 步骤19 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./19.gif" alt="步骤19">
+                </div>
+                <div class="text-box" id="text19">
+                    <p>再度刨削木片，露出藏于木柄内的毛发。</p>
+                </div>
+            </div>
+
+            <!-- 步骤20 -->
+            <div class="image-with-text">
+                <div class="image-wrapper">
+                    <img src="./20.jpeg" alt="步骤20">
+                </div>
+                <div class="text-box" id="text20">
+                    <p>再用磨石将新露出的刷毛打磨齐整，再用肥皂水揉洗干净，发刷又可像初用时那么顺手。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var textBoxes = document.querySelectorAll('.text-box');
+            textBoxes.forEach(function(textBox) {
+                textBox.classList.add('show');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -233,9 +233,8 @@
             color: #f4d03f;
             font-size: 1rem;
             line-height: 1.8;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.4s ease;
+            opacity: 1;
+            transform: translateY(0);
             font-family: 'Noto Serif SC', 'SimSun', 'STSong', serif;
             letter-spacing: 2px;
             text-align: center;
@@ -245,30 +244,48 @@
             pointer-events: none;
         }
 
-        .gallery-item-wrapper.active .caption {
-            opacity: 1;
-            transform: translateY(0);
+        .audio-btn {
+            order: 3;
+            margin-top: 10px;
+            padding: 10px 30px;
+            background: rgba(244, 208, 63, 0.1);
+            color: #f4d03f;
+            border: 1px solid rgba(244, 208, 63, 0.4);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-family: 'Noto Serif SC', 'SimSun', 'STSong', serif;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .gallery-item-video .video-player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 2;
+        .audio-btn:hover {
+            background: rgba(244, 208, 63, 0.2);
+            border-color: #f4d03f;
+            box-shadow: 0 0 20px rgba(244, 208, 63, 0.2);
         }
 
-        .gallery-item-video.playing .video-player {
-            opacity: 1;
+        .audio-btn.playing {
+            background: rgba(244, 208, 63, 0.3);
+            border-color: #f4d03f;
         }
 
-        .gallery-item-video.playing img {
-            opacity: 0;
+        .audio-btn::before {
+            content: '▶';
+            font-size: 0.7rem;
         }
+
+        .audio-btn.playing::before {
+            content: '⏸';
+        }
+
+
 
 
 
@@ -362,142 +379,149 @@
                     <img src="./螺钿镶嵌法_files/1.jpeg" alt="步骤1">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="1.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="02" data-caption="选取色泽纯净、明亮度高的螺料，打磨成厚约一毫米的螺片，再裁切出需要的图案。">
-                    <img src="./螺钿镶嵌法_files/2.jpeg" alt="步骤2">
-                    <video class="video-player" src="./螺钿镶嵌法_files/2.mp4" muted playsinline loop></video>
+                <div class="gallery-item" data-index="02" data-caption="选取色泽纯净、明亮度高的螺料，打磨成厚约一毫米的螺片，再裁切出需要的图案。">
+                    <img src="./螺钿镶嵌法_files/2.gif" alt="步骤2">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="2.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="03" data-caption="调制鱼鳔胶。提前将鱼鳔胶块用水浸泡一晚。使用时，碗中加人与胶块齐平的水，再将碗中的胶块和水隔水融化、调拌均匀即可使用。">
-                    <img src="./螺钿镶嵌法_files/3.jpeg" alt="步骤3">
-                    <video class="video-player" src="./螺钿镶嵌法_files/3.mp4" muted playsinline loop></video>
+                <div class="gallery-item" data-index="03" data-caption="调制鱼鳔胶。提前将鱼鳔胶块用水浸泡一晚。使用时，碗中加人与胶块齐平的水，再将碗中的胶块和水隔水融化、调拌均匀即可使用。">
+                    <img src="./螺钿镶嵌法_files/3.gif" alt="步骤3">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="3.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="04" data-caption="粘贴螺片，贴好后静置待干。">
-                    <img src="./螺钿镶嵌法_files/4.jpeg" alt="步骤4">
-                    <video class="video-player" src="./螺钿镶嵌法_files/4.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="04" data-caption="粘贴螺片，贴好后静置待干。">
+                    <img src="./螺钿镶嵌法_files/4.gif" alt="步骤4">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="4.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="05" data-caption="粘贴较大片的螺钿片时，放好螺钿片后，可以轻轻按压图案的中间部位，将内侧的空气排出以免有气泡留在螺钿片与漆层间，导致镶嵌不实。">
-                    <img src="./螺钿镶嵌法_files/5.jpeg" alt="步骤5">
-                    <video class="video-player" src="./螺钿镶嵌法_files/5.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="05" data-caption="粘贴较大片的螺钿片时，放好螺钿片后，可以轻轻按压图案的中间部位，将内侧的空气排出以免有气泡留在螺钿片与漆层间，导致镶嵌不实。">
+                    <img src="./螺钿镶嵌法_files/5.gif" alt="步骤5">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="5.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="06" data-caption="髹刷蘸取漆液。">
-                    <img src="./螺钿镶嵌法_files/6.jpeg" alt="步骤6">
-                    <video class="video-player" src="./螺钿镶嵌法_files/6.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="06" data-caption="髹刷蘸取漆液。">
+                    <img src="./螺钿镶嵌法_files/6.gif" alt="步骤6">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="6.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="07" data-caption="漆面晾干后，通体薄涂一道精制生漆，然后放入荫房待干。">
-                    <img src="./螺钿镶嵌法_files/7.jpeg" alt="步骤7">
-                    <video class="video-player" src="./螺钿镶嵌法_files/7.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="07" data-caption="漆面晾干后，通体薄涂一道精制生漆，然后放入荫房待干。">
+                    <img src="./螺钿镶嵌法_files/7.gif" alt="步骤7">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="7.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="08" data-caption="调灰漆，精制生漆中加中灰或细灰，调拌均匀。">
-                    <img src="./螺钿镶嵌法_files/8.jpeg" alt="步骤8">
-                    <video class="video-player" src="./螺钿镶嵌法_files/8.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="08" data-caption="调灰漆，精制生漆中加中灰或细灰，调拌均匀。">
+                    <img src="./螺钿镶嵌法_files/8.gif" alt="步骤8">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="8.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="09" data-caption="盖灰，用刮板蘸灰漆给器表通体上一层灰漆，然后放入荫房待干。">
-                    <img src="./螺钿镶嵌法_files/9.jpeg" alt="步骤9">
-                    <video class="video-player" src="./螺钿镶嵌法_files/9.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="09" data-caption="盖灰，用刮板蘸灰漆给器表通体上一层灰漆，然后放入荫房待干。">
+                    <img src="./螺钿镶嵌法_files/9.gif" alt="步骤9">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="9.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="10" data-caption="灰漆干燥后，用灰条打磨器表，将其研磨平滑。这时，漆灰地会略微低于螺钿图案，这是螺钿硬、灰漆软的缘故。">
-                    <img src="./螺钿镶嵌法_files/10.jpeg" alt="步骤10">
-                    <video class="video-player" src="./螺钿镶嵌法_files/10.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="10" data-caption="灰漆干燥后，用灰条打磨器表，将其研磨平滑。这时，漆灰地会略微低于螺钿图案，这是螺钿硬、灰漆软的缘故。">
+                    <img src="./螺钿镶嵌法_files/10.gif" alt="步骤10">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="10.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="11" data-caption="通体涂一层黑漆，待干后，再髹涂一层。如此往复三至四次，每次涂完一层，必须干透才能再涂。">
-                    <img src="./螺钿镶嵌法_files/11.jpeg" alt="步骤11">
-                    <video class="video-player" src="./螺钿镶嵌法_files/11.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="11" data-caption="通体涂一层黑漆，待干后，再髹涂一层。如此往复三至四次，每次涂完一层，必须干透才能再涂。">
+                    <img src="./螺钿镶嵌法_files/11.gif" alt="步骤11">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="11.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="12" data-caption="确认漆层完全晾干硬化后，用刻刀轻轻剔去螺钿图案表面的漆层。">
-                    <img src="./螺钿镶嵌法_files/12.jpeg" alt="步骤12">
-                    <video class="video-player" src="./螺钿镶嵌法_files/12.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="12" data-caption="确认漆层完全晾干硬化后，用刻刀轻轻剔去螺钿图案表面的漆层。">
+                    <img src="./螺钿镶嵌法_files/12.gif" alt="步骤12">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="12.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="13" data-caption="使用灰条或炭条由粗到细地打磨螺钿图案，螺钿边缘及四周的素也要磨到。">
-                    <img src="./螺钿镶嵌法_files/13.jpeg" alt="步骤13">
-                    <video class="video-player" src="./螺钿镶嵌法_files/13.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="13" data-caption="使用灰条或炭条由粗到细地打磨螺钿图案，螺钿边缘及四周的素也要磨到。">
+                    <img src="./螺钿镶嵌法_files/13.gif" alt="步骤13">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="13.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
-                <div class="gallery-item gallery-item-video" data-index="14" data-caption="使用棉纱蘸取少量水混珍珠粉和菜籽油给器表推光，首先擦拭中间螺钿片部位，随后再给板子整体做推光。">
-                    <img src="./螺钿镶嵌法_files/14.jpeg" alt="步骤14">
-                    <video class="video-player" src="./螺钿镶嵌法_files/14.mp4" muted playsinline loop></video>
-
+                <div class="gallery-item" data-index="14" data-caption="使用棉纱蘸取少量水混珍珠粉和菜籽油给器表推光，首先擦拭中间螺钿片部位，随后再给板子整体做推光。">
+                    <img src="./螺钿镶嵌法_files/14.gif" alt="步骤14">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="14.mp3">听讲解</button>
             </div>
             <div class="gallery-item-wrapper">
                 <div class="gallery-item" data-index="15" data-caption="推光后，用酒精擦拭干净器表，一块厚螺钿镶嵌的实验板就制成了。">
                     <img src="./螺钿镶嵌法_files/15.jpeg" alt="步骤15">
                 </div>
                 <div class="caption"></div>
+                <button class="audio-btn" data-audio="15.mp3">听讲解</button>
             </div>
         </div>
     </div>
     <script>
         const galleryItems = document.querySelectorAll('.gallery-item');
+        const audioBtns = document.querySelectorAll('.audio-btn');
+        let currentAudio = null;
+        let currentBtn = null;
         
         galleryItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                const wrapper = this.parentElement;
-                const caption = wrapper.querySelector('.caption');
-                caption.textContent = this.dataset.caption;
+            const wrapper = item.parentElement;
+            const caption = wrapper.querySelector('.caption');
+            caption.textContent = item.dataset.caption;
+        });
+
+        audioBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const audioSrc = `./螺钿镶嵌法_files/${this.dataset.audio}`;
                 
-                if (this.classList.contains('gallery-item-video')) {
-                    const video = this.querySelector('.video-player');
-                    const isPlaying = this.classList.contains('playing');
-                    
-                    if (isPlaying) {
-                        video.pause();
-                        video.currentTime = 0;
-                        this.classList.remove('playing');
-                    } else {
-                        video.play();
+                if (currentAudio && currentAudio.src === audioSrc) {
+                    if (currentAudio.paused) {
+                        currentAudio.play();
                         this.classList.add('playing');
+                    } else {
+                        currentAudio.pause();
+                        this.classList.remove('playing');
                     }
+                } else {
+                    if (currentAudio) {
+                        currentAudio.pause();
+                        currentAudio.currentTime = 0;
+                        currentBtn.classList.remove('playing');
+                    }
+                    
+                    currentAudio = new Audio(audioSrc);
+                    currentBtn = this;
+                    
+                    currentAudio.addEventListener('ended', function() {
+                        currentBtn.classList.remove('playing');
+                    });
+                    
+                    currentAudio.play();
+                    this.classList.add('playing');
                 }
-                
-                wrapper.classList.toggle('active');
-                this.classList.toggle('active');
             });
         });
     </script>

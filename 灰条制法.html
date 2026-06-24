@@ -162,12 +162,13 @@
 
   .gallery-item {
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(218, 165, 32, 0.1);
     transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding-bottom: 60px;
   }
 
   .gallery-item::before {
@@ -195,37 +196,6 @@
     height: auto;
     display: block;
     transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-  }
-
-  .gallery-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border-radius: 16px;
-    background: #000;
-  }
-
-  .gallery-video.show {
-    opacity: 1;
-    visibility: visible;
-  }
-
-
-
-  .gallery-item.has-video {
-    cursor: pointer;
-  }
-
-  .gallery-item.has-video img {
-    position: relative;
-    z-index: 2;
-    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   }
 
   .gallery-item:hover {
@@ -271,24 +241,15 @@
     right: 0;
     padding: 15px 20px;
     background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    transform: translateY(100%);
-    opacity: 0;
-    transition: all 0.3s ease;
-  }
-
-  .gallery-item:hover .image-caption {
     transform: translateY(0);
     opacity: 1;
+    transition: all 0.3s ease;
   }
 
   .image-caption p {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
     letter-spacing: 2px;
-  }
-
-  .gallery-item.has-detail {
-    cursor: pointer;
   }
 
   .item-detail {
@@ -301,11 +262,8 @@
       0 0 20px rgba(218, 165, 32, 0.1),
       inset 0 0 30px rgba(0, 0, 0, 0.5),
       0 2px 10px rgba(0, 0, 0, 0.3);
-    transform: translateY(-100%) scale(0.95);
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transform: translateY(0) scale(1);
+    opacity: 1;
     position: relative;
   }
 
@@ -316,12 +274,6 @@
     border-radius: 14px;
     border: 1px solid rgba(218, 165, 32, 0.2);
     pointer-events: none;
-  }
-
-  .item-detail.show {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-    height: auto;
   }
 
   .item-detail p {
@@ -370,6 +322,34 @@
       gap: 20px;
     }
   }
+
+  .audio-btn {
+    display: block;
+    width: 120px;
+    margin: 15px auto 0;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(218,165,32,0.2) 0%, rgba(139,90,43,0.15) 100%);
+    border: 1px solid rgba(218,165,32,0.3);
+    color: #daa520;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+    letter-spacing: 2px;
+  }
+
+  .audio-btn:hover {
+    background: linear-gradient(135deg, rgba(218,165,32,0.35) 0%, rgba(139,90,43,0.25) 100%);
+    border-color: rgba(218,165,32,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(218,165,32,0.2);
+  }
+
+  .audio-btn.playing {
+    background: linear-gradient(135deg, rgba(218,165,32,0.4) 0%, rgba(139,90,43,0.3) 100%);
+    border-color: rgba(218,165,32,0.6);
+  }
 </style>
 </head>
 <body>
@@ -403,7 +383,7 @@
       <p class="gallery-subtitle">ASH STRIP METHOD</p>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item has-detail" onclick="toggleDetail(1)">
+      <div class="gallery-item">
         <span class="image-number">1</span>
         <img src="./灰条制法_files/1.png" alt="步骤1">
         <div class="image-caption">
@@ -412,60 +392,53 @@
         <div class="item-detail" id="detail-1">
           <p>砖灰磨细成粉</p>
         </div>
+        <button class="audio-btn" data-audio="1.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(2)">
+      <div class="gallery-item">
         <span class="image-number">2</span>
-        <img src="./灰条制法_files/2.png" alt="步骤2" id="video-cover-2">
-        <video id="video-2" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/2.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/2.gif" alt="步骤2">
         <div class="image-caption">
           <p>调和浆料</p>
         </div>
         <div class="item-detail" id="detail-2">
           <p>打磨成粉的砖灰加人水漂洗。</p>
         </div>
+        <button class="audio-btn" data-audio="2.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(3)">
+      <div class="gallery-item">
         <span class="image-number">3</span>
-        <img src="./灰条制法_files/3.png" alt="步骤3" id="video-cover-3">
-        <video id="video-3" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/3.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/3.gif" alt="步骤3">
         <div class="image-caption">
           <p>过滤提纯</p>
         </div>
         <div class="item-detail" id="detail-3">
           <p>极细的粉末随水漂出并收集，三四道后，粗质的粉末就去尽了。</p>
         </div>
+        <button class="audio-btn" data-audio="3.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(4)">
+      <div class="gallery-item">
         <span class="image-number">4</span>
-        <img src="./灰条制法_files/4.png" alt="步骤4" id="video-cover-4">
-        <video id="video-4" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/4.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/4.gif" alt="步骤4">
         <div class="image-caption">
           <p>静置沉淀</p>
         </div>
         <div class="item-detail" id="detail-4">
           <p>漂洗后的粉末铺平晒干。</p>
         </div>
+        <button class="audio-btn" data-audio="4.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(5)">
+      <div class="gallery-item">
         <span class="image-number">5</span>
-        <img src="./灰条制法_files/5.png" alt="步骤5" id="video-cover-5">
-        <video id="video-5" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/5.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/5.gif" alt="步骤5">
         <div class="image-caption">
           <p>精细筛分</p>
         </div>
         <div class="item-detail" id="detail-5">
           <p>晒干的灰料再次碾碎，过细筛箩。</p>
         </div>
+        <button class="audio-btn" data-audio="5.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-detail" onclick="toggleDetail(6)">
+      <div class="gallery-item">
         <span class="image-number">6</span>
         <img src="./灰条制法_files/6.png" alt="步骤6">
         <div class="image-caption">
@@ -474,34 +447,31 @@
         <div class="item-detail" id="detail-6">
           <p>收集起筛过的粉末。</p>
         </div>
+        <button class="audio-btn" data-audio="6.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(7)">
+      <div class="gallery-item">
         <span class="image-number">7</span>
-        <img src="./灰条制法_files/7.png" alt="步骤7" id="video-cover-7">
-        <video id="video-7" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/7.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/7.gif" alt="步骤7">
         <div class="image-caption">
           <p>均匀搅拌</p>
         </div>
         <div class="item-detail" id="detail-7">
           <p>筛好的细灰内加人适量煎过的桐油和猪血料，调拌均匀。</p>
         </div>
+        <button class="audio-btn" data-audio="7.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-video" onclick="toggleVideo(8)">
+      <div class="gallery-item">
         <span class="image-number">8</span>
-        <img src="./灰条制法_files/8.png" alt="步骤8" id="video-cover-8">
-        <video id="video-8" class="gallery-video" playsinline webkit-playsinline preload="metadata">
-          <source src="./灰条制法_files/8.mp4" type="video/mp4">
-        </video>
+        <img src="./灰条制法_files/8.gif" alt="步骤8">
         <div class="image-caption">
           <p>陈化熟成</p>
         </div>
         <div class="item-detail" id="detail-8">
           <p>将灰料调拌至状如包饺子的面。</p>
         </div>
+        <button class="audio-btn" data-audio="8.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-detail" onclick="toggleDetail(9)">
+      <div class="gallery-item">
         <span class="image-number">9</span>
         <img src="./灰条制法_files/9.png" alt="步骤9">
         <div class="image-caption">
@@ -510,8 +480,9 @@
         <div class="item-detail" id="detail-9">
           <p>灰料未干时，搓条切段，塑形后风干。</p>
         </div>
+        <button class="audio-btn" data-audio="9.mp3">播放音频</button>
       </div>
-      <div class="gallery-item has-detail" onclick="toggleDetail(10)">
+      <div class="gallery-item">
         <span class="image-number">10</span>
         <img src="./灰条制法_files/10.png" alt="步骤10">
         <div class="image-caption">
@@ -520,42 +491,49 @@
         <div class="item-detail" id="detail-10">
           <p>风干后，灰条就制成了。打磨时，将灰条蘸水磨漆即可。</p>
         </div>
+        <button class="audio-btn" data-audio="10.mp3">播放音频</button>
       </div>
     </div>
   </div>
   <script>
-    function toggleDetail(id) {
-      var detail = document.getElementById('detail-' + id);
-      if (detail) {
-        detail.classList.toggle('show');
-      }
-    }
-
-    function toggleVideo(id) {
-      var video = document.getElementById('video-' + id);
-      var cover = document.getElementById('video-cover-' + id);
-      var detail = document.getElementById('detail-' + id);
+    let currentAudio = null;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const audioButtons = document.querySelectorAll('.audio-btn');
       
-      if (video && cover) {
-        if (video.classList.contains('show')) {
-          video.classList.remove('show');
-          cover.style.opacity = '1';
-          video.pause();
-          if (detail) {
-            detail.classList.remove('show');
+      audioButtons.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const audioFile = this.dataset.audio;
+          const audioPath = './灰条制法_files/' + audioFile;
+          
+          if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+            document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('playing'));
           }
-        } else {
-          video.classList.add('show');
-          cover.style.opacity = '0';
-          video.play().catch(function(e) {
-            console.log('Autoplay prevented, waiting for user interaction');
+          
+          currentAudio = new Audio(audioPath);
+          currentAudio.play().then(() => {
+            btn.classList.add('playing');
+            btn.textContent = '播放中...';
+          }).catch(function(err) {
+            console.error('音频播放失败:', err);
+            alert('音频播放失败，请检查音频文件是否存在');
           });
-          if (detail) {
-            detail.classList.add('show');
-          }
-        }
-      }
-    }
+          
+          currentAudio.addEventListener('ended', function() {
+            btn.classList.remove('playing');
+            btn.textContent = '播放音频';
+            currentAudio = null;
+          });
+          
+          currentAudio.addEventListener('pause', function() {
+            btn.classList.remove('playing');
+            btn.textContent = '播放音频';
+          });
+        });
+      });
+    });
   </script>
 </body>
 </html>

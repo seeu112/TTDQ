@@ -167,20 +167,19 @@
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      grid-row-gap: 80px;
+      grid-auto-rows: auto;
+      grid-row-gap: 40px;
       grid-column-gap: 25px;
       padding: 20px 0;
+      align-items: start;
     }
 
     .gallery-item {
-      position: relative;
+      display: flex;
+      flex-direction: column;
       border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .clickable-item {
       overflow: visible;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
 
     .gallery-item:hover {
@@ -209,13 +208,10 @@
 
     .gallery-item img {
       width: 100%;
-      height: 100%;
+      height: 260px;
       object-fit: cover;
+      border-radius: 12px;
       transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .video-thumbnail {
-      cursor: pointer;
     }
 
     .clickable-item img {
@@ -227,32 +223,19 @@
     }
 
     .description {
-      position: absolute;
-      top: 50%;
-      left: calc(100% + 20px);
-      transform: translateY(-50%);
-      width: 260px;
+      width: 100%;
       padding: 16px 20px;
       background: rgba(0, 0, 0, 0.9);
-      border-radius: 12px;
-      border: 2px solid #c9a227;
-      box-shadow: 0 0 15px rgba(201, 162, 39, 0.5), 0 0 30px rgba(201, 162, 39, 0.3), inset 0 0 20px rgba(201, 162, 39, 0.1);
+      border-top: 2px solid #c9a227;
       color: #d4af37;
       font-family: 'Noto Serif SC', 'Songti SC', serif;
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.8;
-      text-align: left;
+      text-align: center;
       opacity: 0;
       visibility: hidden;
       transition: all 0.4s ease;
       z-index: 5;
-      max-height: 300px;
-      overflow-y: auto;
-    }
-
-    .description.left {
-      left: auto;
-      right: calc(100% + 20px);
     }
 
     .description.active {
@@ -310,112 +293,74 @@
       font-weight: 400;
     }
 
-    .gallery-item:nth-child(1),
-    .gallery-item:nth-child(6),
-    .gallery-item:nth-child(11) {
-      grid-column: span 2;
-    }
-
-    .gallery-item:nth-child(1) img,
-    .gallery-item:nth-child(6) img,
-    .gallery-item:nth-child(11) img {
-      height: 380px;
-    }
-
-    .gallery-item:not(:nth-child(1)):not(:nth-child(6)):not(:nth-child(11)) img {
-      height: 220px;
-    }
-
-    .video-item {
-      cursor: pointer;
-    }
-
-    .play-icon {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 50px;
-      height: 50px;
-      background: rgba(0, 0, 0, 0.6);
+    .audio-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      color: #d4af37;
+      cursor: pointer;
       transition: all 0.3s ease;
-      z-index: 2;
-      border: 2px solid rgba(201, 162, 39, 0.5);
-      pointer-events: none;
+      margin-left: 10px;
+      flex-shrink: 0;
     }
 
-    .video-item:hover .play-icon {
-      opacity: 0;
-      transform: translate(-50%, -50%) scale(1.1);
+    .audio-btn:hover {
+      background: rgba(212, 175, 55, 0.25);
+      border-color: #d4af37;
+      transform: scale(1.1);
     }
 
-    .play-icon svg {
-      width: 22px;
-      height: 22px;
-      margin-left: 3px;
+    .audio-btn.playing {
+      background: rgba(212, 175, 55, 0.3);
+      border-color: #d4af37;
+      animation: pulse 1.5s infinite;
     }
 
-    .video-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      border-radius: 12px;
+    .audio-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+
+    .audio-btn.playing .play-icon {
       display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 20;
-      overflow: hidden;
     }
 
-    .video-container.active {
+    .audio-btn .pause-icon {
+      display: none;
+    }
+
+    .audio-btn.playing .pause-icon {
+      display: block;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(212, 175, 55, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    }
+
+    .description-content {
       display: flex;
-      animation: fadeIn 0.3s ease;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .description-text {
+      flex: 1;
+      min-width: 0;
     }
 
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
-    }
-
-    .video-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .video-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 35px;
-      height: 35px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 11;
-    }
-
-    .video-close:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: scale(1.1);
-    }
-
-    .video-close svg {
-      width: 16px;
-      height: 16px;
     }
 
     @media (max-width: 768px) {
@@ -475,168 +420,127 @@
         <div class="overlay">
           <div class="title">步骤一</div>
         </div>
-        <div class="description" id="desc1">准备一块上过灰漆的平实漆板。</div>
+        <div class="description" id="desc1">
+        <div class="description-content">
+          <span class="description-text">准备一块上过灰漆的平实漆板。</span>
+          <button class="audio-btn" data-audio="1">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="1">
-        <img src="./堆红做法_files/2.jpg" alt="步骤2" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/2.gif" alt="步骤2">
         <span class="number">02</span>
         <div class="overlay">
           <div class="title">步骤二</div>
         </div>
-        <div class="video-container" id="videoContainer">
-          <video id="videoPlayer">
-            <source src="./堆红做法_files/2.mp4" type="video/mp4">
-          </video>
-          <button class="video-close" id="videoClose">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc2">
+        <div class="description-content">
+          <span class="description-text">调灰漆，细瓦灰中加人适量生漆，调拌至牙膏状，这种状态下的灰漆可塑性强又不会稀软无力。福州漆工在制作堆红所用的灰漆时，会在细瓦灰中加人少量滑石粉、蛤粉和鱼鳔胶，其中，滑石粉使其绵软，蛤粉增强其透气性，鱼鳔使其黏性更佳。</span>
+          <button class="audio-btn" data-audio="2">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc2">调灰漆，细瓦灰中加人适量生漆，调拌至牙膏状，这种状态下的灰漆可塑性强又不会稀软无力。福州漆工在制作堆红所用的灰漆时，会在细瓦灰中加人少量滑石粉、蛤粉和鱼鳔胶，其中，滑石粉使其绵软，蛤粉增强其透气性，鱼鳔使其黏性更佳。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="2">
-        <img src="./堆红做法_files/3.jpg" alt="步骤3" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/3.gif" alt="步骤3">
         <span class="number">03</span>
         <div class="overlay">
           <div class="title">步骤三</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/3.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc3">
+        <div class="description-content">
+          <span class="description-text">蘸取调好的灰漆在胎地上堆剔出花纹。</span>
+          <button class="audio-btn" data-audio="3">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc3">蘸取调好的灰漆在胎地上堆剔出花纹。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="3">
-        <img src="./堆红做法_files/4.jpg" alt="步骤4" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/4.gif" alt="步骤4">
         <span class="number">04</span>
         <div class="overlay">
           <div class="title">步骤四</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/4.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc4">
+        <div class="description-content">
+          <span class="description-text">堆好后可用笔或刮板、雕刀等略加雕刻修饰，然后放人荫房待干。</span>
+          <button class="audio-btn" data-audio="4">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc4">堆好后可用笔或刮板、雕刀等略加雕刻修饰，然后放人荫房待干。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="4">
-        <img src="./堆红做法_files/5.jpg" alt="步骤5" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/5.gif" alt="步骤5">
         <span class="number">05</span>
         <div class="overlay">
           <div class="title">步骤五</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/5.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc5">
+        <div class="description-content">
+          <span class="description-text">待漆灰完全干固后，磨石蘸水顺着灰漆纹样的高低稍微打磨。</span>
+          <button class="audio-btn" data-audio="5">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc5">待漆灰完全干固后，磨石蘸水顺着灰漆纹样的高低稍微打磨。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="5">
-        <img src="./堆红做法_files/6.jpg" alt="步骤6" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/6.gif" alt="步骤6">
         <span class="number">06</span>
         <div class="overlay">
           <div class="title">步骤六</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/6.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc6">
+        <div class="description-content">
+          <span class="description-text">调朱漆，朱漆中加适量樟脑油稀释。</span>
+          <button class="audio-btn" data-audio="6">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc6">调朱漆，朱漆中加适量樟脑油稀释。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="6">
-        <img src="./堆红做法_files/7.jpg" alt="步骤7" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/7.gif" alt="步骤7">
         <span class="number">07</span>
         <div class="overlay">
           <div class="title">步骤七</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/7.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc7">
+        <div class="description-content">
+          <span class="description-text">全面涂堆起的漆灰花纹，髹好后放人荫房待干。</span>
+          <button class="audio-btn" data-audio="7">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc7">全面涂堆起的漆灰花纹，髹好后放人荫房待干。</div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="7">
-        <img src="./堆红做法_files/8.jpg" alt="步骤8" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/8.gif" alt="步骤8">
         <span class="number">08</span>
         <div class="overlay">
           <div class="title">步骤八</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/8.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc8">
+        <div class="description-content">
+          <span class="description-text">每道朱漆干固后都可以再髹涂，如此反复髹涂数层，直至朱漆厚度均匀、呈色饱满。</span>
+          <button class="audio-btn" data-audio="8">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc8">每道朱漆干固后都可以再髹涂，如此反复髹涂数层，直至朱漆厚度均匀、呈色饱满。</div>
+      </div>
       </div>
       <div class="gallery-item clickable-item" data-index="8">
         <img src="./堆红做法_files/9.jpg" alt="步骤9">
@@ -644,30 +548,31 @@
         <div class="overlay">
           <div class="title">步骤九</div>
         </div>
-        <div class="description" id="desc9">朱漆层全部涂完毕后，用炭棒细致打磨漆面。</div>
+        <div class="description" id="desc9">
+        <div class="description-content">
+          <span class="description-text">朱漆层全部涂完毕后，用炭棒细致打磨漆面。</span>
+          <button class="audio-btn" data-audio="9">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+      </div>
       </div>
       <div class="gallery-item video-item clickable-item" data-index="9">
-        <img src="./堆红做法_files/10.jpg" alt="步骤10" class="video-thumbnail">
-        <div class="play-icon">
-          <svg viewBox="0 0 24 24" fill="#c9a227">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
+        <img src="./堆红做法_files/10.gif" alt="步骤10">
         <span class="number">10</span>
         <div class="overlay">
           <div class="title">步骤十</div>
         </div>
-        <div class="video-container">
-          <video>
-            <source src="./堆红做法_files/10.mp4" type="video/mp4">
-          </video>
-          <button class="video-close">
-            <svg viewBox="0 0 24 24" fill="#fff">
-              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            </svg>
+        <div class="description active" id="desc10">
+        <div class="description-content">
+          <span class="description-text">如果需要进一步地美化，就可以在棉球上蘸取珍珠粉和少量菜籽油，细致擦磨漆面以抛光。</span>
+          <button class="audio-btn" data-audio="10">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
         </div>
-        <div class="description" id="desc10">如果需要进一步地美化，就可以在棉球上蘸取珍珠粉和少量菜籽油，细致擦磨漆面以抛光。</div>
+      </div>
       </div>
       <div class="gallery-item clickable-item" data-index="10">
         <img src="./堆红做法_files/11.jpg" alt="步骤11">
@@ -675,60 +580,65 @@
         <div class="overlay">
           <div class="title">步骤十一</div>
         </div>
-        <div class="description" id="desc11">一块堆红的试验板就制成了。</div>
+        <div class="description" id="desc11">
+        <div class="description-content">
+          <span class="description-text">一块堆红的试验板就制成了。</span>
+          <button class="audio-btn" data-audio="11">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+        </div>
+      </div>
       </div>
     </div>
   </div>
 
   <script>
     const galleryItems = document.querySelectorAll('.gallery-item');
+    const audioBtns = document.querySelectorAll('.audio-btn');
+    let currentAudio = null;
 
     galleryItems.forEach((item) => {
-      if (item.classList.contains('video-item')) {
-        const videoThumbnail = item.querySelector('.video-thumbnail');
-        videoThumbnail.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const videoContainer = item.querySelector('.video-container');
-          const videoPlayer = item.querySelector('video');
-          const description = item.querySelector('.description');
-          
-          const rect = item.getBoundingClientRect();
-          const windowWidth = window.innerWidth;
-          const availableSpaceRight = windowWidth - rect.right;
-          const availableSpaceLeft = rect.left;
-          
-          if (availableSpaceLeft > availableSpaceRight && availableSpaceLeft > 280) {
-            description.classList.add('left');
-          } else {
-            description.classList.remove('left');
-          }
-          
-          videoContainer.classList.add('active');
-          description.classList.add('active');
-          videoPlayer.play().catch(() => {});
-        });
+      if (item.classList.contains('video-item') || item.querySelector('.description')) {
+        item.querySelector('.description').classList.add('active');
       }
     });
 
-    const videoItems = document.querySelectorAll('.video-item');
-    videoItems.forEach((item) => {
-      const videoContainer = item.querySelector('.video-container');
-      const videoPlayer = item.querySelector('video');
-      
-      videoPlayer.addEventListener('ended', () => {
-        videoContainer.classList.remove('active');
-        videoPlayer.currentTime = 0;
-      });
-    });
+    audioBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const audioNum = btn.dataset.audio;
+        const audioSrc = `./堆红做法_files/${audioNum}.MP3`;
 
-    const clickableItems = document.querySelectorAll('.clickable-item');
-    clickableItems.forEach((item) => {
-      const img = item.querySelector('img');
-      const description = item.querySelector('.description');
-      
-      img.addEventListener('click', (e) => {
-        e.stopPropagation();
-        description.classList.toggle('active');
+        if (currentAudio && currentAudio.src.includes(audioNum)) {
+          if (currentAudio.paused) {
+            currentAudio.play();
+            btn.classList.add('playing');
+          } else {
+            currentAudio.pause();
+            btn.classList.remove('playing');
+          }
+          return;
+        }
+
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio = null;
+          audioBtns.forEach((b) => b.classList.remove('playing'));
+        }
+
+        currentAudio = new Audio(audioSrc);
+        currentAudio.play();
+        btn.classList.add('playing');
+
+        currentAudio.addEventListener('ended', () => {
+          btn.classList.remove('playing');
+          currentAudio = null;
+        });
+
+        currentAudio.addEventListener('error', () => {
+          btn.classList.remove('playing');
+          currentAudio = null;
+        });
       });
     });
   </script>
